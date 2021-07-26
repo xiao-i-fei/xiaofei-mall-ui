@@ -25,14 +25,14 @@
         </el-row>
 
         <!-- 引入添加和修改的组件 -->
-        <update :getAll="getAll"/>
+        <category-add-or-update :getAll="getAll"/>
     </div>
 </template>
 
 <script>
 
 import {queryAllCategory, deleteCategoryById} from '@/api/product/category'
-import update from "@/views/product/category/update";
+import categoryAddOrUpdate from "@/views/product/category/category-add-or-update";
 import pubsub from 'pubsub-js'
 
 export default {
@@ -63,10 +63,6 @@ export default {
 
         //修改节点
         update(data, update) {
-
-            console.log("data:", data)
-            console.log("update:", update)
-
             let updateData;
             if (update === "add") {
                 updateData = {"category": data, "update": "add"}
@@ -113,7 +109,7 @@ export default {
 
     //组件
     components: {
-        update
+        categoryAddOrUpdate
     },
 
     watch: {
