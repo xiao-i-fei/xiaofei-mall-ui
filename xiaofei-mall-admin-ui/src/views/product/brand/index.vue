@@ -8,7 +8,8 @@
                         <el-input v-model="searchValue" placeholder="参数名" clearable></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button @click="queryBrand()">查询</el-button>
+                        <el-button @click="queryBrand(false)">查询</el-button>
+                        <el-button type="success" @click="queryBrand(true)">查询全部</el-button>
                         <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>
                         <!-- 这里要调用方法，不能直接写方法名字，如果直接写方法名字，会默认传入一个参数，event事件 -->
                         <el-button type="danger" @click="deleteBrand()" :disabled="selectBrands.length<=0">批量删除
@@ -104,7 +105,8 @@ export default {
             this.$bus.$emit('addOrUpdateBrand', id)
         },
         //分页获取商家的信息
-        queryBrand() {
+        queryBrand(isQueryAll) {
+            this.searchValue = isQueryAll ? "" : this.searchValue;
             queryBrandByPage(this.page.pageNo, this.page.pageSize, this.searchValue).then(response => {
                 this.page = response.data
             });

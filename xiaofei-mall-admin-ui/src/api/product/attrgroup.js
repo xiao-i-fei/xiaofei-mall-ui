@@ -48,14 +48,15 @@ export function queryAttrGroupById(attrgroupId) {
  * 查询所有的属性分组信息
  * @returns 返回请求到的数据
  */
-export function queryAttrGroupByPage(pageNo = 1, pageSize = 8, searchValue = "") {
+export function queryAttrGroupByPage(pageNo = 1, pageSize = 8, searchValue = "", categoryId = 0) {
     return request({
         url: `/product/attrgroup/list`,
         method: 'get',
         params: {
             pageNo: pageNo,
             pageSize: pageSize,
-            searchValue: searchValue
+            searchValue: searchValue,
+            catelogId: categoryId
         }
     })
 }

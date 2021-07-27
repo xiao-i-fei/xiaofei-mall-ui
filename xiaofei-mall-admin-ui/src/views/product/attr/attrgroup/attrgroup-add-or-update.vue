@@ -165,6 +165,11 @@ export default {
         }
     },
 
+    beforeDestroy() {
+        //销毁节点
+        this.$bus.$off('addOrUpdateAttrGroup')
+    }
+
 }
 
 </script>

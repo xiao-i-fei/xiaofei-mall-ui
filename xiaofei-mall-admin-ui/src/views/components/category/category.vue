@@ -3,10 +3,10 @@
         <!-- 节点过滤 -->
         <el-input placeholder="搜索" v-model="searchValue"></el-input>
 
-        <!-- highlight-current：高亮选中。expand-on-click-node：需要点击左边小三角才能打开节点 -->
+        <!-- highlight-current：高亮选中。expand-on-click-node：false需要点击左边小三角才能打开节点 -->
         <el-tree class="filter-tree" :data="categorys" :props="defaultProps" :filter-node-method="filterNode"
-                 node-key="catId" highlight-current :expand-on-click-node="false" ref="tree"
-                 accordion :current-node-key="2" :default-expanded-keys="defaultExpandedKeys">
+                 node-key="catId" highlight-current :expand-on-click-node="true" ref="tree" @current-change="nodeClick"
+                 accordion :default-expanded-keys="defaultExpandedKeys">
         </el-tree>
     </div>
 </template>
@@ -29,6 +29,12 @@ export default {
             if (!value) return true;
             return data.name.indexOf(value) !== -1;
         },
+
+        //节点选中触发的事件
+        nodeClick(value, node,component) {
+            //向父组件发送事件；
+            this.$emit("tree-node-click", value, node, component);
+        }
     },
 
     data() {

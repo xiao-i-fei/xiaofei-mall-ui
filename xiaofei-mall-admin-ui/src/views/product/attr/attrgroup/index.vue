@@ -6,7 +6,7 @@
 
                 <!-- 侧边分类区域 -->
                 <el-col :span="4" style="margin-top: 20px">
-                    <category/>
+                    <category @tree-node-click="nodeClick"/>
                 </el-col>
 
                 <el-col :span="19" :offset="1">
@@ -18,8 +18,8 @@
                                 <el-input v-model="searchValue" placeholder="参数名" clearable></el-input>
                             </el-form-item>
                             <el-form-item>
-                                <el-button @click="">查询</el-button>
-                                <el-button type="success" @click="">查询全部</el-button>
+                                <el-button @click="search(false)">查询</el-button>
+                                <el-button type="success" @click="search(true)">查询全部</el-button>
                                 <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>
                                 <!-- 这里要调用方法，不能直接写方法名字，如果直接写方法名字，会默认传入一个参数，event事件 -->
                                 <el-button type="danger" :disabled="selectAttrGroups.length<=0"
@@ -99,7 +99,8 @@ export default {
     },
     data() {
         return {
-            searchValue: "",
+            searchValue: "",//搜索条件
+            categoryId: 0,//用于左边的树形组件的搜索条件
             isUpdate: false,//用于判断是添加操作还是修改操作
             page: {
                 pageNo: 1,
@@ -146,10 +147,21 @@ export default {
             })
         },
 
+        //搜索数据
+        search(isAll) {
+            if (isAll) {
+                this.page.pageNo = 1;
+                this.page.pageSize = 8;
+                this.searchValue = ""
+                this.categoryId = 0
+            }
+
+            this.queryAttrGroup()
+        },
 
         //初始化数据
         queryAttrGroup() {
-            queryAttrGroupByPage(this.page.pageNo, this.page.pageSize, this.searchValue).then(response => {
+            queryAttrGroupByPage(this.page.pageNo, this.page.pageSize, this.searchValue, this.categoryId).then(response => {
                 this.page = response.data
             })
         },
@@ -164,7 +176,19 @@ export default {
         changePageNo(pageNo) {
             this.page.pageNo = pageNo
             this.queryAttrGroup()
+        },
+
+        //树形类别选择
+        nodeClick(value, node, component) {
+            if (value.catLevel === 3) {
+                console.log(value)
+                this.categoryId = value.catId
+                this.queryAttrGroup()//重新查询数据
+            }
         }
+
+    },
+    beforeDestroy() {
     }
 
 };

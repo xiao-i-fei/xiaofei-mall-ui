@@ -3,12 +3,19 @@
         <el-row>
             <el-col style="margin-top: 20px" :span="22" :offset="1">
                 <!-- 节点过滤 -->
-                <el-input placeholder="搜索" v-model="searchValue"></el-input>
+                <el-col style="margin-bottom: 20px" :span="24">
+                    <el-input placeholder="搜索" v-model="searchValue"></el-input>
+                </el-col>
+<!--                <el-col style="text-align: right" :span="2">
+                    <el-button type="primary" @click="closeTree">关闭所有节点</el-button>
+                </el-col>-->
 
-                <!-- highlight-current：高亮选中。expand-on-click-node：需要点击左边小三角才能打开节点 -->
-                <el-tree class="filter-tree" :data="categorys" :props="defaultProps" :filter-node-method="filterNode"
-                         node-key="catId" highlight-current :expand-on-click-node="false" ref="tree"
-                         accordion :current-node-key="2" :default-expanded-keys="defaultExpandedKeys">
+                <el-col :span="24">
+                    <!-- highlight-current：高亮选中。expand-on-click-node：需要点击左边小三角才能打开节点 -->
+                    <el-tree class="filter-tree" :data="categorys" :props="defaultProps"
+                             :filter-node-method="filterNode"
+                             node-key="catId" highlight-current :expand-on-click-node="false" ref="tree"
+                             accordion :current-node-key="1" :default-expanded-keys="defaultExpandedKeys">
                     <span class="custom-tree-node" slot-scope="{ node, data }">
                         <span>{{ node.label }}</span>
                         <span>
@@ -19,7 +26,8 @@
                             <el-button type="text" size="mini" @click="() => update(data,'update')">修改</el-button>
                         </span>
                     </span>
-                </el-tree>
+                    </el-tree>
+                </el-col>
 
             </el-col>
         </el-row>
@@ -87,6 +95,11 @@ export default {
             if (!value) return true;
             return data.name.indexOf(value) !== -1;
         },
+        //关闭所有节点
+        /*closeTree() {
+            debugger
+            this.defaultExpandedKeys = [];
+        }*/
     },
 
     data() {
