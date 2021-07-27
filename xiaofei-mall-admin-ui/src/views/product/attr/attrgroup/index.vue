@@ -85,6 +85,7 @@
 </template>
 
 <script>
+
 import category from "@/views/components/category/category";
 import {deleteAttrGroupById, queryAttrGroupByPage} from "@/api/product/attrgroup";
 import AttrgroupAddOrUpdate from "@/views/product/attr/attrgroup/attrgroup-add-or-update";

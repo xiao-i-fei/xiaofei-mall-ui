@@ -18,6 +18,7 @@
                 </el-form>
             </el-col>
 
+            <!-- 数据展示区域 -->
             <el-col :span="22" :offset="1">
 
                 <!-- 商家信息展示区 -->
@@ -61,8 +62,38 @@
                 </el-pagination>
             </el-col>
 
+            <!-- 修改品牌和类别的关联信息 -->
+            <el-dialog title="品牌和类别关联" :close-on-click-modal="false" :visible.sync="visible">
 
-            <add-or-update :queryBrand="queryBrand"></add-or-update>
+                <el-popover placement="right-end" v-model="cascaderVisible">
+                    <el-cascader v-model="catelogPath" :options="categorys" :props="categoryProps"
+                                 @change="categorySelect"></el-cascader>
+                    <div style="text-align: right; margin: 0">
+                        <el-button size="mini" type="text" @click="cascaderVisible = false">取消</el-button>
+                        <el-button type="primary" size="mini" @click="addRelation()">确定</el-button>
+                    </div>
+                    <el-button slot="reference">新增关联</el-button>
+                </el-popover>
+
+                <el-table :data="categoryBrandRelations" style="width: 100%">
+                    <el-table-column prop="id" label="#"></el-table-column>
+                    <el-table-column prop="brandName" label="品牌名"></el-table-column>
+                    <el-table-column prop="catelogName" label="分类名"></el-table-column>
+                    <el-table-column fixed="right" header-align="center" align="center" label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="text" size="small"
+                                       @click="deleteCategoryBrandRelation(scope.row.id,scope.row.brandId)">移除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="visible=false">取消</el-button>
+                 </span>
+
+            </el-dialog>
+
 
         </el-row>
     </div>
@@ -70,8 +101,15 @@
 
 <script>
 
-import {queryBrandByPage, deleteBrandById} from '@/api/product/brand'
+import {queryBrandByPage, deleteBrandById, updateBrand} from '@/api/product/brand'
 import AddOrUpdate from '@/views/product/brand/brand-add-or-update.vue'
+import {listTree} from "@/api/product/category";
+import {
+    addCategoryBrandRelation,
+    queryCategoryBrandRelationByBrandId,
+    deleteCategoryBrandRelation
+} from "@/api/product/CategoryBrandRelation";
+
 
 export default {
     components: {
@@ -79,9 +117,29 @@ export default {
     },
     data() {
         return {
-            attrType: "",
+            //这里的props是给级联选择器配置
+            categoryProps: {
+                value: "catId",
+                label: "name",
+                children: "children",
+                expandTrigger: 'hover'
+            },
+            categoryBrandRelations: [],
+            categoryBrandRelation: {
+                id: "",
+                brandId: "",
+                catelogId: "",
+                brandName: "",
+                catelogName: "",
+            },
+            categorys: [],//级联选择器全部的值
+            catelogPath: [],//级联选择器选中后的值
+            cascaderVisible: false,//级联选择器是否显示
+            visible: false,//模态框是否显示
+            //===================上面为品牌和类别关联需要的数据============================
+            attrType: "",//添加还是修改
             addOrUpdateVisible: false,//判断是否添加或删除
-            searchValue: "",
+            searchValue: "",//搜索条件
             page: {
                 pageNo: 1,
                 pageSize: 8,
@@ -114,7 +172,7 @@ export default {
 
         //修改商家的显示状态
         updateBrandStatus(data) {
-            updateBrandById(data)
+            updateBrand(data)
         },
 
         //复选框选中之后会执行的方法
@@ -153,7 +211,101 @@ export default {
         changePageNo(pageNo) {
             this.page.pageNo = pageNo
             this.queryBrand()
+        },
+
+        //========================下面为品牌和类别需要用到的方法=============================
+
+
+        /**
+         * 打开添加关联方分类的模态框
+         */
+        updateBrandCategory(brandId) {
+            this.visible = true
+            this.categoryBrandRelation.brandId = brandId
+            this.queryCategoryBrandRelation(brandId)
+            //查询级联选择器中的值
+            this.queryCategoryTree()
+        },
+
+        //获取指定商家绑定的数据
+        queryCategoryBrandRelation(brandId) {
+            //查询该商家已经关联的分类
+            queryCategoryBrandRelationByBrandId(brandId).then(response => {
+                this.categoryBrandRelations = response.data
+            })
+        },
+
+        //根据id和商家id删除
+        deleteCategoryBrandRelation(id, brandId) {
+            this.$confirm(`是否删除id为【${id}】的关联分类信息`, '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+            }).then(() => {
+                deleteCategoryBrandRelation(id, brandId).then(response => {
+                    if (response.data) {
+                        this.$message.success("删除成功")
+                        //刷新关联上数据
+                        this.queryCategoryBrandRelation(this.categoryBrandRelation.brandId)
+                    } else {
+                        this.$message.error("删除失败")
+                    }
+                })
+            }).catch(() => {
+            })
+
+        },
+
+        //获取级联选择器中的值
+        queryCategoryTree() {
+            this.cascaderVisible = true
+            listTree().then(response => {
+                this.categorys = response.data
+            })
+        },
+
+
+        //级联选择器选中之后触发的函数
+        categorySelect(value) {
+            if (value.length > 0) {
+                this.categoryBrandRelation.catelogId = value[value.length - 1]
+            }
+        },
+
+        //添加商家和类别关联的信息
+        addRelation() {
+            addCategoryBrandRelation(this.categoryBrandRelation).then(response => {
+                if (response.data) {
+                    this.$message.success("添加成功")
+                    //清空级联选择器中的属性
+                    this.catelogPath = []
+                    //关闭模态框
+                    this.cascaderVisible = false;
+
+                    //刷新关联上数据
+                    this.queryCategoryBrandRelation(this.categoryBrandRelation.brandId)
+                    // this.categoryBrandRelation = {id: "", brandId: "", catelogId: "", brandName: "", catelogName: ""}
+
+                }
+            })
+        },
+
+        //关闭商家和类别的模态框
+        closeBrandCategoryRelation() {
+            this.categoryBrandRelation = {
+                id: "",
+                brandId: "",
+                catelogId: "",
+                brandName: "",
+                catelogName: "",
+            };
+            this.categoryBrandRelations = [];
+            this.visible = false;
+            this.cascaderVisible = false;
+            this.catelogPath = []
         }
+
+
     }
 
 };

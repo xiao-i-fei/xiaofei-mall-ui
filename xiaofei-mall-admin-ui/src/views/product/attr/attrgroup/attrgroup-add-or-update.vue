@@ -17,9 +17,6 @@
                     <el-input v-model="attrGroup.icon" placeholder="组图标"></el-input>
                 </el-form-item>
                 <el-form-item label="所属分类" prop="catelogId">
-                    <!-- <el-input v-model="data.catelogId" placeholder="所属分类id"></el-input> @change="handleChange" -->
-                    <!-- <el-cascader filterable placeholder="试试搜索：手机" v-model="catelogPath" :options="categorys"  :props="props"></el-cascader> -->
-                    <!-- :catelogPath="catelogPath"自定义绑定的属性，可以给子组件传值 -->
                     <el-cascader v-model="catelogPath" :options="categorys" :props="categoryProps"
                                  @change="categorySelect"></el-cascader>
                 </el-form-item>
