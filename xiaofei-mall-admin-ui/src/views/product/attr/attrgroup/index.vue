@@ -9,6 +9,7 @@
                     <category @tree-node-click="nodeClick"/>
                 </el-col>
 
+                <!-- 右边主分区  -->
                 <el-col :span="19" :offset="1">
 
                     <!-- 搜索区域 -->
@@ -53,7 +54,9 @@
 
                             <el-table-column header-align="center" align="center" width="250" label="操作">
                                 <template slot-scope="scope">
-
+                                    <el-button type="text" size="small" @click="relation(scope.row.attrGroupId)">
+                                        关联
+                                    </el-button>
                                     <el-button type="primary" size="small"
                                                @click="addOrUpdateHandle(scope.row.attrGroupId)">修改
                                     </el-button>
@@ -79,19 +82,25 @@
             </el-col>
         </el-row>
 
+        <!-- 属性分组的添加和修改 -->
         <attrgroup-add-or-update :queryAttrGroup="queryAttrGroup"/>
 
+        <!-- 修改关联关系 -->
+        <attrgroup-relation v-if="relationVisible" ref="relationUpdate"
+                            @refreshData="queryAttrGroup"/>
     </div>
 </template>
 
 <script>
 
 import category from "@/views/components/category/category";
+import AttrgroupRelation from "@/views/product/attr/attrgroup/attrgroup-relation";
 import {deleteAttrGroupById, queryAttrGroupByPage} from "@/api/product/attrgroup";
 import AttrgroupAddOrUpdate from "@/views/product/attr/attrgroup/attrgroup-add-or-update";
 
 export default {
     components: {
+        AttrgroupRelation,
         AttrgroupAddOrUpdate,
         category
     },
@@ -100,6 +109,7 @@ export default {
     },
     data() {
         return {
+            relationVisible: false,//属性分组和属性
             searchValue: "",//搜索条件
             categoryId: 0,//用于左边的树形组件的搜索条件
             isUpdate: false,//用于判断是添加操作还是修改操作
@@ -114,7 +124,13 @@ export default {
         }
     },
     methods: {
-
+        //处理分组与属性的关联
+        relation(groupId) {
+            this.relationVisible = true
+            this.$nextTick(() => {
+                this.$refs.relationUpdate.init(groupId)
+            })
+        },
         //复选框选中的值
         selectionChangeHandle(value) {
             this.selectAttrGroups = value

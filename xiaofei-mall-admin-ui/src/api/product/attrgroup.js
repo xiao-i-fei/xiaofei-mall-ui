@@ -45,6 +45,17 @@ export function queryAttrGroupById(attrgroupId) {
 }
 
 /**
+ * 根据类别id查询属性分组
+ * @param categoryId 类别id
+ */
+export function queryAttrGroupByCategoryId(categoryId) {
+    return request({
+        url: `/product/attrgroup/list/${categoryId}`,
+        method: 'get',
+    })
+}
+
+/**
  * 查询所有的属性分组信息
  * @returns 返回请求到的数据
  */
