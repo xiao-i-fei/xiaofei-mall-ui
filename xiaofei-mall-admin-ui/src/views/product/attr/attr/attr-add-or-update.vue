@@ -156,6 +156,9 @@ export default {
                             this.attr = response.data
                             this.catelogPath = response.data.catelogPath
                             this.attr.valueSelect = response.data.valueSelect.split(';')
+                            this.$nextTick(() => {
+                                this.attr.attrGroupId = response.data.attrGroupId
+                            })
                         }
                     })
                 }
