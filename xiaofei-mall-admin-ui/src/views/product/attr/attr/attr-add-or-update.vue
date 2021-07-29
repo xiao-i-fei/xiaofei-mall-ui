@@ -138,7 +138,7 @@ export default {
     methods: {
         //初始化方法
         init(attrId) {
-            console.log(1)
+            console.log(attrId)
             this.dialogTitle = attrId === 0 ? "新增" : "修改";
             this.attr.attrId = attrId
             this.attr.attrType = this.type
@@ -171,12 +171,11 @@ export default {
                     this.attr.valueSelect = this.attr.valueSelect.join(';')
                     //判断是添加还是修改
                     let addOrUpdate
-                    debugger
-                    if (this.attrId === 0) {
-                        updateAttr(this.attr).then(response => {
+                    if (this.attr.attrId === 0) {
+                        addAttr(this.attr).then(response => {
                             if (response.data && response.code === 200) {
                                 this.$message({
-                                    message: '修改成功',
+                                    message: '添加成功',
                                     type: 'success',
                                     duration: 1500,
                                     onClose: () => {
@@ -189,10 +188,10 @@ export default {
                             }
                         })
                     } else {
-                        addAttr(this.attr).then(response => {
+                        updateAttr(this.attr).then(response => {
                             if (response.data && response.code === 200) {
                                 this.$message({
-                                    message: '添加成功',
+                                    message: '修改成功',
                                     type: 'success',
                                     duration: 1500,
                                     onClose: () => {

@@ -108,7 +108,7 @@ import {
     addCategoryBrandRelation,
     queryCategoryBrandRelationByBrandId,
     deleteCategoryBrandRelation
-} from "@/api/product/CategoryBrandRelation";
+} from "@/api/product/category-brand-relation";
 
 
 export default {

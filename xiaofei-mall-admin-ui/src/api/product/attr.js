@@ -48,7 +48,7 @@ export function queryAttrById(attrId) {
  * 根据分页信息和查询条件查询属性的基本信息
  * @returns 返回请求到的数据
  */
-export function queryAttrByPage(pageNo = 1, pageSize = 8, searchValue = "", categoryId = 0, attrType) {
+export function queryAttrByPage(pageNo = 1, pageSize = 8, searchValue = "", categoryId = 0, attrType = -1) {
     return request({
         url: `/product/attr/list/${attrType}`,
         method: 'get',

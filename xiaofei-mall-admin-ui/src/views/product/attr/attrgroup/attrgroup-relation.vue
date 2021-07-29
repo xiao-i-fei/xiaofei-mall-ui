@@ -1,17 +1,18 @@
 <template>
     <div>
         <el-dialog :close-on-click-modal="false" :visible.sync="visible" @closed="dialogClose">
+
             <el-dialog width="40%" title="选择属性" :visible.sync="innerVisible" append-to-body>
                 <div>
                     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
                         <el-form-item>
-                            <el-input v-model="dataForm.key" placeholder="参数名" clearable></el-input>
+                            <el-input v-model="dataForm.searchValue" placeholder="参数名" clearable></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button @click="getDataList()">查询</el-button>
                         </el-form-item>
                     </el-form>
-                    <el-table :data="dataList" border v-loading="dataListLoading"
+                    <el-table :data="page.items" border v-loading="dataListLoading"
                               @selection-change="innerSelectionChangeHandle" style="width: 100%;">
                         <el-table-column type="selection" header-align="center" align="center"></el-table-column>
                         <el-table-column prop="attrId" header-align="center" align="center"
@@ -24,15 +25,17 @@
                                          label="可选值列表"></el-table-column>
                     </el-table>
                     <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle"
-                                   :current-page="pageIndex" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize"
-                                   :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
+                                   :current-page="page.pageNo" :page-sizes="[8,12,16,20,24,32,40,48]"
+                                   :page-size="page.pageSize" :total="page.itemCount"
+                                   layout="total, sizes, prev, pager, next, jumper">
                     </el-pagination>
                 </div>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="innerVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="submitAddRealtion">确认新增</el-button>
+                    <el-button type="primary" @click="submitAddRelation">确认新增</el-button>
                 </div>
             </el-dialog>
+
             <el-row>
                 <el-col :span="24">
                     <el-button type="primary" @click="addRelation">新建关联</el-button>
@@ -44,7 +47,7 @@
                               border>
                         <el-table-column type="selection" header-align="center" align="center"
                                          width="50"></el-table-column>
-                        <el-table-column prop="attrId" label="#"></el-table-column>
+                        <el-table-column prop="attrId" label="id"></el-table-column>
                         <el-table-column prop="attrName" label="属性名"></el-table-column>
                         <el-table-column prop="valueSelect" label="可选值">
                             <template slot-scope="scope">
@@ -65,11 +68,18 @@
                     </el-table>
                 </el-col>
             </el-row>
+
         </el-dialog>
     </div>
 </template>
 
 <script>
+import {
+    addAttrAttrGroupRelation,
+    deleteAttrAttrGroupRelation,
+    queryAttrAttrGroupRelationByAttrGroupId,
+    queryNoRelationAttr
+} from "@/api/product/attr-attrgroup-relation";
 
 export default {
     components: {},
@@ -83,14 +93,18 @@ export default {
             relationAttrs: [],
             dataListSelections: [],
             dataForm: {
-                key: ""
+                searchValue: ""
             },
-            dataList: [],
-            pageIndex: 1,
-            pageSize: 10,
-            totalPage: 0,
+            page: {
+                pageNo: 1,
+                pageSize: 8,
+                pageTotal: 1,
+                itemCount: 0,
+                items: []
+            },
             dataListLoading: false,
-            innerdataListSelections: []
+            innerdataListSelections: [],
+
         };
     },
     //计算属性类似于data概念
@@ -99,27 +113,26 @@ export default {
     watch: {},
     //方法集合
     methods: {
-        selectionChangeHandle(val) {
-            this.dataListSelections = val;
+        selectionChangeHandle(value) {
+            console.log(value)
+            this.dataListSelections = value;
         },
-        innerSelectionChangeHandle(val) {
-            this.innerdataListSelections = val;
+        innerSelectionChangeHandle(value) {
+            console.log(value)
+            this.innerdataListSelections = value;
         },
         addRelation() {
-            this.getDataList();
             this.innerVisible = true;
+            this.getDataList();
+
         },
         batchDeleteRelation(val) {
             let postData = [];
             this.dataListSelections.forEach(item => {
                 postData.push({attrId: item.attrId, attrGroupId: this.attrGroupId});
             });
-            this.$http({
-                url: this.$http.adornUrl("/product/attrgroup/attr/relation/delete"),
-                method: "post",
-                data: this.$http.adornData(postData, false)
-            }).then(({data}) => {
-                if (data.code == 0) {
+            deleteAttrAttrGroupRelation(postData).then(response => {
+                if (response.code === 200) {
                     this.$message({type: "success", message: "删除成功"});
                     this.init(this.attrGroupId);
                 } else {
@@ -131,12 +144,8 @@ export default {
         relationRemove(attrId) {
             let data = [];
             data.push({attrId, attrGroupId: this.attrGroupId});
-            this.$http({
-                url: this.$http.adornUrl("/product/attrgroup/attr/relation/delete"),
-                method: "post",
-                data: this.$http.adornData(data, false)
-            }).then(({data}) => {
-                if (data.code == 0) {
+            deleteAttrAttrGroupRelation(data).then(response => {
+                if (response.code === 200) {
                     this.$message({type: "success", message: "删除成功"});
                     this.init(this.attrGroupId);
                 } else {
@@ -144,7 +153,7 @@ export default {
                 }
             });
         },
-        submitAddRealtion() {
+        submitAddRelation() {
             this.innerVisible = false;
             //准备数据
             console.log("准备新增的数据", this.innerdataListSelections);
@@ -153,12 +162,9 @@ export default {
                 this.innerdataListSelections.forEach(item => {
                     postData.push({attrId: item.attrId, attrGroupId: this.attrGroupId});
                 });
-                this.$http({
-                    url: this.$http.adornUrl("/product/attrgroup/attr/relation"),
-                    method: "post",
-                    data: this.$http.adornData(postData, false)
-                }).then(({data}) => {
-                    if (data.code == 0) {
+                console.log(postData)
+                addAttrAttrGroupRelation(postData).then(response => {
+                    if (response.code === 200) {
                         this.$message({type: "success", message: "新增关联成功"});
                     }
                     this.$emit("refreshData");
@@ -170,14 +176,8 @@ export default {
         init(id) {
             this.attrGroupId = id || 0;
             this.visible = true;
-            this.$http({
-                url: this.$http.adornUrl(
-                    "/product/attrgroup/" + this.attrGroupId + "/attr/relation"
-                ),
-                method: "get",
-                params: this.$http.adornParams({})
-            }).then(({data}) => {
-                this.relationAttrs = data.data;
+            queryAttrAttrGroupRelationByAttrGroupId(this.attrGroupId).then(response => {
+                this.relationAttrs = response.data;
             });
         },
         dialogClose() {
@@ -186,37 +186,24 @@ export default {
         //========
         // 获取数据列表
         getDataList() {
-            this.dataListLoading = true;
-            this.$http({
-                url: this.$http.adornUrl(
-                    "/product/attrgroup/" + this.attrGroupId + "/noattr/relation"
-                ),
-                method: "get",
-                params: this.$http.adornParams({
-                    page: this.pageIndex,
-                    limit: this.pageSize,
-                    key: this.dataForm.key
-                })
-            }).then(({data}) => {
-                if (data && data.code === 0) {
-                    this.dataList = data.page.list;
-                    this.totalPage = data.page.totalCount;
+            queryNoRelationAttr(this.pageNo, this.pageSize, this.dataForm.searchValue).then(response => {
+                if (response.data && response.code === 200) {
+                    this.page = response.data
                 } else {
                     this.dataList = [];
                     this.totalPage = 0;
                 }
-                this.dataListLoading = false;
             });
         },
         // 每页数
         sizeChangeHandle(val) {
             this.pageSize = val;
-            this.pageIndex = 1;
+            this.pageNo = 1;
             this.getDataList();
         },
         // 当前页
         currentChangeHandle(val) {
-            this.pageIndex = val;
+            this.pageNo = val;
             this.getDataList();
         }
     }

@@ -11,7 +11,6 @@ export function addCategoryBrandRelation(categoryBrandRelation) {
     })
 }
 
-
 /**
  * 删除品牌和类别的关联
  */

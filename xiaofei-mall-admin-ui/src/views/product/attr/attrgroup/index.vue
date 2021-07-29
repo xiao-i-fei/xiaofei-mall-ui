@@ -54,7 +54,7 @@
 
                             <el-table-column header-align="center" align="center" width="250" label="操作">
                                 <template slot-scope="scope">
-                                    <el-button type="text" size="small" @click="relation(scope.row.attrGroupId)">
+                                    <el-button size="small" @click="relation(scope.row.attrGroupId)">
                                         关联
                                     </el-button>
                                     <el-button type="primary" size="small"
