@@ -105,9 +105,8 @@
                     <!-- 分页区域 -->
                     <el-col style="margin-top: 20px;text-align: center" :span="22" :offset="1" te>
                         <el-pagination @size-change="changePageSize" @current-change="changePageNo"
-                                       :current-page="page.pageNo"
+                                       :current-page="page.pageNo" :total="page.itemCount"
                                        :page-sizes="[8,12,16,20,24,32,40,48,56]" :page-size="page.pageSize"
-                                       :total="page.itemCount"
                                        layout="total, sizes, prev, pager, next, jumper">
                         </el-pagination>
                     </el-col>
