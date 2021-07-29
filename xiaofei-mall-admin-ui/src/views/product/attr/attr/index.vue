@@ -41,7 +41,8 @@
                                              label="id"></el-table-column>
                             <el-table-column prop="attrName" header-align="center" align="center"
                                              label="属性名"></el-table-column>
-                            <el-table-column prop="searchType" header-align="center" align="center" label="可检索">
+                            <el-table-column v-if="attrType === 1" prop="searchType" header-align="center"
+                                             align="center" label="可检索">
                                 <template slot-scope="scope">
                                     <i class="el-icon-success" v-if="scope.row.searchType === 1"></i>
                                     <i class="el-icon-error" v-else></i>
@@ -75,13 +76,15 @@
                             </el-table-column>
                             <el-table-column prop="categoryName" header-align="center" align="center"
                                              label="所属分类"></el-table-column>
-                            <el-table-column prop="groupName" header-align="center" align="center" label="所属分组">
+                            <el-table-column v-if="attrType === 1" prop="groupName" header-align="center" align="center"
+                                             label="所属分组">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.attrGroupId">{{ scope.row.attrGroupName }}</span>
                                     <span v-else>暂未分组</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="showDesc" header-align="center" align="center" label="快速展示">
+                            <el-table-column v-if="attrType === 1" prop="showDesc" header-align="center" align="center"
+                                             label="快速展示">
                                 <template slot-scope="scope">
                                     <i class="el-icon-success" v-if="scope.row.showDesc===1"></i>
                                     <i class="el-icon-error" v-else></i>
@@ -103,7 +106,8 @@
                     <el-col style="margin-top: 20px;text-align: center" :span="22" :offset="1" te>
                         <el-pagination @size-change="changePageSize" @current-change="changePageNo"
                                        :current-page="page.pageNo"
-                                       :page-sizes="[8,12,16,20,24]" :page-size="page.pageSize" :total="page.itemCount"
+                                       :page-sizes="[8,12,16,20,24,32,40,48,56]" :page-size="page.pageSize"
+                                       :total="page.itemCount"
                                        layout="total, sizes, prev, pager, next, jumper">
                         </el-pagination>
                     </el-col>
@@ -131,9 +135,15 @@ export default {
         category,
         AddOrUpdate
     },
+    props: {
+        attrType: {
+            type: Number,
+            default: 1,
+            require: true
+        }
+    },
     data() {
         return {
-            attrType: 1,
             addOrUpdateVisible: false,
             dataListLoading: false,
             searchValue: "",
@@ -154,7 +164,7 @@ export default {
     methods: {
         //初始化
         getBaseAttr() {
-            queryAttrByPage(this.page.pageNo, this.page.pageSize, this.searchValue, this.categoryId, 1).then(response => {
+            queryAttrByPage(this.page.pageNo, this.page.pageSize, this.searchValue, this.categoryId, this.attrType).then(response => {
                 this.page = response.data
             })
         },
