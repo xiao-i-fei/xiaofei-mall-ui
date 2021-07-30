@@ -93,9 +93,9 @@
                  </span>
 
             </el-dialog>
-
-
         </el-row>
+
+        <add-or-update :queryBrand="queryBrand"/>
     </div>
 </template>
 
@@ -281,11 +281,10 @@ export default {
                     this.catelogPath = []
                     //关闭模态框
                     this.cascaderVisible = false;
-
                     //刷新关联上数据
                     this.queryCategoryBrandRelation(this.categoryBrandRelation.brandId)
-                    // this.categoryBrandRelation = {id: "", brandId: "", catelogId: "", brandName: "", catelogName: ""}
-
+                } else {
+                    this.$message.error("添加失败")
                 }
             })
         },

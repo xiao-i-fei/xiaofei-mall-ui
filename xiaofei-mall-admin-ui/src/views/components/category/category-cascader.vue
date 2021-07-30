@@ -8,6 +8,7 @@
 <script>
 
 import {listTree} from "@/api/product/category";
+import PubSub from 'pubsub-js'
 
 export default {
     //接受父组件传来的值
@@ -20,7 +21,6 @@ export default {
         }
     },
     data() {
-        //这里存放数据
         return {
             setting: {
                 value: "catId",
@@ -36,9 +36,9 @@ export default {
             this.paths = this.catelogPath;
         },
         paths(value) {
-            this.$emit("update:catelogPath", value);
+            //this.$emit("update:catelogPath", value);
             //还可以使用pubsub-js进行传值
-            //this.PubSub.publish("catPath", value);
+            PubSub.publish("catPath", value);
         }
     },
     //方法集合

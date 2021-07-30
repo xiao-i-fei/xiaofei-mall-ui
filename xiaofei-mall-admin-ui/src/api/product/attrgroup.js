@@ -71,3 +71,15 @@ export function queryAttrGroupByPage(pageNo = 1, pageSize = 8, searchValue = "",
         }
     })
 }
+
+///
+/**
+ * 查询所有的属性分组信息
+ * @returns 返回请求到的数据
+ */
+export function queryAttrGroupWithAttr(categoryId) {
+    return request({
+        url: `/product/attrgroup/list/${categoryId}/withattr`,
+        method: 'get',
+    })
+}

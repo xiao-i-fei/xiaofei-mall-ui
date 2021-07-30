@@ -46,6 +46,17 @@ export function queryBrandById(brandId) {
 }
 
 /**
+ * 根据类别id查询商家信息
+ * @returns 返回请求到的数据
+ */
+export function queryBrandByCategoryId(categoryId) {
+    return request({
+        url: `/product/brand/categoryId/${categoryId}`,
+        method: 'get',
+    })
+}
+
+/**
  * 查询所有的商家信息
  * @returns 返回请求到的数据
  */

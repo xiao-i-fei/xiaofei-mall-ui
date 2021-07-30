@@ -159,6 +159,9 @@ export default {
     },
     mounted() {
         this.$bus.$on('addOrUpdateBrand', brandId => {
+            if(brandId){
+                this.clearBrand()
+            }
             this.attrType = brandId ? "修改" : "添加"
             this.visible = true
             if (brandId) {

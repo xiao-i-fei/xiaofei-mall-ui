@@ -9,6 +9,9 @@
 
 <script>
 
+import {queryBrandByCategoryId} from "@/api/product/brand";
+import PubSub from 'pubsub-js'
+
 export default {
     data() {
         return {
@@ -25,20 +28,14 @@ export default {
     },
     watch: {
         brandId(val) {
-            this.PubSub.publish("brandId", val);
+            PubSub.publish("brandId", val);
         }
     },
     //方法集合
     methods: {
         getCatBrands() {
-            this.$http({
-                url: this.$http.adornUrl("/product/categorybrandrelation/brands/list"),
-                method: "get",
-                params: this.$http.adornParams({
-                    catId: this.catId
-                })
-            }).then(({data}) => {
-                this.brands = data.data;
+            queryBrandByCategoryId(this.catId).then(response => {
+                this.brands = response.data;
             });
         }
     },

@@ -9,7 +9,8 @@
                             <el-input v-model="dataForm.searchValue" placeholder="参数名" clearable></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button @click="getDataList()">查询</el-button>
+                            <el-button @click="getDataList(false)">查询</el-button>
+                            <el-button type="success" @click="getDataList(true)">查询全部</el-button>
                             <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>
                             <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">
                                 批量删除
@@ -118,7 +119,8 @@ export default {
     },*/
     methods: {
         // 获取数据列表
-        getDataList() {
+        getDataList(isAll) {
+            if (isAll) this.dataForm.searchValue = ""
             this.dataListLoading = true;
             queryMemberLevelByPage(this.page.pageNo, this.page.pageSize, this.dataForm.searchValue).then(response => {
                 if (response.data && response.code === 200) {
