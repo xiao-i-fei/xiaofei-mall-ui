@@ -26,7 +26,7 @@
                             <el-form-item label="选择品牌" prop="brandId">
                                 <brand-select></brand-select>
                             </el-form-item>
-                            <el-form-item label="商品重量(Kg)" prop="weight">
+                            <el-form-item label="商品重量(kg)" prop="weight">
                                 <el-input-number v-model.number="spu.weight" :min="0" :precision="3"
                                                  :step="0.1"></el-input-number>
                             </el-form-item>
@@ -324,22 +324,22 @@ export default {
             },
             spuBaseInfoRules: {
                 spuName: [
-                    {required: false, message: '请输入商品名字', trigger: 'blur'}
+                    {required: true, message: '请输入商品名字', trigger: 'blur'}
                 ],
                 spuDescription: [
-                    {required: false, message: '请编写一个简单描述', trigger: 'blur'}
+                    {required: true, message: '请编写一个简单描述', trigger: 'blur'}
                 ],
                 catalogId: [
-                    {required: false, message: '请选择一个分类', trigger: 'blur'}
+                    {required: true, message: '请选择一个分类', trigger: 'blur'}
                 ],
                 brandId: [
-                    {required: false, message: '请选择一个品牌', trigger: 'blur'}
+                    {required: true, message: '请选择一个品牌', trigger: 'blur'}
                 ],
                 decript: [
-                    {required: false, message: '请上传商品详情图集', trigger: 'blur'}
+                    {required: true, message: '请上传商品详情图集', trigger: 'blur'}
                 ],
                 images: [
-                    {required: false, message: '请上传商品图片集', trigger: 'blur'}
+                    {required: true, message: '请上传商品图片集', trigger: 'blur'}
                 ],
                 weight: [{type: 'number', required: true, message: '请填写正确的重量值', trigger: 'blur'}]
             },

@@ -55,7 +55,7 @@
             </el-col>
 
             <!-- 分页区域 -->
-            <el-col style="margin-top: 20px;text-align: center" :span="22" :offset="1" te>
+            <el-col style="margin-top: 20px;text-align: center" :span="22" :offset="1">
                 <el-pagination @size-change="changePageSize" @current-change="changePageNo" :current-page="page.pageNo"
                                :page-sizes="[8,12,16,20,24]" :page-size="page.pageSize" :total="page.itemCount"
                                layout="total, sizes, prev, pager, next, jumper">

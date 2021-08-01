@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-cascader filterable clearable placeholder="试试搜索：手机" v-model="paths" :options="categorys"
-                     :props="setting"></el-cascader>
+        <el-cascader filterable clearable placeholder="试试搜索：手机"
+                     v-model="paths" :options="categorys" :props="setting"></el-cascader>
     </div>
 </template>
 
@@ -36,7 +36,8 @@ export default {
             this.paths = this.catelogPath;
         },
         paths(value) {
-            //this.$emit("update:catelogPath", value);
+            console.log(value)
+            this.$emit("getCatelogPath", value);
             //还可以使用pubsub-js进行传值
             PubSub.publish("catPath", value);
         }
