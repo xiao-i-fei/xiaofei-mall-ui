@@ -87,7 +87,7 @@ export default {
         },
         attrUpdateShow(row) {
             this.$router.push({
-                path: '/product-attrupdate',
+                path: '/product/spu/spuattr',
                 query: {spuId: row.id, catalogId: row.catalogId}
             })
         },

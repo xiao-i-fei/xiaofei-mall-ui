@@ -489,9 +489,6 @@ export default {
             })
 
             let descartes = this.descartes(selectValues)
-            //[["黑色","6GB","移动"],["黑色","6GB","联通"],["黑色","8GB","移动"],["黑色","8GB","联通"],
-            //["白色","6GB","移动"],["白色","6GB","联通"],["白色","8GB","移动"],["白色","8GB","联通"],
-            //["蓝色","6GB","移动"],["蓝色","6GB","联通"],["蓝色","8GB","移动"],["蓝色","8GB","联通"]]
             console.log('生成的组合', JSON.stringify(descartes))
             //有多少descartes就有多少sku
             let skus = []
