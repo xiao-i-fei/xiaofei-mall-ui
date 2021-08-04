@@ -18,6 +18,16 @@ export function querySpuInfoByPage(pageNo = 1, pageSize = 8, spuSearchInfo) {
     })
 }
 
+/**
+ * 商品上架
+ */
+export function spuUp(spuId) {
+    return request({
+        url: `/product/spuinfo/${spuId}`,
+        method: "put"
+    })
+}
+
 
 
 

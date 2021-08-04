@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import {querySpuInfoByPage} from "@/api/product/spu-info";
+import {querySpuInfoByPage,spuUp} from "@/api/product/spu-info";
 import PubSub from 'pubsub-js'
 
 export default {
@@ -67,13 +67,10 @@ export default {
     methods: {
         //商品上架
         productUp(id) {
-            this.$http({
-                url: this.$http.adornUrl('/product/spuinfo/' + id + '/up'),
-                method: 'post'
-            }).then(({data}) => {
-                if (data && data.code === 0) {
+            spuUp(id).then(response => {
+                if (response.code === 200) {
                     this.$message({
-                        message: '操作成功',
+                        message: '上架成功',
                         type: 'success',
                         duration: 1500,
                         onClose: () => {
@@ -81,7 +78,7 @@ export default {
                         }
                     })
                 } else {
-                    this.$message.error(data.msg)
+                    this.$message.error("上架失败")
                 }
             })
         },
