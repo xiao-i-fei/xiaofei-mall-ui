@@ -284,11 +284,13 @@
 </template>
 
 <script>
+
 import CategoryCascader from '@/views/components/category/category-cascader'
 import BrandSelect from '@/views/components/brand/brand-select'
 import MultiUpload from '@/components/upload/multiUpload'
 import {queryAttrGroupWithAttr} from "@/api/product/attrgroup";
 import {queryMemberLevelByPage} from "@/api/member/member-level";
+import {addSpuInfo} from "@/api/member/spu-info";
 import {queryAttrByPage} from "@/api/product/attr";
 import PubSub from 'pubsub-js'
 
@@ -609,12 +611,8 @@ export default {
                 type: 'warning'
             })
                 .then(() => {
-                    this.$http({
-                        url: this.$http.adornUrl('/product/spuinfo/save'),
-                        method: 'post',
-                        data: this.$http.adornData(this.spu, false)
-                    }).then(({data}) => {
-                        if (data.code == 0) {
+                    addSpuInfo(this.spu).then(response => {
+                        if (response.code == 200) {
                             this.$message({
                                 type: 'success',
                                 message: '新增商品成功!'
@@ -623,7 +621,7 @@ export default {
                         } else {
                             this.$message({
                                 type: 'error',
-                                message: '保存失败，原因【' + data.msg + '】'
+                                message: '保存失败'
                             })
                         }
                     })

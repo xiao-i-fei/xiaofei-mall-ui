@@ -28,6 +28,17 @@ export function spuUp(spuId) {
     })
 }
 
+/**
+ * 添加商品
+ */
+export function addSpuInfo(spuInfo) {
+    return request({
+        url: `/product/spuinfo`,
+        method: "post",
+        data: spuInfo
+    })
+}
+
 
 
 
