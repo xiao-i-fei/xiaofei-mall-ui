@@ -290,7 +290,7 @@ import BrandSelect from '@/views/components/brand/brand-select'
 import MultiUpload from '@/components/upload/multiUpload'
 import {queryAttrGroupWithAttr} from "@/api/product/attrgroup";
 import {queryMemberLevelByPage} from "@/api/member/member-level";
-import {addSpuInfo} from "@/api/member/spu-info";
+import {addSpuInfo} from "@/api/product/spu-info";
 import {queryAttrByPage} from "@/api/product/attr";
 import PubSub from 'pubsub-js'
 
