@@ -11,7 +11,7 @@ const service = axios.create({
     // axios中请求配置有baseURL选项，表示请求URL公共部分
     baseURL: process.env.VUE_APP_BASE_API,
     // 设置超时时间，如果该时间内，还是没有响应，则请求失败，开发的时候可以调大一点
-    timeout: 1000000
+    timeout: 10000
 })
 
 // request拦截器

@@ -1,7 +1,7 @@
 {
   "name": "mall",
   "version": "3.0.0",
-  "description": "小飞商城后台管理系统",
+  "description": "小飞管理系统",
   "author": "小飞",
   "license": "MIT",
   "scripts": {

@@ -1,0 +1,184 @@
+.xiaofei-button, .xiaofei-primary-button, div, ul, li {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.xiaofei-primary-button {
+  background-color: #409eff;
+  padding: 12px 23px 12px 23px;
+  color: #ffffff;
+  font-family: inherit;
+  letter-spacing: 5px;
+  display: inline-block;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #66b1ff;
+  }
+
+  &:focus {
+    background-color: #3a8ee6;
+  }
+
+  &:focus-within::after {
+    background-color: red;
+  }
+}
+
+//每一行的宽度
+$width: 1190px;
+.xiaofei-row {
+  width: $width;
+  //解决边框塌陷
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+//每一列的宽度,固定为12列
+$col: 12;
+@for $i from 1 through $col {
+  .xiaofei-col-#{$i} {
+    width: $width/($col/$i)-20px;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+//div等标签居中
+.xiaofei-center {
+  margin: 0 auto;
+}
+
+//字体居中
+.xiaofei-text-center {
+  text-align: center;
+}
+
+//ul，li水平
+.xiaofei-clear-level-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  float: left;
+
+  ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    float: left;
+  }
+
+  /*包含以下四种的链接*/
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  /*正常的未被访问过的链接*/
+  a:link {
+    text-decoration: none;
+  }
+
+  /*已经访问过的链接*/
+  a:visited {
+    text-decoration: none;
+  }
+
+  /*鼠标划过(停留)的链接*/
+  a:hover {
+    text-decoration: none;
+  }
+
+  /* 正在点击的链接*/
+  a:active {
+    text-decoration: none;
+  }
+
+  //解决边框塌陷
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+//ul，li垂直
+.xiaofei-clear-vertical-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  float: left;
+
+  ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /*包含以下四种的链接*/
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  /*正常的未被访问过的链接*/
+  a:link {
+    text-decoration: none;
+  }
+
+  /*已经访问过的链接*/
+  a:visited {
+    text-decoration: none;
+  }
+
+  /*鼠标划过(停留)的链接*/
+  a:hover {
+    text-decoration: none;
+  }
+
+  /* 正在点击的链接*/
+  a:active {
+    text-decoration: none;
+  }
+
+  //解决边框塌陷
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+//去除input框的默认样式
+.xiaofei-clear-input {
+  background: none;
+  outline: none;
+  border: 1px solid #ccc;
+
+  &:focus {
+    border: none;
+  }
+}
+
+//清除按钮的默认样式
+.xiaofei-clear-button {
+  /*消除button的默认样式*/
+  /*这种写法是对所有的button标签同时生效*/
+  margin: 0;
+  padding: 0;
+  /*自定义边框*/
+  border: 0;
+  /*消除默认点击蓝色边框效果*/
+  outline: none;
+}
