@@ -3,6 +3,30 @@
         <div class="start">
             <div style="margin-top: 10px">
                 <div class="xiaofei-row xiaofei-center main">
+                    <!-- 侧边广告 -->
+                    <div class="side-ad">
+                        <div
+                            class="ad-one"
+                            @mouseleave.stop="adShow = false"
+                            @mouseenter.stop="adShow = true"
+                        >
+                            <a>
+                                <img :src="sideAds[0]" alt=""/>
+                            </a>
+                        </div>
+                        <transition name="el-zoom-in-center">
+                            <div
+                                v-show="adShow"
+                                class="transition-box ad-two"
+                                @mouseleave.stop="adShow = false"
+                                @mouseenter.stop="adShow = true"
+                            >
+                                <a>
+                                    <img :src="sideAds[1]" alt="图片加载失败"/>
+                                </a>
+                            </div>
+                        </transition>
+                    </div>
                     <!-- 侧边栏 -->
                     <div class="side">
                         <div class="side-bar">
@@ -12,72 +36,87 @@
                                     mouseover 和 mouseout
                                     mouseenter 和 mouseleave
                                  -->
-                                <li
-                                    v-for="(category, index) in categorys"
-                                    :key="category.catId"
-                                    @mouseleave.stop="categoryShow=false"
-                                    @mouseenter.stop="getCategoryLevel2(index)"
-                                >
+                                <li v-for="(category, index) in categorys" :key="category.catId"
+                                    @mouseleave.stop="categoryShow = false" @mouseenter.stop="getCategoryLevel2(index)">
                                     <a>{{ category.name }} > </a>
                                 </li>
                             </ul>
                         </div>
-
                         <!-- 鼠标选中类别之后的子类别 -->
-                        <div class="no-show-side-bar" v-if="categoryShow" @mouseleave.stop="categoryShow=false"
-                             @mouseenter.stop="categoryShow=true">
+                        <div class="no-show-side-bar" v-show="categoryShow" @mouseleave.stop="categoryShow = false"
+                             @mouseenter.stop="categoryShow = true">
                             <dl v-for="(categoryLevel2, index) in categoryLevels" :key="categoryLevel2.catId">
-                                <dt><a>{{ categoryLevel2.name }}></a></dt>
+                                <dt>
+                                    <a>{{ categoryLevel2.name }}></a>
+                                </dt>
                                 <dd>
-                                    <a v-for="(categoryLevel3,categoryLevel3Index) in categoryLevel2.children"
-                                       :key="categoryLevel3.catId">
-                                        {{ categoryLevel3.name }}</a>
+                                    <router-link style="text-decoration: none;"
+                                                 v-for="(categoryLevel3, categoryLevel3Index) in categoryLevel2.children"
+                                                 :key="categoryLevel3.catId"
+                                                 :to="{path:'/search',query:{categoryId:categoryLevel3.catId}}">
+                                        {{ categoryLevel3.name }}
+                                    </router-link>
                                 </dd>
                             </dl>
                         </div>
                     </div>
-
                     <!-- 轮播图 -->
                     <div class="carousel">
                         <!-- 大轮播图 -->
                         <div class="big-carousel">
                             <el-carousel trigger="click" height="470px">
-                                <el-carousel-item v-for="(carousel,index) in carousels" :key="index">
+                                <el-carousel-item
+                                    v-for="(carousel, index) in carousels"
+                                    :key="index"
+                                >
                                     <img alt="图片加载失败" :src="carousel"/>
                                 </el-carousel-item>
                             </el-carousel>
                         </div>
                         <!-- 小轮播图 -->
                         <div class="small-carousel">
-                            <a href="#"> <img alt="图片加载失败" :src="smallCarousels[0]"/></a>
-                            <a href="#"> <img style="margin-top: 5.5px;margin-bottom: 5.5px" alt="图片加载失败"
-                                              :src="smallCarousels[1]"/></a>
-                            <a href="#"> <img alt="图片加载失败" :src="smallCarousels[2]"/></a>
+                            <a href="#">
+                                <img
+                                    alt="图片加载失败"
+                                    :src="smallCarousels[0]"
+                                /></a>
+                            <a href="#">
+                                <img
+                                    style="
+                                        margin-top: 5.5px;
+                                        margin-bottom: 5.5px;
+                                    "
+                                    alt="图片加载失败"
+                                    :src="smallCarousels[1]"
+                                /></a>
+                            <a href="#">
+                                <img
+                                    alt="图片加载失败"
+                                    :src="smallCarousels[2]"
+                                /></a>
                         </div>
                     </div>
-
                     <!-- 登录区域 -->
                     <div class="login">
                         <!-- 登录部分 -->
                         <div class="login-main">
                             <div class="login-logo">
                                 <div class="img-div">
-                                    <img alt="加载失败"
-                                         src="https://img1.baidu.com/it/u=504609824,3604971623&fm=26&fmt=auto&gp=0.jpg"/>
+                                    <img
+                                        alt="加载失败"
+                                        src="https://img1.baidu.com/it/u=504609824,3604971623&fm=26&fmt=auto&gp=0.jpg"
+                                    />
                                 </div>
-
                                 <div class="login-div">
                                     <a>Hi~欢迎逛商城</a><br/>
                                     <a>登录</a> | <a>注册</a>
                                 </div>
-
                             </div>
                             <div class="other">
                                 <a class="new-people">新人福利</a>
                                 <a class="member">商城会员</a>
                             </div>
                         </div>
-
                         <!-- 热门部分 -->
                         <div class="login-hot">
                             <div class="one">
@@ -85,59 +124,147 @@
                                     <h5>商城快报</h5>
                                 </div>
                                 <div class="new-a">
-                                    <a>更多 <i class="el-icon-caret-right"></i></a>
+                                    <a
+                                    >更多 <i class="el-icon-caret-right"></i
+                                    ></a>
                                 </div>
                             </div>
                             <div class="two">
                                 <ul class="xiaofei-clear-vertical-ul new-main">
-                                    <li><a><span class="high-light">HOT</span>高级显卡遇上高级处理器，这才是电竞游戏本该有的样子</a></li>
-                                    <li><a><span class="high-light">热评</span>强劲电竞装备，联想让你成为游戏达人！</a></li>
-                                    <li><a><span class="high-light">热门</span>低调的性能先锋！iQOO Z系列新机或将回归骁龙阵营</a></li>
-                                    <li><a><span class="high-light">热门</span>无惧挑战，轻松搞定移动办公需求的小新搭配</a></li>
+                                    <li>
+                                        <a
+                                        ><span class="high-light">HOT</span
+                                        >高级显卡遇上高级处理器，这才是电竞游戏本该有的样子</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><span class="high-light">热评</span
+                                        >强劲电竞装备，联想让你成为游戏达人！</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><span class="high-light">热门</span
+                                        >低调的性能先锋！iQOO
+                                            Z系列新机或将回归骁龙阵营</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><span class="high-light">热门</span
+                                        >无惧挑战，轻松搞定移动办公需求的小新搭配</a
+                                        >
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-
                         <!-- 小功能部分 -->
                         <div class="applets">
                             <div>
                                 <ul class="xiaofei-clear-level-ul app-ul">
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/30057/19/14881/720/5cbf064aE187b8361/eed6f6cbf1de3aaa.png"/><br/>
-                                        <span>话费</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/36478/38/5384/2901/5cbf065aEb0c60a12/afb4399323fe3b76.png"/><br/>
-                                        <span>机票</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/31069/34/14642/979/5cbf0665Ec7dc8223/5fee386254dd2ebc.png"/><br/>
-                                        <span>酒店</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/32403/22/14829/3699/5cbf0674E04723693/caa83ce9b881cd24.png"/><br/>
-                                        <span>游戏</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/71890/14/9897/3048/5d7739ddE93eb94f8/f1f6dc5c207329f9.png"/><br/>
-                                        <span>加油卡</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/45761/32/10307/1581/5d7739e2Ece4b6671/0004c1b85fbf7bde.png"/><br/>
-                                        <span>火车票</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/51584/31/10221/1685/5d7739e7E1adb25cd/1d0957d7f2ae01a2.png"/><br/>
-                                        <span>众筹</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/52683/35/10394/3447/5d7739edE270aa7b3/d4d1151b09b5553b.png"/><br/>
-                                        <span>理财</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/56296/3/10260/1443/5d7739f3E233abc53/e6976f3cb30c9a8a.png"/><br/>
-                                        <span>借条</span></a></li>
-                                    <li><a><img alt="加载失败"
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/30057/19/14881/720/5cbf064aE187b8361/eed6f6cbf1de3aaa.png"
+                                        /><br/>
+                                            <span>话费</span></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/36478/38/5384/2901/5cbf065aEb0c60a12/afb4399323fe3b76.png"
+                                        /><br/>
+                                            <span>机票</span></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/31069/34/14642/979/5cbf0665Ec7dc8223/5fee386254dd2ebc.png"
+                                        /><br/>
+                                            <span>酒店</span></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/32403/22/14829/3699/5cbf0674E04723693/caa83ce9b881cd24.png"
+                                        /><br/>
+                                            <span>游戏</span></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/71890/14/9897/3048/5d7739ddE93eb94f8/f1f6dc5c207329f9.png"
+                                        /><br/>
+                                            <span>加油卡</span></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/45761/32/10307/1581/5d7739e2Ece4b6671/0004c1b85fbf7bde.png"
+                                        /><br/>
+                                            <span>火车票</span></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/51584/31/10221/1685/5d7739e7E1adb25cd/1d0957d7f2ae01a2.png"
+                                        /><br/>
+                                            <span>众筹</span></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/52683/35/10394/3447/5d7739edE270aa7b3/d4d1151b09b5553b.png"
+                                        /><br/>
+                                            <span>理财</span></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/56296/3/10260/1443/5d7739f3E233abc53/e6976f3cb30c9a8a.png"/><br/>
+                                            <span>借条</span></a>
+                                    </li>
+                                    <li>
+                                        <a><img alt="加载失败"
                                                 src="https://m.360buyimg.com/babel/jfs/t1/41106/15/4551/3300/5cd4f1c7E507148c7/90a218f053e903d2.png"/><br/>
-                                        <span>电影票</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/40738/20/14562/826/5d773a01E09eb8121/d6f3909618c6307a.png"/><br/>
-                                        <span>企业购</span></a></li>
-                                    <li><a><img alt="加载失败"
-                                                src="https://m.360buyimg.com/babel/jfs/t1/57014/6/10297/815/5d773a07Ec7a61fc9/97917a2daa34be0f.png"/><br/>
-                                        <span>礼品卡</span></a></li>
+                                            <span>电影票</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/40738/20/14562/826/5d773a01E09eb8121/d6f3909618c6307a.png"
+                                        /><br/>
+                                            <span>企业购</span></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                        ><img
+                                            alt="加载失败"
+                                            src="https://m.360buyimg.com/babel/jfs/t1/57014/6/10297/815/5d773a07Ec7a61fc9/97917a2daa34be0f.png"
+                                        /><br/>
+                                            <span>礼品卡</span></a
+                                        >
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -147,20 +274,21 @@
         </div>
     </div>
 </template>
-
 <script>
 import {queryAllCategory} from "@/api/product/category.js";
-import carousel1 from "@/assets/images/carousel/1.webp"
-import carousel2 from "@/assets/images/carousel/2.jpg"
-import carousel3 from "@/assets/images/carousel/3.jpg"
-import carousel4 from "@/assets/images/carousel/4.jpg"
-import carousel5 from "@/assets/images/carousel/5.webp"
-import carousel6 from "@/assets/images/carousel/6.jpg"
-import carousel7 from "@/assets/images/carousel/7.webp"
-import carousel8 from "@/assets/images/carousel/8.webp"
-import small1 from "@/assets/images/carousel/3e4e717eeac051b2.jpg.webp"
-import small2 from "@/assets/images/carousel/af281d0ccd75bd89.png.webp"
-import small3 from "@/assets/images/carousel/c647b3826c472d03.png.webp"
+import carousel1 from "@/assets/images/carousel/eab51cc01ea8288e.jpg.webp";
+import carousel2 from "@/assets/images/carousel/76a6d92783a116ee.jpg.webp";
+import carousel3 from "@/assets/images/carousel/3.jpg";
+import carousel4 from "@/assets/images/carousel/4.jpg";
+import carousel5 from "@/assets/images/carousel/5.webp";
+import carousel6 from "@/assets/images/carousel/6.jpg";
+import carousel7 from "@/assets/images/carousel/7.webp";
+import carousel8 from "@/assets/images/carousel/8.webp";
+import small1 from "@/assets/images/carousel/3e4e717eeac051b2.jpg.webp";
+import small2 from "@/assets/images/carousel/af281d0ccd75bd89.png.webp";
+import small3 from "@/assets/images/carousel/c647b3826c472d03.png.webp";
+import sideAd1 from "@/views/home/img/ad/503d064c8c43d834.png.webp";
+import sideAd2 from "@/views/home/img/ad/a164ab45b363c012.jpg.webp";
 
 export default {
     created() {
@@ -180,28 +308,80 @@ export default {
         getCategoryLevel2(index) {
             this.categoryShow = true;
             this.categoryLevels = this.categorys[index].children;
-            console.log(this.categorys[index].children);
         },
     },
     data() {
         return {
+            adShow: false,
+            sideAds: [sideAd1, sideAd2], //侧边栏的广告栏
             categoryShow: false, //是否显示类别的子节点，需要选中的时候，计算出数据才显示
             categorys: [], //全部的数据
             categoryLevels: [], //二三级类别的数据，需要根据选中的一级类获取二级类别
-            carousels: [carousel1, carousel2, carousel3, carousel4, carousel5, carousel6, carousel7, carousel8],//大的轮播图、
-            smallCarousels: [small1, small2, small3]//小轮播图
+            carousels: [
+                carousel1,
+                carousel2,
+                carousel3,
+                carousel4,
+                carousel5,
+                carousel6,
+                carousel7,
+                carousel8,
+            ], //大的轮播图、
+            smallCarousels: [small1, small2, small3], //小轮播图
         };
     },
 };
 </script>
-
 <style lang="scss" scoped>
 $height: 480px;
 $width: 1190px;
 $side-bar-width: 190px;
 $side-bar-height: 470px;
+
 .start {
     height: 480px;
+    background-color: rgb(244, 244, 244);
+
+    .main {
+        position: relative;
+
+        //侧边广告
+        .side-ad {
+            div {
+                margin-top: 10px;
+                position: absolute;
+                height: $side-bar-height;
+
+                a {
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            //第一个广告
+            .ad-one {
+                left: -272px;
+                width: 272px;
+
+                img {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+
+            //第二个广告
+            .ad-two {
+                width: 790px;
+                z-index: 100;
+
+                img {
+                    max-width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
 
     //侧边栏
     .side {
@@ -209,6 +389,7 @@ $side-bar-height: 470px;
         position: relative;
         width: $side-bar-width;
         height: 480px;
+
         //类别部分
         .side-bar {
             position: absolute;
@@ -269,10 +450,11 @@ $side-bar-height: 470px;
             border: 1px solid #eaeaea;
             z-index: 5;
             width: ($width * 1 - $side-bar-width)+3;
-            height: $side-bar-height*1-2;
+            height: $side-bar-height * 1-2;
             margin-top: 10px;
             background-color: white;
             float: right;
+
             //position: relative;
             //解决边框塌陷
             &:after {
@@ -288,11 +470,12 @@ $side-bar-height: 470px;
                 dt {
                     float: left;
                     //background-color: #707070;
-                    width: ($width * 1 - $side-bar-width)*0.1;
+                    width: ($width * 1 - $side-bar-width) * 0.1;
                     text-align: right;
 
                     > a {
-                        font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+                        font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial,
+                        Hiragino Sans GB, "\5B8B\4F53", sans-serif;
                         font-weight: 900;
 
                         &:hover {
@@ -302,7 +485,7 @@ $side-bar-height: 470px;
                 }
 
                 dd {
-                    width: ($width * 1 - $side-bar-width)*0.8;
+                    width: ($width * 1 - $side-bar-width) * 0.8;
                     float: left;
 
                     > a {
@@ -316,7 +499,6 @@ $side-bar-height: 470px;
                             cursor: pointer;
                         }
                     }
-
                 }
 
                 //解决边框塌陷
@@ -331,7 +513,6 @@ $side-bar-height: 470px;
             }
         }
     }
-
 
     //轮播图区域
     .carousel {
@@ -417,7 +598,8 @@ $side-bar-height: 470px;
                     margin-left: 8px;
 
                     a {
-                        font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+                        font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial,
+                        Hiragino Sans GB, "\5B8B\4F53", sans-serif;
                         color: #666666;
 
                         &:hover {
@@ -460,7 +642,7 @@ $side-bar-height: 470px;
                     color: #fff;
                     border-radius: 13px;
                     background: #e1251b;
-                    transition: background .3s ease, color .3s ease;
+                    transition: background 0.3s ease, color 0.3s ease;
                 }
 
                 .member {
@@ -472,8 +654,8 @@ $side-bar-height: 470px;
                     font-size: 12px;
                     text-align: center;
                     border-radius: 13px;
-                    -webkit-transition: background .3s ease, color .3s ease;
-                    transition: background .3s ease, color .3s ease;
+                    -webkit-transition: background 0.3s ease, color 0.3s ease;
+                    transition: background 0.3s ease, color 0.3s ease;
                     background: #363634;
                     color: #e5d790;
                 }
@@ -549,7 +731,7 @@ $side-bar-height: 470px;
                         text-align: center;
                         vertical-align: 0;
                         color: #e1251b;
-                        background-color: rgba(225, 37, 27, .08);
+                        background-color: rgba(225, 37, 27, 0.08);
                         margin-right: 6px;
                     }
 
@@ -589,7 +771,6 @@ $side-bar-height: 470px;
         .applets {
             width: 190px;
             height: 238px;
-
 
             .app-ul {
                 margin: 5px 10px 0 10px;

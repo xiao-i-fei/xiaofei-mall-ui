@@ -69,7 +69,6 @@ export default {
         timing() {
 
             setTimeout(() => {
-                console.log(1)
                 this.endSecond = this.endSecond - 1
             }, 100)
             //设置初始时间

@@ -17,7 +17,7 @@ export function addCategory(category) {
  */
 export function queryAllCategory() {
     return request({
-        url: '/product/category/list',
+        url: '/product/category/cache/list',
         method: 'get',
     })
 }

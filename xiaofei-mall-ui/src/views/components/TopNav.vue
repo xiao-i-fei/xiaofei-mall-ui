@@ -3,7 +3,11 @@
     <div class="main">
         <div class="top-nav-main xiaofei-row xiaofei-center">
             <div class="left-div xiaofei-col-6">
-                <a>
+                <a v-if="homeIsShow" href="/">
+                    <i class="el-icon-s-home"></i>
+                    <span>商城首页</span>
+                </a>
+                <a class="location">
                     <i class="el-icon-location"></i>
                     <span>湖南</span>
                 </a>
@@ -20,7 +24,14 @@
 </template>
 
 <script>
-export default {}
+export default {
+    props: {
+        homeIsShow: {
+            type: Boolean,
+            default: false,
+        },
+    },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -38,22 +49,33 @@ $height: 30px;
     height: $height;
     line-height: $height;
 
-    i {
-        color: rgb(241, 2, 21);
-    }
-
     span {
         display: inline-block;
         color: rgb(153, 153, 153);
-        margin-left: 10px;
-        font-size: 14px;
+        font-size: 13px;
+    }
+
+    i {
+        color: rgb(92, 84, 82);
+    }
+
+    .location {
+        padding: 0 20px;
+        position: relative;
+        &:hover {
+            background-color: white;
+        }
     }
 
     a {
+        height: $height;
+        line-height: $height;
+        display: inline-block;
+
         &:hover {
             cursor: pointer;
-
-            i, span {
+            i,
+            span {
                 color: rgb(241, 2, 21);
             }
         }
@@ -70,7 +92,6 @@ $height: 30px;
 
     li {
         padding: 0 10px;
-
 
         a {
             color: rgb(153, 153, 153);
@@ -92,5 +113,4 @@ $height: 30px;
         visibility: hidden;
     }
 }
-
 </style>

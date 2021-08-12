@@ -1,21 +1,31 @@
 <template>
     <div class="top-search-main">
-
         <div class="xiaofei-row xiaofei-center">
+            <!-- 左侧logo区域 -->
             <div class="xiaofei-col-2 top-search-left">
-                <a>
-                    <img :src="logo" alt="图片加载失败">
+                <a href="/">
+                    <img :src="logo" alt="图片加载失败"/>
                 </a>
             </div>
+            <!-- 搜索按钮和购物车按钮 -->
             <div class="xiaofei-col-8 top-search-middle">
-                <!-- 搜索按钮和购物车按钮 -->
                 <div class="search-main">
                     <div class="search-input">
-                        <input placeholder="输入搜索条件" type="text" class="xiaofei-clear-input">
-                        <button class="xiaofei-clear-button">搜 索</button>
+                        <input
+                            placeholder="输入搜索条件"
+                            type="text" v-model="searchValue"
+                            class="xiaofei-clear-input"
+                        />
+                        <button
+                            class="xiaofei-clear-button"
+                            @click="toSearchPage"
+                        >
+                            搜 索
+                        </button>
                     </div>
-                    <div class="shopping-btn"><i class="el-icon-shopping-cart-2"></i> 我的购物车</div>
-
+                    <div class="shopping-btn">
+                        <i class="el-icon-shopping-cart-2"></i> 我的购物车
+                    </div>
                 </div>
                 <!-- 搜索下面的第一个导航栏 -->
                 <div class="search-one-nav">
@@ -46,34 +56,45 @@
                 </div>
             </div>
 
+            <!-- 右侧广告区域 -->
             <div class="xiaofei-col-2 top-search-right">
                 <a>
-                    <img :src="rightAd" alt="图片加载失败">
+                    <img :src="rightAd" alt="图片加载失败"/>
                 </a>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
-import logo from '@/assets/images/logo.jpeg'
-import rightAd from '@/views/home/img/ad/search-right-ad.webp'
+import logo from "@/assets/images/logo.jpeg";
+//import rightAd from '@/views/home/img/ad/search-right-ad.webp'
+import rightAd from "@/views/home/img/ad/0f9394ebde8292d1.png.webp";
 
 export default {
     data() {
         return {
-            logo: logo,
-            rightAd: rightAd,
-        }
-    }
-}
+            logo: logo,//logo图片
+            rightAd: rightAd,//右侧广告图片
+            searchValue: "",
+        };
+    },
+    methods: {
+        //去搜索页面
+        toSearchPage() {
+            if (this.searchValue) {
+                this.$router.push({path: `/search?searchValue=${this.searchValue}`});
+            }
+        },
+    },
+};
 </script>
 
 <style lang="scss" scoped>
 $color: #e1251b;
 $height: 140px;
 .top-search-main {
+    background-color: white;
     height: $height;
 }
 
@@ -81,7 +102,6 @@ $height: 140px;
 .top-search-left {
     height: $height;
     text-align: center;
-
 
     img {
         max-width: 100%;
@@ -145,7 +165,7 @@ $height: 140px;
         //购物车按钮
         .shopping-btn {
             padding: 0 10px;
-            height: $height+4;
+            height: $height + 4;
             line-height: $height;
             float: left;
             border: 1px solid #eeeeee;
@@ -200,7 +220,7 @@ $height: 140px;
 
     //搜索下面的第二个导航栏
     .search-two-nav {
-        margin-top: 30px;
+        margin-top: 20px;
 
         .height-light {
             color: $color;
@@ -209,7 +229,8 @@ $height: 140px;
 
         a {
             color: #333333;
-            font: 18px Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+            font: 16px Microsoft YaHei, Heiti SC, tahoma, arial,
+            Hiragino Sans GB, "\5B8B\4F53", sans-serif;
 
             &:hover {
                 color: $color;
@@ -230,8 +251,6 @@ $height: 140px;
             visibility: hidden;
         }
     }
-
-
 }
 
 //右边广告区域
@@ -241,6 +260,7 @@ $height: 140px;
     line-height: $height;
 
     img {
+        margin-top: 10px;
         max-width: 100%;
         max-height: 100%;
         /*width: 171px;
@@ -253,5 +273,4 @@ $height: 140px;
         }
     }
 }
-
 </style>

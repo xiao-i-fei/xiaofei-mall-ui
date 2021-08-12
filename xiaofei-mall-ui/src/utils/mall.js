@@ -187,3 +187,25 @@ export function tansParams(params) {
 	})
 	return result
 }
+
+/**
+ * 解析当前浏览器的参数
+ */
+export function getQuery() {
+    let search = location.search.length > 0 ? location.search.substr(1) : '';
+    if (!search) return null;
+    let Query = {};
+    if (search.includes('&')) {
+        let strArray = search.split('&');
+        strArray.forEach(item => {
+            if (item.includes('=')) {
+                let arr = item.split('=');
+                Query[decodeURIComponent(arr[0])] = decodeURIComponent(arr[1])
+            }
+        })
+    } else {
+        let arr = search.split('=');
+        Query[decodeURIComponent(arr[0])] = decodeURIComponent(arr[1])
+    }
+    return Query;
+}

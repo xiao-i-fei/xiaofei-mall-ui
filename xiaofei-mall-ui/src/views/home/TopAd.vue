@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import topAd from '@/views/home/img/ad/top-ad.webp'
+import topAd from '@/views/home/img/ad/260801c87b4da864.jpg.webp'
 
 export default {
     data() {
@@ -22,7 +22,10 @@ export default {
 <style lang="scss" scoped>
 $height: 80px;
 .top-ad-main {
-    background-color: rgb(253, 224, 226);
+    background-color: rgb(198, 46, 36);
     height: $height;
+    img{&:hover{
+        cursor:pointer;
+    }}
 }
 </style>
