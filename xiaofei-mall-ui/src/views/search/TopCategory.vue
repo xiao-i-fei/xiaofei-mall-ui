@@ -1,29 +1,5 @@
 <template>
     <div>
-        <top-nav :homeIsShow="true"/>
-
-        <!-- 搜索输入框和按钮区域 -->
-        <div class="search-main xiaofei-row xiaofei-center">
-            <!-- logo区域 -->
-            <div class="xiaofei-col-3 logo">
-                <a href="/">
-                    <img :src="logo" alt="图片加载失败"/>
-                </a>
-            </div>
-            <!-- 搜索区域 -->
-            <div class="xiaofei-col-9 search">
-                <div class="search-input">
-                    <input placeholder="输入搜索条件" type="text" v-model="key" class="xiaofei-clear-input"/>
-                    <button class="xiaofei-clear-button" @click="btnSearch" @keyup.enter="btnSearch">搜 索</button>
-                </div>
-                <div class="shopping-btn">
-                    <el-badge :value="12" class="item">
-                        <i class="el-icon-shopping-cart-2"></i> 我的购物车
-                    </el-badge>
-                </div>
-            </div>
-        </div>
-
         <!-- 商品分类区域 -->
         <div class="category-region">
             <div class="xiaofei-row xiaofei-center">
@@ -89,13 +65,15 @@
 </template>
 
 <script>
-import logo from "@/assets/images/logo.jpeg";
-import TopNav from "@/views/components/TopNav";
-import {getQuery} from "@/utils/mall";
+import TopSearch from "@/views/components/TopSearch";
+import logo from "@/assets/images/logo.png";
 import {queryAllCategory} from "@/api/product/category";
 
 export default {
     props: ["searchValue"],
+    components:{
+      TopSearch
+    },
     created() {
         this.getCategory()
         this.key = this.searchValue
@@ -105,27 +83,6 @@ export default {
         //点击类别重新加载
         categoryLocation(categoryId) {
             window.location.href = `/search?categoryId=${categoryId}`
-        },
-
-        //搜索
-        btnSearch() {
-            let str = "?";
-            let param = getQuery();
-            Object.keys(param).forEach(key => {
-                if (key === "searchValue") {
-                    str = `${str}${key}=${this.key}&`
-                } else {
-                    str = `${str}${key}=${param[key]}&`
-                }
-            })
-            if (str.indexOf("searchValue") === -1) {
-                str = str + "searchValue=" + this.key
-            }
-            str = str.substr(0, str.length - 1).toString()
-
-            window.location.href = "/search?" + str
-
-            //this.$bus.$emit('btnSearch', this.key)
         },
         //获取所有类别
         getCategory() {
@@ -141,9 +98,6 @@ export default {
             this.categoryShow2 = true
             this.categoryLevels = this.categorys[index].children;
         },
-    },
-    components: {
-        TopNav,
     },
     data() {
         return {
@@ -173,8 +127,9 @@ $color: rgb(243, 2, 19);
     // 左边logo区域
     .logo {
         img {
-            max-width: 100%;
-            max-height: 100%;
+            width: 200px;
+            height: auto;
+            margin-top: 20px;
         }
 
         a {

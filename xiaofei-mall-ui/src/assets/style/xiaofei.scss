@@ -182,3 +182,26 @@ $col: 12;
   /*消除默认点击蓝色边框效果*/
   outline: none;
 }
+
+//每一行的宽度
+.div-row {
+  width: 1200px;
+  //解决边框塌陷
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+//每一列的宽度,固定为12列
+$col: 12;
+@for $i from 1 through $col {
+  .div-col-#{$i} {
+    width: 1200/($col/$i)-20px;
+    float: left;
+    padding:0 10px;
+  }
+}

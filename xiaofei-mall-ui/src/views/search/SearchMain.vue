@@ -5,23 +5,23 @@
             <div class="search-condition xiaofei-row xiaofei-center">
                 <div class="xiaofei-col-6 condition-left">
                     <div>
-                        <a @click="getSort(0)" :class="{highlight:searchVo.sort===0,
-                        searchTit:searchVo.sort!==0}">综合</a>
-                        <a @click="getSort(searchVo.sort===2?-2:2)"
-                           :class="{highlight:searchVo.sort===2||searchVo.sort===-2,
-                           searchTit:searchVo.sort!==2&&searchVo.sort!==-2}">销量
+                        <a @click="getSort(0)" :class="{highlight:searchVo.sort==0,
+                        searchTit:searchVo.sort!=0}">综合</a>
+                        <a @click="getSort(searchVo.sort==2?-2:2)"
+                           :class="{highlight:searchVo.sort==2||searchVo.sort==-2,
+                           searchTit:searchVo.sort!=2&&searchVo.sort!=-2}">销量
                         </a>
-                        <a @click="getSort(searchVo.sort===3?-3:3)"
-                           :class="{highlight:searchVo.sort===3||searchVo.sort===-3,
-                           searchTit:searchVo.sort!==3&&searchVo.sort!==-3}">评论数
+                        <a @click="getSort(searchVo.sort==3?-3:3)"
+                           :class="{highlight:searchVo.sort==3||searchVo.sort==-3,
+                           searchTit:searchVo.sort!=3&&searchVo.sort!=-3}">评论数
                         </a>
-                        <a @click="getSort(searchVo.sort===4?-4:4)"
-                           :class="{highlight:searchVo.sort===4||searchVo.sort===-4,
-                           searchTit:searchVo.sort!==4&&searchVo.sort!==-4}">新品
+                        <a @click="getSort(searchVo.sort==4?-4:4)"
+                           :class="{highlight:searchVo.sort==4||searchVo.sort==-4,
+                           searchTit:searchVo.sort!=4&&searchVo.sort!=-4}">新品
                         </a>
-                        <a @click="getSort(searchVo.sort===1?-1:1)"
-                           :class="{highlight:searchVo.sort===1||searchVo.sort===-1,
-                           searchTit:searchVo.sort!==1&&searchVo.sort!==-1}">价格
+                        <a @click="getSort(searchVo.sort==1?-1:1)"
+                           :class="{highlight:searchVo.sort==1||searchVo.sort==-1,
+                           searchTit:searchVo.sort!=1&&searchVo.sort!=-1}">价格
                         </a>
                     </div>
                     <div>
@@ -30,27 +30,6 @@
                         <el-button @click="getPrice" icon="el-icon-search" class="price-search-btn"
                                    circle></el-button>
                     </div>
-                    <!--                    <ul class="xiaofei-clear-level-ul">
-                                            <li @click="getSort(0)" :class="{highlight:searchVo.sort===0}">综合</li>
-                                            <li @click="getSort(searchVo.sort===2?-2:2)"
-                                                :class="{highlight:searchVo.sort===2||searchVo.sort===-2}">销量
-                                            </li>
-                                            <li @click="getSort(searchVo.sort===3?-3:3)"
-                                                :class="{highlight:searchVo.sort===3||searchVo.sort===-3}">评论数
-                                            </li>
-                                            <li @click="getSort(searchVo.sort===4?-4:4)"
-                                                :class="{highlight:searchVo.sort===4||searchVo.sort===-4}">新品
-                                            </li>
-                                            <li @click="getSort(searchVo.sort===1?-1:1)"
-                                                :class="{highlight:searchVo.sort===1||searchVo.sort===-1}">价格
-                                            </li>
-                                            <li>
-                                                <input v-model.number="searchVo.minPrice" class="xiaofei-clear-input">
-                                            </li>
-                                            <li>
-                                                <input v-model.number="searchVo.maxPrice" class="xiaofei-clear-input">
-                                            </li>
-                                        </ul>-->
                 </div>
                 <!-- 一个小的分页区域 -->
                 <div class="xiaofei-col-6 condition-right"></div>
@@ -61,7 +40,9 @@
                 <ul class="xiaofei-clear-level-ul">
                     <li v-for="item in page.items" :key="item.skuId">
                         <div class="item-img">
-                            <el-image lazy :src="item.skuImg"></el-image>
+                            <router-link style="text-decoration: none;" :to="{path:`/item/${item.skuId}/itemdesc`}">
+                                <el-image lazy :src=" item.skuImg"></el-image>
+                            </router-link>
                         </div>
                         <div class="item-price">￥ {{ item.skuPrice }}</div>
                         <div class="item-title" v-show="item.highlightFields!==''" v-html="item.highlightFields">
@@ -71,9 +52,11 @@
                         <div class="item-common"><a>{{ item.commentNum }}</a> 条评论</div>
                         <div class="item-brand">{{ item.brandName }}</div>
                         <div class="item-add-shop-cart">
-                            <button class="xiaofei-clear-button add-btn"><i class="el-icon-shopping-cart-full"></i>加入购物车
-                            </button>
+                            <el-button v-if="item.hasStock" class="xiaofei-clear-button add-btn"><i
+                                class="el-icon-shopping-cart-full"></i>加入购物车
+                            </el-button>
                         </div>
+                        <div class="item-not-hasstock" v-show="!item.hasStock">已 售 罄</div>
                     </li>
                 </ul>
             </div>
@@ -106,6 +89,8 @@ export default {
         this.$bus.$on('btnSearch', this.btnSearch)
 
         this.searchVo = this.searchCondition
+
+        console.log(this.searchVo)
         //初始化数据
         this.getData()
     },
@@ -135,7 +120,6 @@ export default {
         },
         //排序选择
         getSort(sort) {
-            this.$message.info(sort)
             this.searchVo.sort = sort
             let str = "?";
             let param = getQuery();
@@ -301,6 +285,7 @@ $width: 1200px;
         width: $width;
 
         li {
+            position: relative;
             //  background-color: red;
             $width: 238px;
             $height: 385px;
@@ -375,6 +360,19 @@ $width: 1200px;
                         border: 1px solid #e4393c;
                     }
                 }
+            }
+
+            .item-not-hasstock {
+                position: absolute;
+                width: 100%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                top: 200px;
+                background-color: rgba(36, 41, 46, 0.5);
+                font-size: 17px;
+                font-weight: 800;
+                color: white;
             }
 
             &:hover {

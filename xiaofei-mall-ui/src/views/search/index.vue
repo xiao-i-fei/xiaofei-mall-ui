@@ -1,15 +1,20 @@
 <template>
     <div>
-        <top-search :search-value="searchVo.searchValue"/>
+        <top-nav :homeIsShow="true"/>
+        <top-search/>
+        <top-category :search-value="searchVo.searchValue"/>
         <search-main :searchCondition="searchVo"/>
         <mall-footer/>
     </div>
 </template>
 
 <script>
-import TopSearch from "@/views/search/TopSearch";
+
+import TopCategory from "@/views/search/TopCategory";
 import SearchMain from "@/views/search/SearchMain";
 import MallFooter from "@/views/components/MallFooter";
+import TopNav from "@/views/components/TopNav";
+import TopSearch from "@/views/components/TopSearch";
 
 export default {
     created() {
@@ -24,9 +29,11 @@ export default {
         this.searchVo.sort = this.$route.query.sort === undefined ? 0 : this.$route.query.sort
     },
     components: {
+        TopSearch,
+        TopCategory,
         MallFooter,
         SearchMain,
-        TopSearch
+        TopNav
     },
     data() {
         return {

@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import logo from "@/assets/images/logo.jpeg";
+import logo from "@/assets/images/logo.png";
 //import rightAd from '@/views/home/img/ad/search-right-ad.webp'
 import rightAd from "@/views/home/img/ad/0f9394ebde8292d1.png.webp";
 
@@ -104,6 +104,7 @@ $height: 140px;
     text-align: center;
 
     img {
+        margin-top: 35px;
         max-width: 100%;
         max-height: 100%;
     }

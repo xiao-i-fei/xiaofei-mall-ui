@@ -1,16 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Index from '../views/index'
+import Index from '@/views/home'
 
 Vue.use(VueRouter)
 
 const routes = [
-    {path: '/', name: 'Index', component: Index},
+    {path: '/', name: '', component: Index},
     {path: '/index', name: 'Index', component: Index},
     {
         path: '/search',
         name: 'Search',
         component: () => import('@/views/search/index.vue'),
+    },
+    {
+        path: '/item/:skuId', name: 'Item', component: () => import('@/views/item/index'),
+        children: [
+            {path: 'itemdesc', name: 'ItemDesc', component: () => import("@/views/item/ItemDesc")},
+            {path: 'itembaseattr', name: 'ItemBaseAttr', component: () => import("@/views/item/ItemBaseAttr")},
+        ]
     }
     /*{
         path: '/about',

@@ -7,7 +7,7 @@
             <ul class="xiaofei-clear-level-ul main-data">
                 <li v-for="(item, index) in suggestData" :key="item.skuId">
                     <!-- 商品信息 -->
-                    <a>
+                    <router-link style="text-decoration: none;" :to="{path:`/item/${item.skuId}/itemdesc`}">
                         <!-- 商品图片，lazy，图片懒加载 -->
                         <el-image class="product-img" lazy :src="item.skuImg">
                             <div slot="error" class="image-slot">
@@ -30,7 +30,7 @@
                                 <span>￥ {{ item.skuPrice }}</span>
                             </div>
                         </div>
-                    </a>
+                    </router-link>
 
                     <!-- 查找商品相似 -->
                     <div
@@ -53,7 +53,8 @@
 </template>
 
 <script>
-import { getProductRandom } from "@/api/search/product";
+import {getProductRandom} from "@/api/search/product";
+
 export default {
     data() {
         return {
@@ -79,6 +80,7 @@ export default {
 <style lang="scss" scoped>
 .main {
     margin-top: 50px;
+
     h3 {
         width: 150px;
         height: 45px;
@@ -117,9 +119,10 @@ export default {
             .product-title {
                 padding: 0 20px;
                 text-align: left;
+
                 p {
                     font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial,
-                        Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+                    Hiragino Sans GB, "\5B8B\4F53", sans-serif;
                     color: rgb(102, 102, 102);
                 }
             }
@@ -128,6 +131,7 @@ export default {
             .product-price {
                 padding: 0 20px;
                 text-align: left;
+
                 span {
                     color: rgb(225, 37, 27);
                     font-weight: 800;
@@ -144,10 +148,10 @@ export default {
         .product-like {
             background-color: #fff;
             background: linear-gradient(
-                180deg,
-                rgba(255, 255, 255, 0.8) 0,
-                white 35%,
-                white
+                    180deg,
+                    rgba(255, 255, 255, 0.8) 0,
+                    white 35%,
+                    white
             );
             z-index: 10;
             position: absolute;
@@ -167,6 +171,7 @@ export default {
                 border-radius: 20px;
                 color: white;
                 font-size: 12px;
+
                 &:hover {
                     cursor: pointer;
                     background-color: rgb(200, 22, 35);
@@ -175,6 +180,7 @@ export default {
             }
         }
     }
+
     //解决边框塌陷
     &:after {
         content: ".";
