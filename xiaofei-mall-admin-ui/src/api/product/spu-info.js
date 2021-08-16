@@ -23,7 +23,7 @@ export function querySpuInfoByPage(pageNo = 1, pageSize = 8, spuSearchInfo) {
  */
 export function spuUp(spuId) {
     return request({
-        url: `/product/spuinfo/${spuId}`,
+        url: `/product/spuinfo/internal/${spuId}`,
         method: "put"
     })
 }
@@ -33,7 +33,7 @@ export function spuUp(spuId) {
  */
 export function addSpuInfo(spuInfo) {
     return request({
-        url: `/product/spuinfo`,
+        url: `/product/spuinfo/internal`,
         method: "post",
         data: spuInfo
     })

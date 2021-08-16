@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function addAttrAttrGroupRelation(attrAttrGroupRelation) {
     return request({
-        url: `/product/attrattrgrouprelation`,
+        url: `/product/internal/attrattrgrouprelation`,
         method: "post",
         data: attrAttrGroupRelation
     })
@@ -16,14 +16,14 @@ export function addAttrAttrGroupRelation(attrAttrGroupRelation) {
  */
 export function deleteAttrAttrGroupRelation(attrAttrGroupRelations) {
     return request({
-        url: `/product/attrattrgrouprelation`,
+        url: `/product/internal/attrattrgrouprelation`,
         method: "delete",
         data: attrAttrGroupRelations
     })
 }
 
 /**
- * 添加属性和属性分组的关联
+ * 工具属性id查询关联关系
  */
 export function queryAttrAttrGroupRelationByAttrGroupId(attrGroupId) {
     return request({

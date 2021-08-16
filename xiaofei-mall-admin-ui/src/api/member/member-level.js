@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export function addMemberLevel(memberLevel) {
     return request({
-        url: `/member/memberlevel`,
+        url: `/member/memberlevel/internal`,
         method: 'post',
         data: memberLevel
     })
@@ -17,7 +17,7 @@ export function addMemberLevel(memberLevel) {
  */
 export function deleteMemberLevelByIds(memberLevelIds) {
     return request({
-        url: `/member/memberlevel`,
+        url: `/member/memberlevel/internal`,
         method: 'delete',
         data: memberLevelIds
     })
@@ -28,7 +28,7 @@ export function deleteMemberLevelByIds(memberLevelIds) {
  */
 export function updateMemberLevel(memberLevel) {
     return request({
-        url: `/member/memberlevel`,
+        url: `/member/memberlevel/internal`,
         method: 'put',
         data: memberLevel
     })
@@ -39,7 +39,7 @@ export function updateMemberLevel(memberLevel) {
  */
 export function queryMemberLevelById(memberLevelId) {
     return request({
-        url: `/member/memberlevel/${memberLevelId}`,
+        url: `/member/memberlevel/internal/${memberLevelId}`,
         method: 'get',
     })
 }
@@ -50,7 +50,7 @@ export function queryMemberLevelById(memberLevelId) {
  */
 export function queryMemberLevelByPage(pageNo = 1, pageSize = 20, searchValue = "") {
     return request({
-        url: `/member/memberlevel/list`,
+        url: `/member/memberlevel/internal/list`,
         method: 'get',
         params: {
             pageNo: pageNo,

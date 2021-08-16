@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function addAttr(attr) {
     return request({
-        url: `/product/attr`,
+        url: `/product/internal/attr`,
         method: 'post',
         data: attr
     })
@@ -16,7 +16,7 @@ export function addAttr(attr) {
  */
 export function updateAttr(attr) {
     return request({
-        url: `/product/attr`,
+        url: `/product/internal/attr`,
         method: 'put',
         data: attr
     })
@@ -27,7 +27,7 @@ export function updateAttr(attr) {
  */
 export function deleteAttrById(attrIds) {
     return request({
-        url: `/product/attr`,
+        url: `/product/internal/attr`,
         method: 'delete',
         data: attrIds,
     })

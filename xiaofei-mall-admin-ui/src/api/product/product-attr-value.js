@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export function updateProductAttrValue(productAttrValues, spuId) {
     return request({
-        url: `/product/productattrvalue/${spuId}`,
+        url: `/product/productattrvalue/internal/${spuId}`,
         method: 'put',
         data: productAttrValues
     })

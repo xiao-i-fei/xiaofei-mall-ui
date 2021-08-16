@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function addWareSku(wareSku) {
     return request({
-        url: "/ware/waresku",
+        url: "/ware/waresku/internal",
         method: "post",
         data: wareSku
     })
@@ -16,7 +16,7 @@ export function addWareSku(wareSku) {
  */
 export function deleteWareSku(wareSkuIds) {
     return request({
-        url: "/ware/waresku",
+        url: "/ware/waresku/internal",
         method: "delete",
         data: wareSkuIds
     })
@@ -27,7 +27,7 @@ export function deleteWareSku(wareSkuIds) {
  */
 export function updateWareSku(wareSku) {
     return request({
-        url: "/ware/waresku",
+        url: "/ware/waresku/internal",
         method: "put",
         data: wareSku
     })
@@ -38,7 +38,7 @@ export function updateWareSku(wareSku) {
  */
 export function queryWareSkuByWareSkuId(wareSkuId) {
     return request({
-        url: `/ware/waresku/${wareSkuId}`,
+        url: `/ware/waresku/internal/${wareSkuId}`,
         method: "get"
     })
 }
@@ -48,7 +48,7 @@ export function queryWareSkuByWareSkuId(wareSkuId) {
  */
 export function queryWareSkuByPage(pageNo = 1, pageSize = 8, wareSkuVo) {
     return request({
-        url: '/ware/waresku',
+        url: '/ware/waresku/internal',
         method: 'get',
         params: {
             pageNo: pageNo,

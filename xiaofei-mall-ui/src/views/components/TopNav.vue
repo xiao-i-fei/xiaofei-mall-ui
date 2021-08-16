@@ -14,8 +14,13 @@
             </div>
             <div class="right-div xiaofei-col-6">
                 <ul class="xiaofei-clear-level-ul">
-                    <li><a>你好，请登录</a></li>
-                    <li><a>免费注册</a></li>
+                    <li>
+                        <router-link style="text-decoration: none;" :to="{path:'/loginorregist/login'}">你好，请登录
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link style="text-decoration: none;" :to="{path:'/loginorregist/regist'}">免费注册</router-link>
+                    </li>
                     <li><a>我的订单</a></li>
                 </ul>
             </div>
@@ -62,6 +67,7 @@ $height: 30px;
     .location {
         padding: 0 20px;
         position: relative;
+
         &:hover {
             background-color: white;
         }
@@ -74,6 +80,7 @@ $height: 30px;
 
         &:hover {
             cursor: pointer;
+
             i,
             span {
                 color: rgb(241, 2, 21);

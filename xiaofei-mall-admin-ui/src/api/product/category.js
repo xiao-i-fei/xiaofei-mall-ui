@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function addCategory(category) {
     return request({
-        url: `/product/category/add`,
+        url: `/product/category/internal/add`,
         method: "post",
         data: category
     })
@@ -16,7 +16,7 @@ export function addCategory(category) {
  */
 export function deleteCategoryById(categoryId) {
     return request({
-        url: `/product/category/${categoryId}`,
+        url: `/product/category/internal/${categoryId}`,
         method: 'delete',
     })
 }
@@ -26,7 +26,7 @@ export function deleteCategoryById(categoryId) {
  */
 export function updateCategory(category) {
     return request({
-        url: `/product/category/update`,
+        url: `/product/category/internal/update`,
         method: 'put',
         data: category
     })

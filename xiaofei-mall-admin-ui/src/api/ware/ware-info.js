@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function addWareInfo(wareInfo) {
     return request({
-        url: "/ware/wareinfo",
+        url: "/ware/wareinfo/internal",
         method: "post",
         data: wareInfo
     })
@@ -16,7 +16,7 @@ export function addWareInfo(wareInfo) {
  */
 export function deleteWareInfo(wareIds) {
     return request({
-        url: "/ware/wareinfo",
+        url: "/ware/wareinfo/internal",
         method: "delete",
         data: wareIds
     })
@@ -27,7 +27,7 @@ export function deleteWareInfo(wareIds) {
  */
 export function updateWareInfo(wareInfo) {
     return request({
-        url: "/ware/wareinfo",
+        url: "/ware/wareinfo/internal",
         method: "put",
         data: wareInfo
     })
@@ -38,7 +38,7 @@ export function updateWareInfo(wareInfo) {
  */
 export function queryWareInfoByWareId(wareId) {
     return request({
-        url: `/ware/wareinfo/${wareId}`,
+        url: `/ware/wareinfo/internal/${wareId}`,
         method: "get"
     })
 }
@@ -48,7 +48,7 @@ export function queryWareInfoByWareId(wareId) {
  */
 export function queryWareInfoByPage(pageNo = 1, pageSize = 8, searchValue = "") {
     return request({
-        url: '/ware/wareinfo',
+        url: '/ware/wareinfo/internal',
         method: 'get',
         params: {
             pageNo: pageNo,
