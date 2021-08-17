@@ -75,6 +75,7 @@
 
 import {sendEmailCode, userLogin, userRegister} from "@/api/auth/auth";
 import Cookies from "js-cookie";
+import {getMemberByToken} from '@/api/member/member'
 
 export default {
     created() {
@@ -227,12 +228,26 @@ export default {
                     if (response.data.isSuccess) {
                         this.$message.success(response.data.message)
                         //将token保存在浏览器自带的服务器中
-                        window.sessionStorage.setItem("Admin-Token", response.data.token)
-                        window.sessionStorage.setItem("username", response.data.username)
+                        //window.sessionStorage.setItem("Admin-Token", response.data.token)
+                        //window.sessionStorage.setItem("username", response.data.username)
                         //将cookie信息保存在cookie中
-                        Cookies.set("Admin-Token", response.data.token);
-                        Cookies.set("username", response.data.username);
-                        this.$router.push({path: '/'});
+                        Cookies.set("Admin-Token", response.data.token, {domain: 'localhost'});
+                        Cookies.set("username", response.data.username, {domain: 'localhost'});
+
+
+                        //获取用户信息
+                        getMemberByToken().then(response => {
+                            if (response.data.id > 0) {
+                                this.userInfo = response.data
+                                //将token保存在浏览器自带的服务器中
+                                //window.sessionStorage.setItem("userInfo", response.data)
+                                //将用户信息保存在cookie中
+                                let userInfo = JSON.stringify(response.data)
+                                Cookies.set("userInfo", userInfo, {domain: 'localhost'})
+                            }
+                            this.$router.push({path: '/'});
+                        })
+
                     } else {
                         this.$message.error(response.data.message)
                     }

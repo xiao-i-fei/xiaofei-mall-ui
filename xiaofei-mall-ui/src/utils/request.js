@@ -4,6 +4,7 @@ import store from '@/store'
 import {getToken} from '@/utils/auth'
 import errorCode from '@/utils/errorCode'
 import {tansParams} from "@/utils/mall";
+import Cookie from 'js-cookie'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
@@ -11,7 +12,7 @@ const service = axios.create({
     // axios中请求配置有baseURL选项，表示请求URL公共部分
     baseURL: process.env.VUE_APP_BASE_API,
     // 设置超时时间，如果该时间内，还是没有响应，则请求失败，开发的时候可以调大一点
-    timeout: 10000
+    timeout: 1000000
 })
 
 // request拦截器
@@ -20,6 +21,8 @@ service.interceptors.request.use(config => {
     const isToken = (config.headers || {}).isToken === false
     if (getToken() && !isToken) {
         config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    } else {
+        Cookie.remove('userInfo')
     }
 
     // get请求映射params参数
@@ -57,6 +60,9 @@ service.interceptors.response.use(res => {
         // 获取错误信息
         const msg = errorCode[code] || res.data.msg || errorCode['default']
         if (code === 401) {
+            //删除token中的用户信息
+            Cookie.remove("username")
+            Cookie.remove("userInfo")
             MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
                     confirmButtonText: '重新登录',
                     cancelButtonText: '取消',
@@ -64,7 +70,7 @@ service.interceptors.response.use(res => {
                 }
             ).then(() => {
                 store.dispatch('LogOut').then(() => {
-                    location.href = '/';
+                    location.href = '/loginorregist/login';
                 })
             }).catch(() => {
             });

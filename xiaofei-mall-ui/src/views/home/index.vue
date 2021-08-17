@@ -19,6 +19,8 @@ import MallFooter from "@/views/components/MallFooter";
 import RelatedSuggest from "@/views/components/RelatedSuggest";
 
 export default {
+    created() {
+    },
     components: {
         MallFooter,
         Spike,

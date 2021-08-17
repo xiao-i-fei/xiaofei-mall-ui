@@ -34,6 +34,8 @@
 
             <!-- 版本选择区域 -->
             <div class="right">
+
+                <!-- 基本参数部分 -->
                 <div class="item-info">
                     <div class="item-title" v-text="skuDetailInfo.skuInfo.skuName"></div>
                     <div class="item-subtitle">
@@ -71,6 +73,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 销售属性区域 -->
                 <div class="item-sale-attrs">
                     <div class="item-sale-attr" v-for="(saleAttr,saleAttrIndex) in skuDetailInfo.saleAttr"
                          :key="saleAttr.attrId">
@@ -85,15 +89,20 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 添加购物车或立即购买 -->
                 <div class="item-add">
                     <div class="item-add-num">
-                        <el-input clearable max="999" min="1" v-model.number="buyNum" placeholder="购买数量"></el-input>
+                        <el-input max="999" min="1" v-model.number="buySkuInfo.buyNum" placeholder="购买数量"></el-input>
+                        <i class="el-icon-plus" @click="buySkuInfo.buyNum++" :disabled="true"></i>
+                        <i class="el-icon-minus" @click="buySkuInfo.buyNum--"></i>
                     </div>
                     <div class="item-add-shopping">
-                        <el-button type="primary">加入购物</el-button>
-                        <el-button type="danger">立即购买</el-button>
+                        <el-button type="primary" @click="addShopOrBuy(true)">加入购物</el-button>
+                        <el-button type="danger" @click="addShopOrBuy(false)">立即购买</el-button>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -129,14 +138,9 @@ export default {
                 label: "cityName",
                 children: "children"
             },
-            buyNum: "",//购买数量
+            buySkuInfo: {skuId: this.skuId, buyNum: 1},//购买或加入购物车商品的信息
             skuIds: [],//所有销售属性中包含的skuId，再根据选择的skuIds集合来取交集，判断最终的skuId
         }
-    },
-    created() {
-        this.skuId = this.$route.params.skuId
-        this.querySkuDetailsInfo(this.skuId)
-        this.getProvinces()
     },
     methods: {
         //获取销售属性中的skuIds
@@ -217,8 +221,32 @@ export default {
                     flag++;
                 })
             })
+        },
+        //添加购物车或购买
+        addShopOrBuy(isAdd = true) {
+            if (isAdd) {
+                //添加购物车
+                this.$message.info("添加购物车")
+            } else {
+                //购买
+                this.$message.info("立即购买")
+            }
         }
-    }
+    },
+    watch: {
+        'buySkuInfo.buyNum'(newValue, oldValue) {
+            if (newValue > 0 && newValue < 100) {
+            } else {
+                this.$message.success("最少一件，最多99件")
+                this.buySkuInfo.buyNum = oldValue
+            }
+        }
+    },
+    created() {
+        this.skuId = this.$route.params.skuId
+        this.querySkuDetailsInfo(this.skuId)
+        this.getProvinces()
+    },
 }
 </script>
 
@@ -562,11 +590,25 @@ $color4: #5e69ad;
 
         .item-add-num {
             float: left;
-            margin-right: 30px;
+            margin-right: 40px;
             width: 150px;
+            position: relative;
 
-            .el-input__inner {
-                padding-right: 5px
+            i {
+                position: absolute;
+                background-color: #f1f1f1;
+                padding: 3px;
+                border: 1px solid #c3c7cf;
+                font-size: 12px;
+                right: 0;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .el-icon-minus {
+                top: 20px;
             }
         }
 

@@ -15,11 +15,19 @@
             <div class="right-div xiaofei-col-6">
                 <ul class="xiaofei-clear-level-ul">
                     <li>
-                        <router-link style="text-decoration: none;" :to="{path:'/loginorregist/login'}">你好，请登录
+                        <router-link v-if="userInfo.id>0" style="text-decoration: none;"
+                                     :to="{path:'/loginorregist/login'}">
+                            {{ userInfo.username }} 欢迎登录
+                        </router-link>
+                        <router-link v-else style="text-decoration: none;" :to="{path:'/loginorregist/login'}">
+                            你好，请登录
                         </router-link>
                     </li>
                     <li>
-                        <router-link style="text-decoration: none;" :to="{path:'/loginorregist/regist'}">免费注册</router-link>
+                        <router-link v-if="userInfo" style="text-decoration: none;"
+                                     :to="{path:'/loginorregist/regist'}">
+                            免费注册
+                        </router-link>
                     </li>
                     <li><a>我的订单</a></li>
                 </ul>
@@ -29,13 +37,30 @@
 </template>
 
 <script>
+import Cookie from 'js-cookie'
+
 export default {
+    mounted() {
+        this.getUserInfo()
+    },
+    methods: {
+        //获取用户信息
+        getUserInfo() {
+            let userInfo = Cookie.get("userInfo")
+            if (userInfo) this.userInfo = JSON.parse(userInfo)
+        }
+    },
     props: {
         homeIsShow: {
             type: Boolean,
             default: false,
         },
     },
+    data() {
+        return {
+            userInfo: {},//用户信息
+        }
+    }
 };
 </script>
 

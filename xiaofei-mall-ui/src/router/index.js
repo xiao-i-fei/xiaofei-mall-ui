@@ -15,13 +15,7 @@ const routes = [
             {path: 'itembaseattr', name: 'ItemBaseAttr', component: () => import("@/views/item/ItemBaseAttr")},
         ]
     },
-    {path: '/register', name: 'Register', component: () => import('@/views/member/register/index'),},
-    {path: '/login', name: 'Login', component: () => import('@/views/member/login/index'),},
-    {
-        path: '/loginorregist/:flag',
-        name: 'LoginOrRegister',
-        component: () => import('@/views/member/loginorregist/index'),
-    },
+    {path: '/loginorregist/:flag', name: 'LoginOrRegister', component: () => import('@/views/member/loginorregist/index'),},
     /*{
         path: '/about',
         name: 'About',

@@ -98,20 +98,34 @@
                     </div>
                     <!-- 登录区域 -->
                     <div class="login">
-                        <!-- 登录部分 -->
-                        <div class="login-main">
+                        <!-- 登录成功 -->
+                        <div v-if="userInfo.id>0" class="login-success-main">
                             <div class="login-logo">
                                 <div class="img-div">
-                                    <img
-                                        alt="加载失败"
-                                        src="https://img1.baidu.com/it/u=504609824,3604971623&fm=26&fmt=auto&gp=0.jpg"
-                                    />
+                                    <img alt="加载失败" :src="userInfo.header"/>
+                                </div>
+                                <div class="login-div">
+                                    <a>Hi~{{userInfo.username}}</a><br/>
+                                    <a>退出登录</a>
+                                </div>
+                                <div class="other">
+                                    <a>现在续费会员享特惠价</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 没有登录部分登录部分 -->
+                        <div v-else class="not-login-main">
+                            <div class="login-logo">
+                                <div class="img-div">
+                                    <img alt="加载失败"
+                                         src="https://img1.baidu.com/it/u=504609824,3604971623&fm=26&fmt=auto&gp=0.jpg"/>
                                 </div>
                                 <div class="login-div">
                                     <a>Hi~欢迎逛商城</a><br/>
                                     <a>登录</a> | <a>注册</a>
                                 </div>
                             </div>
+
                             <div class="other">
                                 <a class="new-people">新人福利</a>
                                 <a class="member">商城会员</a>
@@ -289,12 +303,21 @@ import small2 from "@/assets/images/carousel/af281d0ccd75bd89.png.webp";
 import small3 from "@/assets/images/carousel/c647b3826c472d03.png.webp";
 import sideAd1 from "@/views/home/img/ad/503d064c8c43d834.png.webp";
 import sideAd2 from "@/views/home/img/ad/a164ab45b363c012.jpg.webp";
+import Cookie from 'js-cookie'
 
 export default {
     created() {
         this.getCategory();
     },
+    mounted() {
+        this.getUserInfo()
+    },
     methods: {
+        //获取用户信息
+        getUserInfo() {
+            let userInfo = Cookie.get("userInfo")
+            if (userInfo) this.userInfo = JSON.parse(userInfo)
+        },
         //获取所有类别
         getCategory() {
             queryAllCategory().then((response) => {
@@ -328,6 +351,7 @@ export default {
                 carousel8,
             ], //大的轮播图、
             smallCarousels: [small1, small2, small3], //小轮播图
+            userInfo: {},//用户信息
         };
     },
 };
@@ -566,8 +590,8 @@ $side-bar-height: 470px;
         background-color: white;
         float: left;
 
-        //登录部分
-        .login-main {
+        //没有登录的样式
+        .not-login-main {
             width: 190px;
             height: 102px;
             border-bottom: 1px solid #eeeeee;
@@ -658,6 +682,86 @@ $side-bar-height: 470px;
                     transition: background 0.3s ease, color 0.3s ease;
                     background: #363634;
                     color: #e5d790;
+                }
+            }
+        }
+
+        //登录成功的样式
+        .login-success-main {
+            width: 190px;
+            height: 102px;
+            border-bottom: 1px solid #eeeeee;
+            .login-logo {
+                height: 67px;
+                text-align: center;
+                color: #666666;
+
+                .img-div {
+                    float: left;
+                    width: 65px;
+                    text-align: right;
+
+                    img {
+                        margin-top: 10px;
+                        border-radius: 50%;
+                        width: 40px;
+                        height: 40px;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .login-div {
+                    width: 116px;
+                    text-align: center;
+                    float: left;
+                    margin-top: 6px;
+                    margin-left: 8px;
+
+                    a {
+                        font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial,
+                        Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+                        color: #666666;
+
+                        &:hover {
+                            cursor: pointer;
+                            color: #e1251b;
+                        }
+                    }
+                }
+
+                //解决边框塌陷
+                &:after {
+                    margin-top: 10px;
+                    content: ".";
+                    display: BLOCK;
+                    height: 0;
+                    clear: BOTH;
+                    visibility: HIDDEN;
+                }
+            }
+
+            .other {
+                text-align: center;
+
+                a {
+                    box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+                    display: inline-block;
+                    width: 155px;
+                    margin-top: 10px;
+                    height: 25px;
+                    line-height: 25px;
+                    text-align: center;
+                    border-radius: 12px;
+                    font-size: 12px;
+                    color: #e1251b;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: #c81623;
+                        color: white;
+                    }
                 }
             }
         }
