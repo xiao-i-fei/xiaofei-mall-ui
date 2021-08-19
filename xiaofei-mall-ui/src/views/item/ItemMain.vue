@@ -93,9 +93,9 @@
                 <!-- 添加购物车或立即购买 -->
                 <div class="item-add">
                     <div class="item-add-num">
-                        <el-input max="999" min="1" v-model.number="buySkuInfo.buyNum" placeholder="购买数量"></el-input>
-                        <i class="el-icon-plus" @click="buySkuInfo.buyNum++" :disabled="true"></i>
-                        <i class="el-icon-minus" @click="buySkuInfo.buyNum--"></i>
+                        <el-input max="999" min="1" v-model.number="cartReq.buyNum" placeholder="购买数量"></el-input>
+                        <i class="el-icon-plus" @click="cartReq.buyNum++" :disabled="true"></i>
+                        <i class="el-icon-minus" @click="cartReq.buyNum--"></i>
                     </div>
                     <div class="item-add-shopping">
                         <el-button type="primary" @click="addShopOrBuy(true)">加入购物</el-button>
@@ -113,6 +113,9 @@
 import {querySkuItemInfo} from "@/api/product/sku-info";
 import {queryAllProvinces} from "@/api/product/provinces";
 import {getUUID} from "@/utils";
+import {addCart} from "@/api/cart/cart";
+import Cookie from 'js-cookie'
+import {getToken} from "@/utils/auth";
 
 export default {
     props: {},
@@ -138,7 +141,7 @@ export default {
                 label: "cityName",
                 children: "children"
             },
-            buySkuInfo: {skuId: this.skuId, buyNum: 1},//购买或加入购物车商品的信息
+            cartReq: {id: "", skuId: "", spuId: "", buyNum: 1, check: true, defaultImage: "", userId: ""},//购买或加入购物车商品的信息
             skuIds: [],//所有销售属性中包含的skuId，再根据选择的skuIds集合来取交集，判断最终的skuId
         }
     },
@@ -225,8 +228,54 @@ export default {
         //添加购物车或购买
         addShopOrBuy(isAdd = true) {
             if (isAdd) {
-                //添加购物车
-                this.$message.info("添加购物车")
+                //获取用户信息
+                let token = getToken();
+                let userInfo = Cookie.get("userInfo");
+                if (token && userInfo) {
+                    //设置购物信息
+                    userInfo = JSON.parse(userInfo);
+                    this.cartReq.skuId = this.skuDetailInfo.skuInfo.skuId
+                    this.cartReq.spuId = this.skuDetailInfo.spuInfoDesc.spuId
+                    this.cartReq.defaultImage = this.skuDetailInfo.skuInfo.skuDefaultImg
+                    this.cartReq.userId = userInfo.id
+                    if (userInfo.id > 0) {
+                        addCart(this.cartReq).then(response => {
+                            if (response.data && response.code == 200) {
+                                this.$router.push(`/addtocart/${response.data}`)
+                            } else {
+                                this.$message.error("购物车添加失败，请重新添加");
+                            }
+                        })
+                    } else {
+                        this.$confirm('该操作需要登录，是否前往登录', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                        }).then(() => {
+                            this.$router.push({path: `/loginorregist/login`})
+                        }).catch(() => {
+                            this.$message({
+                                type: 'info',
+                                message: '已取消删除'
+                            });
+                        });
+                    }
+
+                } else {
+                    this.$confirm('该操作需要登录，是否前往登录', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        this.$router.push({path: `/loginorregist/login`})
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
+                }
+
             } else {
                 //购买
                 this.$message.info("立即购买")
@@ -234,11 +283,11 @@ export default {
         }
     },
     watch: {
-        'buySkuInfo.buyNum'(newValue, oldValue) {
+        'cartReq.buyNum'(newValue, oldValue) {
             if (newValue > 0 && newValue < 100) {
             } else {
                 this.$message.success("最少一件，最多99件")
-                this.buySkuInfo.buyNum = oldValue
+                this.cartReq.buyNum = oldValue
             }
         }
     },

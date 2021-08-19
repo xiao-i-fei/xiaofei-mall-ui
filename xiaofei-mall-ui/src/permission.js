@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 //白名单
 const whiteList = ['/', '/search']
 
-const TokenKey = 'Admin-Token'//token的键
+const TokenKey = 'User-Token'//token的键
 
 router.beforeEach((to, from, next) => {
 
@@ -44,6 +44,7 @@ router.beforeEach((to, from, next) => {
         // 没有token，判断当前访问路径是否在白名单里面，如果没有在白名单里面，直接重定向到登录页面去，删除cookie中的用户信息
         Cookie.remove("username")
         Cookie.remove("userInfo")
+        Cookie.remove(TokenKey)
 
         if (whiteList.indexOf(to.path) !== -1 || dynamicWhiteList.indexOf(to.path)) {
             // 在免登录白名单，直接进入

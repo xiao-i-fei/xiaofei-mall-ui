@@ -231,7 +231,7 @@ export default {
                         //window.sessionStorage.setItem("Admin-Token", response.data.token)
                         //window.sessionStorage.setItem("username", response.data.username)
                         //将cookie信息保存在cookie中
-                        Cookies.set("Admin-Token", response.data.token, {domain: 'localhost'});
+                        Cookies.set("User-Token", response.data.token, {domain: 'localhost'});
                         Cookies.set("username", response.data.username, {domain: 'localhost'});
 
 

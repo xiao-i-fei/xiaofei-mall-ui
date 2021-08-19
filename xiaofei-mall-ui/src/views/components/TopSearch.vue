@@ -15,9 +15,12 @@
                     <button class="xiaofei-clear-button" @click="btnSearch">搜 索</button>
                 </div>
                 <div class="shopping-btn">
-                    <el-badge :value="12" class="item">
-                        <i class="el-icon-shopping-cart-2"></i> 我的购物车
-                    </el-badge>
+                    <router-link style="text-decoration: none;color: rgb(243, 2, 19)"
+                                 :to="{path:'/cart'}">
+                        <el-badge :value="12" class="item">
+                            <i class="el-icon-shopping-cart-2"></i> 我的购物车
+                        </el-badge>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -29,7 +32,7 @@ import logo from "@/assets/images/logo.png";
 import {getQuery} from "@/utils/mall";
 
 export default {
-    props:["searchValue"],
+    props: ["searchValue"],
     created() {
         this.key = this.searchValue
     },

@@ -32,3 +32,13 @@ export function userLogin(userInfo) {
         data: userInfo
     })
 }
+
+/**
+ * 用户注销
+ */
+export function logout() {
+    return request({
+        url: `/user/auth/logout`,
+        method: "delete"
+    })
+}

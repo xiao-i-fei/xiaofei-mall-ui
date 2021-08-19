@@ -15,7 +15,13 @@ const routes = [
             {path: 'itembaseattr', name: 'ItemBaseAttr', component: () => import("@/views/item/ItemBaseAttr")},
         ]
     },
-    {path: '/loginorregist/:flag', name: 'LoginOrRegister', component: () => import('@/views/member/loginorregist/index'),},
+    {
+        path: '/loginorregist/:flag',
+        name: 'LoginOrRegister',
+        component: () => import('@/views/member/loginorregist/index'),
+    },
+    {path: '/addtocart/:cartId', name: 'CartAdd', component: () => import('@/views/cart/add/index')},
+    {path: '/cart', name: 'Cart', component: () => import('@/views/cart/cart/index')}
     /*{
         path: '/about',
         name: 'About',
