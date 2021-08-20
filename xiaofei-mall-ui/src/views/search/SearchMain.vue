@@ -52,8 +52,8 @@
                         <div class="item-common"><a>{{ item.commentNum }}</a> 条评论</div>
                         <div class="item-brand">{{ item.brandName }}</div>
                         <div class="item-add-shop-cart">
-                            <el-button v-if="item.hasStock" class="xiaofei-clear-button add-btn"><i
-                                class="el-icon-shopping-cart-full"></i>加入购物车
+                            <el-button @click="addCart(item)" v-if="item.hasStock" class="xiaofei-clear-button add-btn">
+                                <i class="el-icon-shopping-cart-full"></i>加入购物车
                             </el-button>
                         </div>
                         <div class="item-not-hasstock" v-show="!item.hasStock">已 售 罄</div>
@@ -76,6 +76,9 @@
 <script>
 import {getProductBySearch} from "@/api/search/product";
 import {getQuery} from "@/utils/mall";
+import {addCart} from "@/api/cart/cart";
+import {getToken} from "@/utils/auth";
+import Cookie from "js-cookie";
 
 export default {
     props: {
@@ -84,13 +87,11 @@ export default {
         }
     },
     created() {
-        console.log(this.searchCondition)
         //发布消息
         this.$bus.$on('btnSearch', this.btnSearch)
 
         this.searchVo = this.searchCondition
 
-        console.log(this.searchVo)
         //初始化数据
         this.getData()
     },
@@ -110,9 +111,61 @@ export default {
                 itemCount: 0,
                 items: []
             },
+            cartReq: {id: "", skuId: "", spuId: "", buyNum: 1, check: true, defaultImage: "", userId: ""},//购买或加入购物车商品的信息
+
         }
     },
     methods: {
+        //添加购物车
+        addCart(item) {
+            //获取用户信息
+            let token = getToken();
+            let userInfo = Cookie.get("userInfo");
+            if (token && userInfo) {
+                //设置购物信息
+                userInfo = JSON.parse(userInfo);
+                this.cartReq.skuId = item.skuId
+                this.cartReq.spuId = item.spuId
+                this.cartReq.defaultImage = item.skuImg
+                this.cartReq.userId = userInfo.id
+                if (userInfo.id > 0) {
+                    addCart(this.cartReq).then(response => {
+                        if (response.data && response.code == 200) {
+                            this.$router.push(`/addtocart/${response.data}`)
+                        } else {
+                            this.$message.error("购物车添加失败，请重新添加");
+                        }
+                    })
+                } else {
+                    this.$confirm('该操作需要登录，是否前往登录', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        this.$router.push({path: `/loginorregist/login`})
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
+                }
+
+            } else {
+                this.$confirm('该操作需要登录，是否前往登录', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$router.push({path: `/loginorregist/login`})
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            }
+        },
         //按钮搜索
         btnSearch(searchValue) {
             this.searchVo.searchValue = searchValue

@@ -15,10 +15,21 @@ export function addCart(cartReq) {
 /**
  * 删除购物车信息
  */
-export function deleteCart(cartId) {
+export function deleteCart(ids) {
     return request({
-        url: `/cart/auth/${id}`,
+        url: `/cart/auth`,
         method: 'delete',
+        data: ids
+    })
+}
+
+/**
+ * 全选和全不选
+ */
+export function cartCheckAll(checkAll) {
+    return request({
+        url: `/cart/auth/checkall/${checkAll}`,
+        method: 'put',
     })
 }
 
@@ -28,7 +39,7 @@ export function deleteCart(cartId) {
 export function updateCart(cartReq) {
     return request({
         url: `/cart/auth`,
-        method: 'update',
+        method: 'put',
         data: cartReq
     })
 }
@@ -39,6 +50,16 @@ export function updateCart(cartReq) {
 export function queryCartById(cartId) {
     return request({
         url: `/cart/auth/${cartId}`,
+        method: "get"
+    })
+}
+
+/**
+ * 根据用户id查询用户信息
+ */
+export function queryCartByUserId() {
+    return request({
+        url: `/cart/auth`,
         method: "get"
     })
 }

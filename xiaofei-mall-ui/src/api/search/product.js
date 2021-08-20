@@ -26,7 +26,6 @@ export function getProductBySearch(search, pageNo = 1, pageSize = 40) {
         minPrice = maxPrice
         maxPrice = t
     }
-    console.log("搜索条件为：", search)
     return request({
         url: `/elasticsearch/product`,
         method: "get",

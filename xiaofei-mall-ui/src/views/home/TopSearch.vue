@@ -15,6 +15,7 @@
                             placeholder="输入搜索条件"
                             type="text" v-model="searchValue"
                             class="xiaofei-clear-input"
+                            @keyup.enter="toSearchPage"
                         />
                         <button
                             class="xiaofei-clear-button"
@@ -24,7 +25,10 @@
                         </button>
                     </div>
                     <div class="shopping-btn">
+                        <router-link style="text-decoration: none;color: rgb(243, 2, 19)"
+                                     :to="{path:'/cart'}">
                         <i class="el-icon-shopping-cart-2"></i> 我的购物车
+                        </router-link>
                     </div>
                 </div>
                 <!-- 搜索下面的第一个导航栏 -->

@@ -40,7 +40,7 @@
                         </router-link>
 
                         <router-link style="text-decoration: none;"
-                                     :to="{path:`/item/${cartInfo.skuId}/itemdesc`}">
+                                     :to="{path:`/cart`}">
                             去购物车结算 >
                         </router-link>
                     </div>

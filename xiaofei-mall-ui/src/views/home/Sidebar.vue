@@ -105,8 +105,8 @@
                                     <img alt="加载失败" :src="userInfo.header"/>
                                 </div>
                                 <div class="login-div">
-                                    <a>Hi~{{userInfo.username}}</a><br/>
-                                    <a>退出登录</a>
+                                    <a>Hi~{{ userInfo.username }}</a><br/>
+                                    <a @click="logout">退出登录</a>
                                 </div>
                                 <div class="other">
                                     <a>现在续费会员享特惠价</a>
@@ -304,6 +304,7 @@ import small3 from "@/assets/images/carousel/c647b3826c472d03.png.webp";
 import sideAd1 from "@/views/home/img/ad/503d064c8c43d834.png.webp";
 import sideAd2 from "@/views/home/img/ad/a164ab45b363c012.jpg.webp";
 import Cookie from 'js-cookie'
+import {logout} from "@/api/auth/auth";
 
 export default {
     created() {
@@ -313,6 +314,20 @@ export default {
         this.getUserInfo()
     },
     methods: {
+        //退出登录
+        logout() {
+            logout().then(response => {
+                if (response.code == 200) {
+                    Cookie.remove('User-Token');
+                    Cookie.remove('username');
+                    Cookie.remove('userInfo');
+                    this.$message.success("退出成功")
+                    window.location.href = "/"
+                } else {
+                    this.$message.success("退出失败")
+                }
+            })
+        },
         //获取用户信息
         getUserInfo() {
             let userInfo = Cookie.get("userInfo")
@@ -691,6 +706,7 @@ $side-bar-height: 470px;
             width: 190px;
             height: 102px;
             border-bottom: 1px solid #eeeeee;
+
             .login-logo {
                 height: 67px;
                 text-align: center;
@@ -706,7 +722,8 @@ $side-bar-height: 470px;
                         border-radius: 50%;
                         width: 40px;
                         height: 40px;
-                        &:hover{
+
+                        &:hover {
                             cursor: pointer;
                         }
                     }

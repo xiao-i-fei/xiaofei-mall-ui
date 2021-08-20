@@ -15,16 +15,25 @@
             <div class="right-div xiaofei-col-6">
                 <ul class="xiaofei-clear-level-ul">
                     <li>
-                        <router-link v-if="userInfo.id>0" style="text-decoration: none;"
+<!--                        <el-dropdown trigger="click">-->
+                            <router-link v-if="userInfo.id>0" style="text-decoration: none;"
+                                         :to="{path:'/loginorregist/login'}">
+                                {{ userInfo.username }} 欢迎登录<i class="el-icon-arrow-down el-icon--right"></i>
+                            </router-link>
+<!--                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>个人中心</el-dropdown-item>
+                                <el-dropdown-item>退出登录</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>-->
+
+                        <!-- 没有登录的时候显示 -->
+                        <router-link v-if="!userInfo.id>0" style="text-decoration: none;"
                                      :to="{path:'/loginorregist/login'}">
-                            {{ userInfo.username }} 欢迎登录
-                        </router-link>
-                        <router-link v-else style="text-decoration: none;" :to="{path:'/loginorregist/login'}">
                             你好，请登录
                         </router-link>
                     </li>
                     <li>
-                        <router-link v-if="userInfo" style="text-decoration: none;"
+                        <router-link v-if="!userInfo.id>0" style="text-decoration: none;"
                                      :to="{path:'/loginorregist/regist'}">
                             免费注册
                         </router-link>
@@ -38,12 +47,27 @@
 
 <script>
 import Cookie from 'js-cookie'
+import {logout} from "@/api/auth/auth";
 
 export default {
     mounted() {
         this.getUserInfo()
     },
     methods: {
+        //退出登录
+        logout() {
+            logout().then(response => {
+                if (response.code == 200) {
+                    Cookie.remove('User-Token');
+                    Cookie.remove('username');
+                    Cookie.remove('userInfo');
+                    this.$message.success("退出成功")
+                    this.$router.push({path: "/"})
+                } else {
+                    this.$message.success("退出失败")
+                }
+            })
+        },
         //获取用户信息
         getUserInfo() {
             let userInfo = Cookie.get("userInfo")
@@ -76,6 +100,7 @@ $height: 30px;
 }
 
 .left-div {
+    padding-left: 0;
     height: $height;
     line-height: $height;
 
@@ -115,6 +140,7 @@ $height: 30px;
 }
 
 .right-div {
+    padding-right: 0;
     height: $height;
     line-height: $height;
 

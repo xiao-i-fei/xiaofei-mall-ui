@@ -11,13 +11,14 @@
             <!-- 搜索区域 -->
             <div class="xiaofei-col-9 search">
                 <div class="search-input">
-                    <input placeholder="输入搜索条件" type="text" v-model="key" class="xiaofei-clear-input"/>
+                    <input placeholder="输入搜索条件" @keyup.enter="btnSearch" type="text" v-model="key"
+                           class="xiaofei-clear-input"/>
                     <button class="xiaofei-clear-button" @click="btnSearch">搜 索</button>
                 </div>
                 <div class="shopping-btn">
                     <router-link style="text-decoration: none;color: rgb(243, 2, 19)"
                                  :to="{path:'/cart'}">
-                        <el-badge :value="12" class="item">
+                        <el-badge :value="cartTotalCount" class="item">
                             <i class="el-icon-shopping-cart-2"></i> 我的购物车
                         </el-badge>
                     </router-link>
@@ -30,16 +31,22 @@
 <script>
 import logo from "@/assets/images/logo.png";
 import {getQuery} from "@/utils/mall";
+import Cookie from 'js-cookie'
 
 export default {
     props: ["searchValue"],
     created() {
+        this.cartTotalCount = Cookie.get("cartTotalCount")
         this.key = this.searchValue
+        if (this.$route.query.searchValue) {
+            this.key = this.$route.query.searchValue
+        }
     },
     data() {
         return {
             logo: logo,
             key: "",
+            cartTotalCount: '',//购物车中商品的数量
         };
     },
     methods: {
