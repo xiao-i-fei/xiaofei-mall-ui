@@ -13,10 +13,6 @@ const whiteList = ['/', '/search']
 const TokenKey = 'User-Token'//token的键
 
 router.beforeEach((to, from, next) => {
-
-    //动态白名单
-    let dynamicWhiteList = [`/loginorregist/${to.params}`, `/item/${to.params}/itemdesc`,`/item/${to.params}/itembaseattr`]
-
     NProgress.start()//请求进度条，样式
     //判断token是否存在
     if (getToken()) {
@@ -45,8 +41,10 @@ router.beforeEach((to, from, next) => {
         Cookie.remove("username")
         Cookie.remove("userInfo")
         Cookie.remove(TokenKey)
-
-        if (whiteList.indexOf(to.path) !== -1 || dynamicWhiteList.indexOf(to.path)) {
+        //动态白名单
+        let dynamicWhiteList = [`/loginorregist/${to.params.flag}`, `/item/${to.params.skuId}/itemdesc`, `/item/${to.params.skuId}/itembaseattr`]
+        debugger
+        if (whiteList.indexOf(to.path) > -1 || dynamicWhiteList.indexOf(to.path) > -1) {
             // 在免登录白名单，直接进入
             next()//往下执行
         } else {

@@ -21,7 +21,9 @@ const routes = [
         component: () => import('@/views/member/loginorregist/index'),
     },
     {path: '/addtocart/:cartId', name: 'CartAdd', component: () => import('@/views/cart/add/index')},
-    {path: '/cart', name: 'Cart', component: () => import('@/views/cart/cart/index')}
+    {path: '/cart', name: 'Cart', component: () => import('@/views/cart/cart/index')},
+    {path: '/account', name: 'Account', component: () => import('@/views/member/account/home/index')},
+    {path: '/trade', name: 'Trade', component: () => import('@/views/order/trade/index')}
     /*{
         path: '/about',
         name: 'About',

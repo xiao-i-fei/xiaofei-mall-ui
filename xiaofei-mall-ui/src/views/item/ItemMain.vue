@@ -186,7 +186,6 @@ export default {
         querySkuDetailsInfo(skuId) {
             querySkuItemInfo(skuId).then(response => {
                 this.skuDetailInfo = response.data
-                console.log(this.skuDetailInfo.saleAttr[0].attrValues)
                 //设置图片合集
                 let flag = 1;
                 let skuImages = []

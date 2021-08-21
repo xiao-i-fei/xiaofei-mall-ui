@@ -102,7 +102,9 @@
                         <div v-if="userInfo.id>0" class="login-success-main">
                             <div class="login-logo">
                                 <div class="img-div">
-                                    <img alt="加载失败" :src="userInfo.header"/>
+                                    <a href="/account">
+                                        <img alt="加载失败" :src="userInfo.header"/>
+                                    </a>
                                 </div>
                                 <div class="login-div">
                                     <a>Hi~{{ userInfo.username }}</a><br/>
@@ -122,7 +124,13 @@
                                 </div>
                                 <div class="login-div">
                                     <a>Hi~欢迎逛商城</a><br/>
-                                    <a>登录</a> | <a>注册</a>
+                                    <router-link style="text-decoration: none;"
+                                                 :to="{path:'/loginorregist/login'}">登录
+                                    </router-link>
+                                    |
+                                    <router-link style="text-decoration: none;"
+                                                 :to="{path:'/loginorregist/regist'}">注册
+                                    </router-link>
                                 </div>
                             </div>
 

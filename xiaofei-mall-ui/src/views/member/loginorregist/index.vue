@@ -231,8 +231,8 @@ export default {
                         //window.sessionStorage.setItem("Admin-Token", response.data.token)
                         //window.sessionStorage.setItem("username", response.data.username)
                         //将cookie信息保存在cookie中
-                        Cookies.set("User-Token", response.data.token, {domain: 'localhost'});
-                        Cookies.set("username", response.data.username, {domain: 'localhost'});
+                        Cookies.set("User-Token", response.data.token);
+                        Cookies.set("username", response.data.username);
 
 
                         //获取用户信息
@@ -243,7 +243,7 @@ export default {
                                 //window.sessionStorage.setItem("userInfo", response.data)
                                 //将用户信息保存在cookie中
                                 let userInfo = JSON.stringify(response.data)
-                                Cookies.set("userInfo", userInfo, {domain: 'localhost'})
+                                Cookies.set("userInfo", userInfo)
                             }
                             this.$router.push({path: '/'});
                         })
@@ -503,7 +503,7 @@ export default {
     .verify-btn {
         position: absolute;
         top: 290px;
-        left: 240px;
+        left: 65%;
         font-size: 12px;
         color: #026ba4;
 
