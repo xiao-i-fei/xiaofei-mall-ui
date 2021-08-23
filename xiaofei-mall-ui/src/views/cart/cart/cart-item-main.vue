@@ -106,7 +106,7 @@
                     <li><a>移入关注</a></li>
                     <li><a @click="clearCart">清空购物车</a></li>
                     <li>
-                        <a>去结算</a>
+                        <router-link :to="{path:'/trade'}">去结算</router-link>
                     </li>
                     <li>已选<em class="total-check-em">{{ cartInfo.totalCheck }}</em>商品，
                         总价<em class="total-price-em">￥ {{ cartInfo.totalPrice }}</em></li>
