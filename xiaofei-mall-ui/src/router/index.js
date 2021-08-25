@@ -24,7 +24,8 @@ const routes = [
     {path: '/cart', name: 'Cart', component: () => import('@/views/cart/cart/index')},
     {path: '/account', name: 'Account', component: () => import('@/views/member/account/home/index')},
     {path: '/trade', name: 'Trade', component: () => import('@/views/order/trade/index')},
-    {path: '/pay', name: 'Pay', component: () => import('@/views/order/pay/index')}
+    {path: '/pay/:orderId/:orderSn', name: 'Pay', component: () => import('@/views/order/pay/index')},
+    {path: '/order', name: 'Order', component: () => import('@/views/order/order/index')}
     /*{
         path: '/about',
         name: 'About',

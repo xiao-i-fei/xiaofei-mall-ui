@@ -225,7 +225,7 @@
 </template>
 
 <script>
-import {queryOrderInfo,crateOrder} from "@/api/order/order";
+import {queryOrderInfo, crateOrder} from "@/api/order/order";
 import {queryAllProvinces} from "@/api/product/provinces";
 import {
     addMemberAddress,
@@ -378,35 +378,39 @@ export default {
             } else {
                 //组合订单信息
                 let order = {
-                    totalAmount:this.orderInfo.cartInfo.totalPrice,//订单的总金额
-                    orderItemInfos:[],
+                    totalAmount: this.orderInfo.cartInfo.totalPrice,//订单的总金额
+                    orderItemInfos: [],
                     receivingInfo: {
                         receiverName: this.defaultAddress.name,
-                        receiverPhone:  this.defaultAddress.phone,
-                        receiverPostCode:  this.defaultAddress.postCode,
-                        receiverProvince:  this.defaultAddress.province,
-                        receiverCity:  this.defaultAddress.city,
-                        receiverRegion:  this.defaultAddress.region,
-                        receiverDetailAddress:  this.defaultAddress.detailAddress
+                        receiverPhone: this.defaultAddress.phone,
+                        receiverPostCode: this.defaultAddress.postCode,
+                        receiverProvince: this.defaultAddress.province,
+                        receiverCity: this.defaultAddress.city,
+                        receiverRegion: this.defaultAddress.region,
+                        receiverDetailAddress: this.defaultAddress.detailAddress
                     }//收获地址信息
                 }
                 //遍历商品信息
-                this.orderInfo.cartInfo.items.forEach(item=>{
-                    let orderItemInfo={
-                        skuId:item.skuId,
-                        spuId:item.spuId,
-                        skuName:item.skuName,
-                        skuPic:item.defaultImage,
-                        skuPrice:item.skuPrice,
-                        skuQuantity:item.buyNum,
-                        skuAttrsVals:item.saleAttr
+                this.orderInfo.cartInfo.items.forEach(item => {
+                    let orderItemInfo = {
+                        skuId: item.skuId,
+                        spuId: item.spuId,
+                        skuName: item.skuName,
+                        skuPic: item.defaultImage,
+                        skuPrice: item.skuPrice,
+                        skuQuantity: item.buyNum,
+                        skuAttrsVals: item.saleAttr
 
                     }
                     order.orderItemInfos.push(orderItemInfo)
                 })
-                console.log("提交的订单信息为：",order)
-                crateOrder(order).then(response=>{
-
+                console.log("提交的订单信息为：", order)
+                crateOrder(order).then(response => {
+                    if (response.code == 200){
+                        this.$router.push({path:`/pay/${response.data.orderId}/${response.data.orderSn}`})
+                    } else {
+                        this.$message.error("订单提交失败，请重新提交订单")
+                    }
                 })
             }
         }

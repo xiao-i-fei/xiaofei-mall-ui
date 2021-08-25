@@ -38,7 +38,7 @@
                             免费注册
                         </router-link>
                     </li>
-                    <li><a>我的订单</a></li>
+                    <li><router-link :to="{path:`/order`}" style="text-decoration: none">我的订单</router-link></li>
                 </ul>
             </div>
         </div>

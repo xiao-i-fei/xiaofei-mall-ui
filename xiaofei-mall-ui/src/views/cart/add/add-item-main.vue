@@ -3,49 +3,50 @@
         <div class="aaa">
             <div class="div-row xiaofei-center cart-item-main">
 
-                <div class="cart-item-left">
+                <div  v-for="cartInfo in cartInfos" :key="cartInfo.id">
+                    <div class="cart-item-left">
 
-                    <div class="one">
-                        <h3><i class="el-icon-circle-check"></i>商品已成功加入购物车！</h3>
-                    </div>
-
-                    <div class="two">
-                        <div class="cart-item-img">
-                            <el-image style="width: 60px; height: 60px"
-                                      :src="cartInfo.defaultImage" fit="contain" lazy>
-                            </el-image>
+                        <div class="one">
+                            <h3><i class="el-icon-circle-check"></i>商品已成功加入购物车！</h3>
                         </div>
-                        <div class="cart-item-title">
-                            <div class="sku-title">
-                                <router-link style="text-decoration: none;"
-                                             :to="{path:`/item/${cartInfo.skuId}/itemdesc`}">
-                                    {{ cartInfo.skuName }}
-                                </router-link>
+
+                        <div class="two">
+                            <div class="cart-item-img">
+                                <el-image style="width: 60px; height: 60px"
+                                        :src="cartInfo.defaultImage" fit="contain" lazy>
+                                </el-image>
                             </div>
-                            <div class="spu-sale-attr">
-                                <span v-for="(value,key) in cartInfo.saleAttr">
-                                  {{ key }}: {{ value }}
-                                </span> / 数量{{ cartInfo.buyNum }}
+                            <div class="cart-item-title">
+                                <div class="sku-title">
+                                    <router-link style="text-decoration: none;"
+                                                :to="{path:`/item/${cartInfo.skuId}/itemdesc`}">
+                                        {{ cartInfo.skuName }}
+                                    </router-link>
+                                </div>
+                                <div class="spu-sale-attr">
+                                    <span v-for="(value,key) in JSON.parse(cartInfo.saleAttr)">
+                                    {{ key }}: {{ value }}
+                                    </span> / 数量{{ cartInfo.buyNum }}
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
-                </div>
+                    <div class="cart-item-right">
+                        <div class="btn">
+                            <router-link style="text-decoration: none;"
+                                        :to="{path:`/item/${cartInfo.skuId}/itemdesc`}">
+                                查看商品详情
+                            </router-link>
 
-                <div class="cart-item-right">
-                    <div class="btn">
-                        <router-link style="text-decoration: none;"
-                                     :to="{path:`/item/${cartInfo.skuId}/itemdesc`}">
-                            查看商品详情
-                        </router-link>
-
-                        <router-link style="text-decoration: none;"
-                                     :to="{path:`/cart`}">
-                            去购物车结算 >
-                        </router-link>
+                            <router-link style="text-decoration: none;"
+                                        :to="{path:`/cart`}">
+                                去购物车结算 >
+                            </router-link>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -61,17 +62,18 @@ export default {
     },
     methods: {
         //根据id查询购物车商品信息
-        queryCartById(id) {
+        queryCartById() {
             queryCartById(this.id).then(response => {
-                this.cartInfo = response.data
-                this.cartInfo.saleAttr = JSON.parse(response.data.saleAttr)
+                this.cartInfos = response.data
+                /* this.cartInfo = response.data
+                this.cartInfo.saleAttr = JSON.parse(response.data.saleAttr) */
             })
         }
     },
     data() {
         return {
             id: "",
-            cartInfo: {},
+            cartInfos: [],
         }
     }
 }
@@ -81,14 +83,25 @@ export default {
 $width: 1200px;
 $height: 145px;
 
+div{
+    //解决边框塌陷
+            &:after {
+                content: ".";
+                display: block;
+                height: 0;
+                clear: both;
+                visibility: hidden;
+            }
+}
+
 .aaa {
-    height: $height;
+    //height: $height;
     background-color: #f5f5f5;
     margin-bottom: 20px;
 }
 
 .cart-item-main {
-    height: $height;
+    //height: $height;
     background-color: #f5f5f5;
 
     .cart-item-left {

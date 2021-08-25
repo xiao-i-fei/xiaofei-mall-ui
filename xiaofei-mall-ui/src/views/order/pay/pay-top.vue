@@ -3,7 +3,9 @@
         <div class="pay-top xiaofei-center">
             <div class="left">
                 <div class="logo">
-                    <img src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-08-15/logo.png" alt="图片加载失败">
+                    <a href="/">
+                        <img src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-08-15/logo.png" alt="图片加载失败">
+                    </a>
                 </div>
                 <div class="title">
                     <h3>收银台</h3>
@@ -72,9 +74,11 @@ $width: 990px;
         .logo {
             float: left;
 
-            > img {
-                height: $height;
-                object-fit: contain;
+            > a {
+                > img {
+                    height: $height;
+                    object-fit: contain;
+                }
             }
         }
 
@@ -101,14 +105,16 @@ $width: 990px;
             border-right: 1px solid #dddddd;
 
             > a {
-                padding:0 10px;
+                padding: 0 10px;
             }
 
 
         }
-        >span:last-child{
+
+        > span:last-child {
             border: none;
-            >a:last-child{
+
+            > a:last-child {
                 padding-right: 0;
             }
         }

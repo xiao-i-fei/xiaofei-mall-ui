@@ -238,9 +238,12 @@ export default {
                     this.cartReq.defaultImage = this.skuDetailInfo.skuInfo.skuDefaultImg
                     this.cartReq.userId = userInfo.id
                     if (userInfo.id > 0) {
-                        addCart(this.cartReq).then(response => {
+                        let cartReqs = [];
+                        cartReqs.push(this.cartReq);
+                        console.log("添加购物车的信息为：",cartReqs);
+                        addCart(cartReqs).then(response => {
                             if (response.data && response.code == 200) {
-                                this.$router.push(`/addtocart/${response.data}`)
+                                this.$router.push(`/addtocart/${response.data.toString()}`)
                             } else {
                                 this.$message.error("购物车添加失败，请重新添加");
                             }

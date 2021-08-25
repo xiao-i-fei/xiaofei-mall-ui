@@ -4,11 +4,11 @@ import request from "@/utils/request";
  * 添加购物车
  * @param cartReq 添加购物车的信息
  */
-export function addCart(cartReq) {
+export function addCart(cartReqs) {
     return request({
         url: `/cart/auth`,
         method: 'post',
-        data: cartReq
+        data: cartReqs
     })
 }
 

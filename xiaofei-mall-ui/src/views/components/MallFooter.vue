@@ -47,12 +47,12 @@
                     <div class="xiaofei-col-2">
                         <h5>购物指南</h5>
                         <ul class="xiaofei-clear-vertical-ul">
-                            <li>购物流程</li></li>
-                            <li>会员介绍</li></li>
-                            <li>生活旅行</li></li>
-                            <li>常见问题</li></li>
-                            <li>大家电</li></li>
-                            <li>联系客服</li></li>
+                            <li>购物流程</li>
+                            <li>会员介绍</li>
+                            <li>生活旅行</li>
+                            <li>常见问题</li>
+                            <li>大家电</li>
+                            <li>联系客服</li>
                         </ul>
                     </div>
 
@@ -60,11 +60,11 @@
                     <div class="xiaofei-col-2">
                         <h5>配送方式</h5>
                         <ul class="xiaofei-clear-vertical-ul">
-                            <li>上门自提</li></li>
-                            <li>211限时送达</li></li>
-                            <li>配送服务查询</li></li>
-                            <li>配送费收取标准</li></li>
-                            <li>海外配送</li></li>
+                            <li>上门自提</li>
+                            <li>211限时送达</li>
+                            <li>配送服务查询</li>
+                            <li>配送费收取标准</li>
+                            <li>海外配送</li>
                         </ul>
                     </div>
 
@@ -72,10 +72,10 @@
                     <div class="xiaofei-col-2">
                         <h5>支付方式</h5>
                         <ul class="xiaofei-clear-vertical-ul">
-                            <li>货到付款</li></li>
-                            <li>在线支付</li></li>
-                            <li>分期支付</li></li>
-                            <li>公司转账</li></li>
+                            <li>货到付款</li>
+                            <li>在线支付</li>
+                            <li>分期支付</li>
+                            <li>公司转账</li>
                         </ul>
                     </div>
 
@@ -83,11 +83,11 @@
                     <div class="xiaofei-col-2">
                         <h5>售后服务</h5>
                         <ul class="xiaofei-clear-vertical-ul">
-                            <li>售后政策</li></li>
-                            <li>价格保护</li></li>
-                            <li>退款说明</li></li>
-                            <li>返修/退换货</li></li>
-                            <li>取消订单</li></li>
+                            <li>售后政策</li>
+                            <li>价格保护</li>
+                            <li>退款说明</li>
+                            <li>返修/退换货</li>
+                            <li>取消订单</li>
                         </ul>
                     </div>
 
@@ -95,11 +95,11 @@
                     <div class="xiaofei-col-2">
                         <h5>特色服务</h5>
                         <ul class="xiaofei-clear-vertical-ul">
-                            <li>夺宝岛</li></li>
-                            <li>DIY装机</li></li>
-                            <li>延保服务</li></li>
-                            <li>E卡</li></li>
-                            <li>京东通信</li></li>
+                            <li>夺宝岛</li>
+                            <li>DIY装机</li>
+                            <li>延保服务</li>
+                            <li>E卡</li>
+                            <li>京东通信</li>
                         </ul>
                     </div>
 
@@ -132,7 +132,7 @@ export default {
 
 <style lang="scss" scoped>
 .foot-main {
-    background-color: rgb(234, 234, 234);
+    background-color: #eaeaea;
     //解决边框塌陷
     &:after {
         content: ".";
@@ -143,9 +143,11 @@ export default {
     }
 }
 .one {
+    background-color: #eaeaea;
     border-bottom: 1px solid rgb(222, 222, 222);
 }
 .foot-one {
+    background-color:#eaeaea;
     > div {
         height: 55px;
         margin: 20px 0;
@@ -182,6 +184,7 @@ export default {
     }
 }
 .two {
+    background-color:#eaeaea;
     padding-bottom: 30px;
 }
 .foot-two {

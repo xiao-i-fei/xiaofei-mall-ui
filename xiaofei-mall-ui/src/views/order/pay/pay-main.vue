@@ -1,150 +1,256 @@
 <template>
     <div>
-        <div class="xiaofei-center aaa">
-            <!-- 订单信息 -->
-            <div class="pay-order-info">
-                <div class="left">
-                    <div class="img">
-                        <img src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-08-14/IMG_20210823_140229.png"
-                             alt="图片加载失败">
+        <div v-if="errorIsShow">
+            <div class="error-info xiaofei-center">
+                {{ errorInfo }}<br>
+                <a href="/" style="margin-top: 20px;display: inline-block;font-size: 17px;color: #69a5ff">首页</a>
+            </div>
+        </div>
+        <div v-else>
+            <div class="xiaofei-center aaa">
+                <!-- 订单信息 -->
+                <div class="pay-order-info">
+                    <div class="left">
+                        <div class="img">
+                            <img
+                                src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-08-14/IMG_20210823_140229.png"
+                                alt="图片加载失败">
+                        </div>
+                        <div class="order-info">
+                            <div>订单提交成功，请尽快付款！<span>订单号：{{ orderItemInfo.orderEntity.orderSn }}</span></div>
+                            <div>
+                                <span>千万别扫码，</span>
+                                <span>请您在 <span style="color: #e31613">30分钟内</span> 内完成支付，否则订单会被自动取消</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="order-info">
-                        <div>订单提交成功，请尽快付款！<span>订单号：423432432424</span></div>
-                        <div>
-                            <span>千万别扫码，</span>
-                            <span>请您在 <span style="color: #e31613">30分钟内</span> 内完成支付，否则订单会被自动取消</span>
+                    <div class="right">
+                        <div class="one" style="margin-top: 20px;margin-bottom: 5px">
+                            <span style="color: #666666;margin-right: 5px;font-size: 12px">应付金额</span>
+                            <strong
+                                style="padding: 0 5px;color: #e31613;font-weight: 700;font-size: 16px">{{
+                                    orderItemInfo.orderEntity.payAmount
+                                }}</strong>
+                            <span style="color: #666666;margin-right: 5px;font-size: 12px">元</span>
+                        </div>
+                        <div class="two">
+                            <a style="" class="order-detail-info-a" @click="orderInfoShow=!orderInfoShow">
+                                订单详情
+                                <i v-if="!orderInfoShow" class="el-icon-caret-bottom"></i>
+                                <i v-else class="el-icon-caret-top"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="right">
-                    <div class="one" style="margin-top: 20px;margin-bottom: 5px">
-                        <span style="color: #666666;margin-right: 5px;font-size: 12px">应付金额</span>
-                        <strong style="padding: 0 5px;color: #e31613;font-weight: 700;font-size: 16px">6599.00</strong>
-                        <span style="color: #666666;margin-right: 5px;font-size: 12px">元</span>
-                    </div>
-                    <div class="two">
-                        <a style="" class="order-detail-info-a">
-                            订单详情
-                            <i class="el-icon-caret-bottom"></i>
-                        </a>
-                    </div>
-                </div>
             </div>
-        </div>
 
-        <div class="bbb xiaofei-center">
-            <div class="xiaofei-center">
-                <!-- 支付方式选择 -->
-                <div class="pay-switch-main">
-                    <div class="pay-switch" style="margin-bottom: 15px">
-                        <div>
+            <div class="bbb xiaofei-center">
+                <div class="xiaofei-center">
+                    <div>
+                        <el-collapse-transition>
+                            <div v-show="orderInfoShow"
+                                 style="padding-top: 5px;margin-bottom: 20px;border-top: 1px solid rgb(208, 208, 208);font-size: 12px;color: #666666">
+                                <div>
+                            <span>
+                                收货地址：{{ orderItemInfo.orderEntity.receiverProvince }} -
+                                        {{ orderItemInfo.orderEntity.receiverCity }} -
+                                        {{ orderItemInfo.orderEntity.receiverRegion }} -
+                                        {{ orderItemInfo.orderEntity.receiverDetailAddress }}
+                             </span>
+                                    <span
+                                        v-if="orderItemInfo.orderEntity.receiverName&&orderItemInfo.orderEntity.receiverPhone">
+                                        收货人：【 *{{ orderItemInfo.orderEntity.receiverName.substring(1) }}
+                                         ， ****{{ orderItemInfo.orderEntity.receiverPhone.substring(4) }}】
+                                    </span>
+                                </div>
+                                <div>
+                                    商品名称：
+                                    <div v-for="(item,index) in orderItemInfo.orderItemEntitys">
+                                        {{ item.spuName }}
+                                    </div>
+                                </div>
+                            </div>
+                        </el-collapse-transition>
+                    </div>
+                    <!-- 支付方式选择 -->
+                    <div class="pay-switch-main">
+                        <div class="pay-switch" style="margin-bottom: 15px">
+                            <div>
                             <span
                                 style="display: inline-block;color:#db262f;background-color: #ffeeed;font-size: 15px;padding: 10px;font-weight: 800">
                                 商城支付
                             </span>
-                        </div>
-                        <div style="padding: 20px">
-                            <!-- 每一项支付方式 -->
-                            <div class="pay-switch-item" style="padding: 15px">
-                                <div class="pay-check">
-                                    <input type="checkbox"/>
-                                </div>
-                                <div class="pay-logo">
-                                    <div style="float: left">
-                                        <img src="https://storage.360buyimg.com/payment-assets/sdk/bank/ICBC.png"
-                                             alt="">
+                            </div>
+                            <div style="padding: 20px">
+                                <!-- 每一项支付方式 -->
+                                <div class="pay-switch-item" style="padding: 15px">
+                                    <div class="pay-check">
+                                        <input type="checkbox" v-model="paymentMethod"/>
                                     </div>
-                                    <div style="float: left;line-height: 28px">
-                                        <strong>工商银行</strong>
+                                    <div class="pay-logo">
+                                        <div style="float: left">
+                                            <img src="https://storage.360buyimg.com/payment-assets/sdk/bank/ICBC.png"
+                                                 alt="">
+                                        </div>
+                                        <div style="float: left;line-height: 28px">
+                                            <strong>工商银行</strong>
+                                        </div>
+                                    </div>
+                                    <div class="pay-channel">
+                                        <span>储蓄卡（6666）</span>
+                                    </div>
+                                    <div class="pay-money">
+                                        支付 <strong>{{ orderItemInfo.orderEntity.payAmount }}</strong>元
                                     </div>
                                 </div>
-                                <div class="pay-channel">
-                                    <span>储蓄卡（6666）</span>
+                                <div class="pay-switch-item" style="padding: 15px">
+                                    <div class="pay-check">
+                                        <input type="checkbox" style="cursor: not-allowed" disabled/>
+                                    </div>
+                                    <div class="pay-logo">
+                                        <div style="float: left">
+                                            <img
+                                                src="https://storage.360buyimg.com/payment-assets/sdk/icon/BAITIAO_2.0.png"
+                                                alt="">
+                                        </div>
+                                        <div style="float: left;line-height: 28px">
+                                            <strong>白条</strong>
+                                        </div>
+                                    </div>
+                                    <div class="pay-channel">
+                                        <span>可用额度 0 元</span>
+                                    </div>
+                                    <div class="pay-money" v-if="false">
+                                        支付 <strong>{{ orderItemInfo.orderEntity.payAmount }}</strong>元
+                                    </div>
                                 </div>
-                                <div class="pay-money">
-                                    支付 <strong>6599.00</strong>元
+                                <div class="pay-switch-item" style="padding: 15px">
+                                    <div class="pay-check">
+                                        <input type="checkbox" style="cursor: not-allowed" disabled/>
+                                    </div>
+                                    <div class="pay-logo">
+                                        <div style="float: left">
+                                            <img src="https://storage.360buyimg.com/payment-assets/sdk/icon/JDGB.png"
+                                                 alt="">
+                                        </div>
+                                        <div style="float: left;line-height: 28px">
+                                            <strong>钢镚</strong>
+                                        </div>
+                                    </div>
+                                    <div class="pay-channel">
+                                        <span>本次可消费 0 元</span>
+                                    </div>
+                                    <div class="pay-money" v-if="false">
+                                        支付 <strong>{{ orderItemInfo.orderEntity.payAmount }}</strong>元
+                                    </div>
                                 </div>
                             </div>
-                            <div class="pay-switch-item" style="padding: 15px">
-                                <div class="pay-check">
-                                    <input type="checkbox" style="cursor: not-allowed" disabled/>
-                                </div>
-                                <div class="pay-logo">
-                                    <div style="float: left">
-                                        <img src="https://storage.360buyimg.com/payment-assets/sdk/icon/BAITIAO_2.0.png"
-                                             alt="">
-                                    </div>
-                                    <div style="float: left;line-height: 28px">
-                                        <strong>白条</strong>
-                                    </div>
-                                </div>
-                                <div class="pay-channel">
-                                    <span>可用额度 0 元</span>
-                                </div>
-                                <div class="pay-money" v-if="false">
-                                    支付 <strong>6599.00</strong>元
-                                </div>
-                            </div>
-                            <div class="pay-switch-item" style="padding: 15px">
-                                <div class="pay-check">
-                                    <input type="checkbox"  style="cursor: not-allowed" disabled/>
-                                </div>
-                                <div class="pay-logo">
-                                    <div style="float: left">
-                                        <img src="https://storage.360buyimg.com/payment-assets/sdk/icon/JDGB.png"
-                                             alt="">
-                                    </div>
-                                    <div style="float: left;line-height: 28px">
-                                        <strong>钢镚</strong>
-                                    </div>
-                                </div>
-                                <div class="pay-channel">
-                                    <span>本次可消费 0 元</span>
-                                </div>
-                                <div class="pay-money" v-if="false">
-                                    支付 <strong>6599.00</strong>元
-                                </div>
+                        </div>
+                        <div class="other-pay">
+                            <div style="margin-left: 50px">
+                                <a>其他支付方式</a>
                             </div>
                         </div>
-                    </div>
-                    <div class="other-pay">
-                        <div style="margin-left: 50px">
-                            <a>其他支付方式</a>
+                        <div class="pay-btn">
+                            <div @click="orderPay">立即支付</div>
                         </div>
                     </div>
-                    <div class="pay-btn">
-                        <div>立即支付</div>
-                    </div>
-                </div>
 
-                <div class="third-pay-switch">
-                    <div class="third-pay-switch-main">
-                        <div class="third-pay-switch-item">
-                            <div class="third-pay-switch-image">
-                                <img src="https://storage.360buyimg.com/payment-assets/sdk/bank/PAY-UNION.png" alt=""/>
+                    <!-- 第三方支付方式 -->
+                    <div class="third-pay-switch">
+                        <div class="third-pay-switch-main">
+                            <div class="third-pay-switch-item">
+                                <div class="third-pay-switch-image">
+                                    <img src="https://storage.360buyimg.com/payment-assets/sdk/bank/PAY-UNION.png"
+                                         alt=""/>
+                                </div>
+                                <div class="third-pay-switch-name">
+                                    <span>中国银联</span>
+                                </div>
                             </div>
-                            <div class="third-pay-switch-name">
-                                <span>中国银联</span>
-                            </div>
-                        </div>
-                        <div class="third-pay-switch-item">
-                            <div class="third-pay-switch-image">
-                                <img src="https://storage.360buyimg.com/payment-assets/sdk/bank/PAY-WEIXIN.png" alt=""/>
-                            </div>
-                            <div class="third-pay-switch-name">
-                                <span>微信支付</span>
+                            <div class="third-pay-switch-item">
+                                <div class="third-pay-switch-image">
+                                    <img src="https://storage.360buyimg.com/payment-assets/sdk/bank/PAY-WEIXIN.png"
+                                         alt=""/>
+                                </div>
+                                <div class="third-pay-switch-name">
+                                    <span>微信支付</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
 
 <script>
-export default {}
+import {payOrderInfo, orderPay} from "@/api/order/order";
+
+export default {
+    data() {
+        return {
+            errorInfo: "",
+            errorIsShow: false,
+            orderInfoShow: false,
+            orderReqVo: {
+                orderId: "", orderSn: "", skuInfos: []
+            },
+            orderItemInfo: {orderEntity: {}, orderItemEntitys: []},
+            paymentMethod: true,//支付方式
+        }
+    },
+    methods: {
+        //订单支付
+        orderPay() {
+            if (this.paymentMethod) {
+                this.$confirm('是否执行支付操作', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let skuInfos = [];
+                    this.orderItemInfo.orderItemEntitys.forEach(item => {
+                        let skuInfo = {skuId: "", spuId: "", skuQuantity: 1}
+                        skuInfo.skuId = item.skuId
+                        skuInfo.spuId = item.spuId
+                        skuInfo.skuQuantity = item.skuQuantity;
+                        skuInfos.push(skuInfo)
+                    })
+                    this.orderReqVo.skuInfos = skuInfos;
+                    orderPay(this.orderReqVo).then(response => {
+                        if (response.code==200) {
+                            this.$router.push({path:`/order`})
+                        } else {
+                            this.message.err("支付失败。请重新支付")
+                        }
+                    })
+                }).catch(() => {
+                });
+            } else {
+                this.$message.info("请选择支付方式")
+            }
+        },
+        //获取订单详信息
+        getOrderItemInfo() {
+            payOrderInfo(this.orderReqVo).then(response => {
+                if (response.code == 200) {
+                    this.orderItemInfo = response.data
+                } else {
+                    this.errorInfo = response.msg
+                    this.errorIsShow = true
+                }
+            })
+        }
+    },
+    created() {
+        //接收订单号和订单id
+        this.orderReqVo.orderId = this.$route.params.orderId;
+        this.orderReqVo.orderSn = this.$route.params.orderSn;
+        this.getOrderItemInfo();
+    },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -250,6 +356,16 @@ $width: 990px;
             }
         }
     }
+}
+
+.error-info {
+    border-top: 10px solid #4b5b78;
+    margin-top: 60px;
+    text-align: center;
+    padding: 50px 100px;
+    width: $width*1-200px;
+    color: #666;
+    font-size: 24px;
 }
 
 .bbb {
@@ -415,7 +531,8 @@ $width: 990px;
                     span {
                         font-size: 16px;
                         color: #666;
-                        &:hover{
+
+                        &:hover {
                             cursor: pointer;
                             color: #e4393c;
                         }

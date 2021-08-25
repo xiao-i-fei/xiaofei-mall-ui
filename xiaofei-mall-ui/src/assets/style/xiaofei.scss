@@ -202,13 +202,19 @@ $col: 12;
   .div-col-#{$i} {
     width: 1200/($col/$i)-20px;
     float: left;
-    padding:0 10px;
+    padding: 0 10px;
   }
 }
 
-a{
+a {
   cursor: pointer;
-  &:hover{
+
+  &:hover {
     cursor: pointer;
   }
+}
+
+.xiaofei-clear-table {
+  border-collapse: collapse; //表格的边框合并，如果相邻，则共用一个边框。
+  border-spacing: 0; //设置行与单元格边框的间距。
 }

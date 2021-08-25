@@ -129,7 +129,9 @@ export default {
                 this.cartReq.defaultImage = item.skuImg
                 this.cartReq.userId = userInfo.id
                 if (userInfo.id > 0) {
-                    addCart(this.cartReq).then(response => {
+                    let cartReqs = [];
+                    cartReqs.push(this.cartReq);
+                    addCart(cartReqs).then(response => {
                         if (response.data && response.code == 200) {
                             this.$router.push(`/addtocart/${response.data}`)
                         } else {
@@ -144,10 +146,6 @@ export default {
                     }).then(() => {
                         this.$router.push({path: `/loginorregist/login`})
                     }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '已取消删除'
-                        });
                     });
                 }
 
@@ -159,10 +157,6 @@ export default {
                 }).then(() => {
                     this.$router.push({path: `/loginorregist/login`})
                 }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
                 });
             }
         },
