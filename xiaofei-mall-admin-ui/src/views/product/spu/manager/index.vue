@@ -1,40 +1,40 @@
 <template>
     <div>
-        <el-row>
-            <el-col style="margin-top: 20px" :span="22" :offset="1">
+        <el-row :gutter="10" style="margin-top:20px">
+
+            <!-- 数据展示区域 -->
+            <el-col :span="22" :offset="1">
 
                 <!-- 添加搜索条件区域 -->
                 <el-col :span="24">
                     <el-form :inline="true" :model="skuSearchVo" @keyup.enter.native="getSkuInfo()">
-                        <el-form :inline="true" :model="skuSearchVo">
-                            <el-form-item label="分类">
-                                <category-cascader :catelogPath.sync="catelogPath"></category-cascader>
-                            </el-form-item>
-                            <el-form-item label="品牌">
-                                <brand-select style="width:160px"></brand-select>
-                            </el-form-item>
-                            <el-form-item label="销量">
-                                <el-select placeholder="请选择" v-model="skuSearchVo.saleCount" filterable clearable>
-                                    <el-option label="销量最少" value="-1"></el-option>
-                                    <el-option label="正常排序" value="0"></el-option>
-                                    <el-option label="销量最多" value="1"></el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="价格">
-                                <el-input-number style="width:160px" v-model.number="skuSearchVo.minPrice"
-                                                 :min="0"></el-input-number>
-                                -
-                                <el-input-number style="width:160px" v-model.number="skuSearchVo.maxPrice"
-                                                 :min="0"></el-input-number>
-                            </el-form-item>
-                            <el-form-item label="检索">
-                                <el-input style="width:160px" v-model="skuSearchVo.searchValue" clearable></el-input>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button @click="searchSkuInfo(false)">查询</el-button>
-                                <el-button type="primary" @click="searchSkuInfo(true)">查询全部</el-button>
-                            </el-form-item>
-                        </el-form>
+                        <el-form-item label="分类">
+                            <category-cascader :catelogPath.sync="catelogPath"></category-cascader>
+                        </el-form-item>
+                        <el-form-item label="品牌">
+                            <brand-select style="width:160px"></brand-select>
+                        </el-form-item>
+                        <el-form-item label="销量">
+                            <el-select placeholder="请选择" v-model="skuSearchVo.saleCount" filterable clearable>
+                                <el-option label="销量最少" value="-1"></el-option>
+                                <el-option label="正常排序" value="0"></el-option>
+                                <el-option label="销量最多" value="1"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="价格">
+                            <el-input-number style="width:160px" v-model.number="skuSearchVo.minPrice"
+                                                :min="0"></el-input-number>
+                            -
+                            <el-input-number style="width:160px" v-model.number="skuSearchVo.maxPrice"
+                                                :min="0"></el-input-number>
+                        </el-form-item>
+                        <el-form-item label="检索">
+                            <el-input style="width:160px" v-model="skuSearchVo.searchValue" clearable></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button @click="searchSkuInfo(false)">查询</el-button>
+                            <el-button type="primary" @click="searchSkuInfo(true)">查询全部</el-button>
+                        </el-form-item>
                     </el-form>
                 </el-col>
 
@@ -102,6 +102,7 @@
                 </el-col>
 
             </el-col>
+
         </el-row>
     </div>
 </template>
