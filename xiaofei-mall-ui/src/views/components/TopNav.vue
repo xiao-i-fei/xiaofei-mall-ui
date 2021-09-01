@@ -15,16 +15,25 @@
             <div class="right-div xiaofei-col-6">
                 <ul class="xiaofei-clear-level-ul">
                     <li>
-<!--                        <el-dropdown trigger="click">-->
-                            <router-link v-if="userInfo.id>0" style="text-decoration: none;"
-                                         :to="{path:'/loginorregist/login'}">
+                        <el-dropdown>
+                            <span class="el-dropdown-link">
+                              <router-link v-if="userInfo.id>0" style="text-decoration: none;"
+                                           :to="{path:'/account'}">
                                 {{ userInfo.username }} 欢迎登录<i class="el-icon-arrow-down el-icon--right"></i>
-                            </router-link>
-<!--                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item>个人中心</el-dropdown-item>
-                                <el-dropdown-item>退出登录</el-dropdown-item>
+                              </router-link>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <ul class="xiaofei-clear-vertical-ul" style="padding: 0 20px;text-align: center">
+                                    <li style="padding: 5px 0"><a style="font-size: 12px;color: #666;" @click="logout">退出登录</a>
+                                    </li>
+                                    <li style="padding: 5px 0">
+                                        <router-link to="/account"
+                                                     style="text-decoration: none;font-size: 12px;color: #666">个人信息中心
+                                        </router-link>
+                                    </li>
+                                </ul>
                             </el-dropdown-menu>
-                        </el-dropdown>-->
+                        </el-dropdown>
 
                         <!-- 没有登录的时候显示 -->
                         <router-link v-if="!userInfo.id>0" style="text-decoration: none;"
@@ -38,7 +47,9 @@
                             免费注册
                         </router-link>
                     </li>
-                    <li><router-link :to="{path:`/order`}" style="text-decoration: none">我的订单</router-link></li>
+                    <li>
+                        <router-link :to="{path:`/order`}" style="text-decoration: none">我的订单</router-link>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -56,13 +67,14 @@ export default {
     methods: {
         //退出登录
         logout() {
+            console.log(13132)
             logout().then(response => {
                 if (response.code == 200) {
                     Cookie.remove('User-Token');
                     Cookie.remove('username');
                     Cookie.remove('userInfo');
                     this.$message.success("退出成功")
-                    this.$router.push({path: "/"})
+                    window.location.href = "/";
                 } else {
                     this.$message.success("退出失败")
                 }

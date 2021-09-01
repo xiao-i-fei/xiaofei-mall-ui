@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function addCategoryBrandRelation(categoryBrandRelation) {
     return request({
-        url: `/product/internal/categorybrandrelation`,
+        url: `/product/categorybrandrelation/internal`,
         method: "post",
         data: categoryBrandRelation
     })
@@ -16,7 +16,7 @@ export function addCategoryBrandRelation(categoryBrandRelation) {
  */
 export function deleteCategoryBrandRelation(id, brandId) {
     return request({
-        url: `/product/internal/categorybrandrelation/${id}/${brandId}`,
+        url: `/product/categorybrandrelation/internal/${id}/${brandId}`,
         method: "delete",
     })
 }
@@ -26,7 +26,7 @@ export function deleteCategoryBrandRelation(id, brandId) {
  */
 export function queryCategoryBrandRelationByBrandId(brandId) {
     return request({
-        url: `/product/internal/categorybrandrelation/${brandId}`,
+        url: `/product/categorybrandrelation/internal/${brandId}`,
         method: "get",
     })
 }

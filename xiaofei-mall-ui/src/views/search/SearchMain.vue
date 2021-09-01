@@ -357,6 +357,8 @@ $width: 1200px;
             }
 
             .item-title {
+                height: 35px;
+                overflow: hidden;
                 margin: 5px 0;
                 color: #666666;
                 font-size: 12px;

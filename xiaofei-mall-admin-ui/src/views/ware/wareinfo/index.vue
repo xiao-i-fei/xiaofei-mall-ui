@@ -112,13 +112,13 @@ export default {
         //修改每一页显示的数量
         changePageSize(pageSize) {
             this.page.pageSize = pageSize
-            this.queryBrand()
+            this.getWareInfo()
         },
 
         //修改当前页，上一页或下一页
         changePageNo(pageNo) {
             this.page.pageNo = pageNo
-            this.queryBrand()
+            this.getWareInfo()
         },
         // 多选
         selectionChangeHandle(val) {

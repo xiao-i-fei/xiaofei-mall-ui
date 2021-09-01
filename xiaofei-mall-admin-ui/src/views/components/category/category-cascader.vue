@@ -36,8 +36,8 @@ export default {
             this.paths = this.catelogPath;
         },
         paths(value) {
-            console.log(value)
             this.$emit("getCatelogPath", value);
+            this.$emit("update:catelogPath",value);
             //还可以使用pubsub-js进行传值
             PubSub.publish("catPath", value);
         }

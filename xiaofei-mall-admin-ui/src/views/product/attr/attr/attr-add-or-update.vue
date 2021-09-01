@@ -27,7 +27,8 @@
                     <el-input v-model="attr.icon" placeholder="属性图标"></el-input>
                 </el-form-item>
                 <el-form-item label="所属分类" prop="catelogId">
-                    <category-cascader :catelogPath.sync="catelogPath"></category-cascader>
+                    <el-cascader v-model="catelogPath" clearable filterable :options="categorys" :props="categoryProps"
+                                 @change="categorySelect"></el-cascader>
                 </el-form-item>
                 <el-form-item label="所属分组" prop="attrGroupId" v-if="type === 1">
                     <el-select ref="groupSelect" v-model="attr.attrGroupId" placeholder="请选择">
@@ -60,6 +61,7 @@
 import CategoryCascader from '@/views/components/category/category-cascader'
 import {queryAttrById, updateAttr, addAttr} from "@/api/product/attr";
 import {queryAttrGroupByCategoryId} from "@/api/product/attrgroup";
+import {listTree} from "@/api/product/category";
 
 export default {
 
@@ -80,6 +82,15 @@ export default {
                 attrGroupId: "",
                 showDesc: 0,
             },
+            //这里的props是给级联选择器配置
+            categoryProps: {
+                value: "catId",
+                label: "name",
+                children: "children",
+                expandTrigger: 'hover'
+            },
+            attrType: "",
+            categorys: [],
             catelogPath: [],
             attrGroups: [],
             dataRule: {
@@ -135,7 +146,22 @@ export default {
         }
     },
 
+    created() {
+        this.queryCategoryTree();
+    },
     methods: {
+        //获取级联选择器中的值
+        queryCategoryTree() {
+            listTree().then(response => {
+                this.categorys = response.data
+            })
+        },
+        //级联选择器选中之后触发的函数
+        categorySelect(value) {
+            if (value.length > 0) {
+                this.attr.catelogId = value[value.length - 1]
+            }
+        },
         //初始化方法
         init(attrId) {
             console.log(attrId)
@@ -231,7 +257,6 @@ export default {
             this.attr.catelogId = path[path.length - 1]
             if (path && path.length === 3) {
                 queryAttrGroupByCategoryId(path[path.length - 1]).then(response => {
-
                     if (response.data && response.code === 200) {
                         this.attrGroups = response.data
                     } else {

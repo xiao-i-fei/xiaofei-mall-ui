@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function addAttrGroup(attrgroup) {
     return request({
-        url: `/product/internal/attrgroup/add`,
+        url: `/product/attrgroup/internal/add`,
         method: 'post',
         data: attrgroup
     })
@@ -16,7 +16,7 @@ export function addAttrGroup(attrgroup) {
  */
 export function updateAttrGroup(attrgroup) {
     return request({
-        url: `/product/internal/attrgroup/update`,
+        url: `/product/attrgroup/internal/update`,
         method: 'put',
         data: attrgroup
     })
@@ -27,7 +27,7 @@ export function updateAttrGroup(attrgroup) {
  */
 export function deleteAttrGroupById(attrgroupIds) {
     return request({
-        url: `/product/internal/attrgroup/delete`,
+        url: `/product/attrgroup/internal/delete`,
         method: 'delete',
         data: attrgroupIds,
     })

@@ -157,6 +157,9 @@ export default {
             let intersection = strSkuIds.toString().split(",").filter(function (val) {
                 return skuIds.toString().split(",").indexOf(val) > -1
             })
+            if(strSkuIds==""){
+                intersection = skuIds;
+            }
             if (intersection > 0) {
                 this.skuIds = intersection
                 window.location.href = `/item/${intersection}/itemdesc`;
@@ -240,7 +243,7 @@ export default {
                     if (userInfo.id > 0) {
                         let cartReqs = [];
                         cartReqs.push(this.cartReq);
-                        console.log("添加购物车的信息为：",cartReqs);
+                        console.log("添加购物车的信息为：", cartReqs);
                         addCart(cartReqs).then(response => {
                             if (response.data && response.code == 200) {
                                 this.$router.push(`/addtocart/${response.data.toString()}`)
@@ -388,16 +391,15 @@ $color4: #5e69ad;
         border-bottom: 1px dotted #dfdfdf;
 
         .item-title {
-            height: 28px;
+            padding: 10px 0;
             line-height: 28px;
-            padding-top: 10px;
             margin-bottom: 5px;
             color: $color1;
             font: 700 16px Arial, "microsoft yahei";
         }
 
         .item-subtitle {
-            height: 18px;
+            padding-bottom: 5px ;
             line-height: 18px;
             color: $color2;
             font-size: 12px;
@@ -599,7 +601,7 @@ $color4: #5e69ad;
             .dd {
                 float: left;
                 border: 1px solid #cccccc;
-                margin: 0 10px;
+                margin: 5px 10px;
                 padding: 0 13px;
                 color: #666666;
                 font-size: 12px;

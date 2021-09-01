@@ -28,7 +28,7 @@
                     <el-table-column prop="brandId" header-align="center" align="center" label="品牌id"></el-table-column>
                     <el-table-column prop="name" header-align="center" align="center" label="品牌名"></el-table-column>
                     <el-table-column prop="logo" header-align="center" align="center" label="品牌logo">
-                        <template slot-scope="scope"><img alt="" :src="scope.row.logo"/></template>
+                        <template slot-scope="scope"><img alt="" style="height: 36px;object-fit: contain" :src="scope.row.logo"/></template>
                     </el-table-column>
                     <el-table-column prop="descript" header-align="center" align="center" label="介绍"></el-table-column>
                     <el-table-column prop="showStatus" header-align="center" align="center" label="显示状态">
@@ -90,7 +90,7 @@
 
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="visible=false">取消</el-button>
-                 </span>
+                </span>
 
             </el-dialog>
         </el-row>

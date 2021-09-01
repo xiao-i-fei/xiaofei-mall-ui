@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function addBrand(brand) {
     return request({
-        url: `/product/internal/brand/add`,
+        url: `/product/brand/internal/add`,
         method: 'post',
         data: brand
     })
@@ -17,7 +17,7 @@ export function addBrand(brand) {
  */
 export function updateBrand(brand) {
     return request({
-        url: `/product/internal/brand/update`,
+        url: `/product/brand/internal/update`,
         method: 'put',
         data: brand
     })

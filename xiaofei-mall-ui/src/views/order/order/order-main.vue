@@ -96,7 +96,6 @@
                                                 <span>{{ item.orderEntity.receiverName }}<i
                                                     class="el-icon-s-custom"></i></span>
                                             </el-tooltip>
-
                                         </div>
                                     </td>
                                     <td style="border:1px solid #e5e5e5;border-left:0;border-top:0"> <!-- 订单项的价格信息 -->
@@ -137,7 +136,9 @@
                                                 </div>
                                             </div>
                                             <div v-if="item.orderEntity.status===2">
-                                                已发货
+                                                <div class="c" style="margin-top: 5px">
+                                                    <el-button @click="updateOrder(item.orderEntity.id,item.orderEntity.orderSn,3)" size="mini" type="success">确认收货</el-button>
+                                                </div>
                                                 <div class="c" style="margin-top: 5px">
                                                     <a @click="updateOrder(item.orderEntity.id,item.orderEntity.orderSn,4)">取消订单</a>
                                                 </div>
@@ -186,7 +187,7 @@ export default {
         return {
             orderStatus: 0,
             orderItemQuery: {orderSn: "", orderStatus: null, addTime: null},
-            page: {pageNo: 1, pageSize: 1, pageTotal: 1, itemCount: 0, items: []}
+            page: {pageNo: 1, pageSize: 10, pageTotal: 1, itemCount: 0, items: []}
         }
     },
     methods: {
@@ -224,11 +225,11 @@ export default {
 
             updateOrder(orderUpdateInfo).then(response=>{
                 if(response.code==200){
-                    this.$message.success("取消成功")
+                    this.$message.success("操作成功");
                     //重新请求数据
-                    this.queryOrderItem()
+                    this.queryOrderItem();
                 }else{
-                    this.$message.error("订单取消失败，请重试")
+                    this.$message.error("订单操作失败，请重试");
                 }
             })
         },

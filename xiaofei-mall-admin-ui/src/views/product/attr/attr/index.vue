@@ -202,7 +202,6 @@ export default {
         //根据id查询基本属性
         queryAttrById(attrId) {
             queryAttrById(attrId).then(response => {
-
             })
         },
         //条件是搜索
@@ -238,8 +237,6 @@ export default {
             this.page.pageNo = pageNo
             this.getBaseAttr()
         },
-
-
     }
 }
 

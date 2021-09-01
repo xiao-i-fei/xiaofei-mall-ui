@@ -10,15 +10,15 @@
                             <el-input v-model.number="orderItemQuery.orderSn" placeholder="订单编号"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary">查询</el-button>
+                            <el-button type="primary" @click="queryOrderItem()">查询</el-button>
                         </el-form-item>
                     </el-form>
                 </el-col>
 
                 <!-- 数据展示区域 -->
                 <el-col :span="24">
-                    <el-table  max-height="1100" :data="page.items" lazy border style="width: 100%;" highlight-current-row>
-                        <el-table-column type="expand">
+                    <el-table  max-height="1100" :data="page.items" lazy style="width: 100%;" highlight-current-row>
+                        <el-table-column type="expand" label="订单详情" width="80">
                             <template slot-scope="scope">
                                     <el-table :data="scope.row.orderItemEntitys" lazy border mstyle="width: 100%" highlight-current-row>
                                         <el-table-column header-align="center" align="center" label="商品图片">
@@ -48,33 +48,33 @@
                         <el-table-column prop="orderEntity.orderSn" header-align="center" align="center"
                                          label="订单编号"></el-table-column>
                         <el-table-column header-align="center" align="center" label="收货人">
-                                         <template slot-scope="scope">
-                                             <el-row :gutter="10">
-                                                 <el-col :span="24">
-                                                     <el-tooltip class="item" effect="dark" placement="left">
-                                                        <div slot="content">
-                                                            <span style="color: white;font-weight: 800">{{
-                                                                    scope.row.orderEntity.receiverName
-                                                                }}</span><br/>
-                                                            <span
-                                                                style="padding: 10px 0;color: white">{{
-                                                                    scope.row.orderEntity.receiverProvince
-                                                                }}{{
-                                                                    scope.row.orderEntity.receiverCity
-                                                                }}{{
-                                                                    scope.row.orderEntity.receiverRegion
-                                                                }}{{ scope.row.orderEntity.receiverDetailAddress }}</span><br/>
-                                                            <span
-                                                                style="padding: 10px 0;color: white">{{
-                                                                    scope.row.orderEntity.receiverPhone
-                                                                }}</span>
-                                                        </div>
-                                                        <span>{{ scope.row.orderEntity.receiverName }}
-                                                            <i class="el-icon-s-custom"></i></span>
-                                                    </el-tooltip>
-                                                 </el-col>
-                                             </el-row>
-                                         </template>
+                            <template slot-scope="scope">
+                                <el-row :gutter="10">
+                                    <el-col :span="24">
+                                        <el-tooltip class="item" effect="dark" placement="left">
+                                        <div slot="content">
+                                            <span style="color: white;font-weight: 800">{{
+                                                    scope.row.orderEntity.receiverName
+                                                }}</span><br/>
+                                            <span
+                                                style="padding: 10px 0;color: white">{{
+                                                    scope.row.orderEntity.receiverProvince
+                                                }}{{
+                                                    scope.row.orderEntity.receiverCity
+                                                }}{{
+                                                    scope.row.orderEntity.receiverRegion
+                                                }}{{ scope.row.orderEntity.receiverDetailAddress }}</span><br/>
+                                            <span
+                                                style="padding: 10px 0;color: white">{{
+                                                    scope.row.orderEntity.receiverPhone
+                                                }}</span>
+                                        </div>
+                                        <span>{{ scope.row.orderEntity.receiverName }}
+                                            <i class="el-icon-s-custom"></i></span>
+                                    </el-tooltip>
+                                    </el-col>
+                                </el-row>
+                            </template>
                         </el-table-column>
                         <el-table-column header-align="center" align="center"
                                          label="订单来源">
@@ -108,10 +108,10 @@
                                 <span v-if="scope.row.orderEntity.status==5">订单无效</span>
                             </template>
                         </el-table-column>
-                        <el-table-column header-align="center" align="center" width="300" label="操作">
+                        <el-table-column header-align="center" align="center" label="操作">
                             <template slot-scope="scope">
-                                <el-button v-if="scope.row.orderEntity.status==1" type="primary" size="mini">发 货</el-button>
-                                <el-button v-else type="success" size="mini">已完成</el-button></el-button>
+                                <el-button v-if="scope.row.orderEntity.status==1" type="primary" size="mini" @click="updateOrderStatus(scope.row)">发 货</el-button>
+                                <el-button v-else type="success" size="mini">暂无操作</el-button></el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import { queryAllByPage } from "@/api/order/order-item";
+import { queryAllByPage,updateOrderStatus } from "@/api/order/order-item";
 export default {
     created() {
         this.queryOrderItem();
@@ -170,6 +170,18 @@ export default {
             this.page.pageNo = pageNo;
             this.queryOrderItem();
         },
+        //修改订单信息 ---- 发货
+        updateOrderStatus(item){
+            //封装需要修改的数据
+            let orderUpdate = {id:item.orderEntity.id,orderSn:item.orderEntity.orderSn,status:2};
+            updateOrderStatus(orderUpdate).then(response=>{
+                if(!response.data){
+                    this.$message.error("发货失败，请重新发货");
+                }else{
+                    this.queryOrderItem();
+                }
+            })
+        }
     },
 };
 </script>

@@ -83,7 +83,7 @@ export default {
                     _self.dataObj.policy = response.data.policy
                     _self.dataObj.signature = response.data.signature
                     _self.dataObj.ossaccessKeyId = response.data.accessid
-                    _self.dataObj.key = response.data.dir + getUUID().replace('-', '').replace('_', '') + '_${filename}'
+                    _self.dataObj.key = response.data.dir + getUUID().replace('-', '').replace('_', '')
                     _self.dataObj.dir = response.data.dir
                     _self.dataObj.host = response.data.host
                     resolve(true)

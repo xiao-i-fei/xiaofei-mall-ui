@@ -22,7 +22,7 @@
                         >
                             <!-- 商品标题 -->
                             <div class="product-title">
-                                <p>{{ item.skuTitle }}</p>
+                                <p  style="height: 35px;overflow: hidden;">{{ item.skuTitle }}</p>
                             </div>
 
                             <!-- 商品价格 -->

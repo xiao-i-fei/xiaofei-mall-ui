@@ -17,7 +17,7 @@
                     <el-input v-model="attrGroup.icon" placeholder="组图标"></el-input>
                 </el-form-item>
                 <el-form-item label="所属分类" prop="catelogId">
-                    <el-cascader v-model="catelogPath" :options="categorys" :props="categoryProps"
+                    <el-cascader v-model="catelogPath" clearable filterable :options="categorys" :props="categoryProps"
                                  @change="categorySelect"></el-cascader>
                 </el-form-item>
             </el-form>
@@ -37,7 +37,6 @@ export default {
     props: ["queryAttrGroup"],
 
     mounted() {
-
         this.$bus.$on('addOrUpdateAttrGroup', attrGroupId => {
             this.attrType = attrGroupId ? "修改" : "添加"
             this.visible = true

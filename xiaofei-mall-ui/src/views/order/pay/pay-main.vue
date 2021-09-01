@@ -45,7 +45,7 @@
             </div>
 
             <div class="bbb xiaofei-center">
-                <div class="xiaofei-center">
+                <div class="xiaofei-center" style="width: 990px">
                     <div>
                         <el-collapse-transition>
                             <div v-show="orderInfoShow"
