@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div>
         <el-cascader filterable clearable placeholder="试试搜索：手机"
                      v-model="paths" :options="categorys" :props="setting"></el-cascader>
