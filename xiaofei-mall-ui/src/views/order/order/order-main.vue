@@ -178,7 +178,6 @@ import {updateOrder} from "@/api/order/order";
 import {formatDate} from "@/utils";
 import {getToken} from '@/utils/auth'
 import {addCart} from "@/api/cart/cart";
-
 export default {
     created() {
         this.queryOrderItem()

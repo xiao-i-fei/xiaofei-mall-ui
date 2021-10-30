@@ -11,7 +11,7 @@
                             @mouseenter.stop="adShow = true"
                         >
                             <a>
-                                <img :src="sideAds[0]" alt=""/>
+                                <img :src="sideAds.smallAds.advPic" alt=""/>
                             </a>
                         </div>
                         <transition name="el-zoom-in-center">
@@ -22,7 +22,7 @@
                                 @mouseenter.stop="adShow = true"
                             >
                                 <a>
-                                    <img :src="sideAds[1]" alt="图片加载失败"/>
+                                    <img :src="sideAds.bigAds.advPic" alt="图片加载失败"/>
                                 </a>
                             </div>
                         </transition>
@@ -66,35 +66,31 @@
                         <div class="big-carousel">
                             <el-carousel trigger="click" height="470px">
                                 <el-carousel-item
+                                    v-for="(carousel, index) in homeAdv.carousels"
+                                    :key="index"
+                                >
+                                    <img alt="图片加载失败" :src="carousel.advPic"/>
+                                </el-carousel-item>
+                            </el-carousel>
+                            <!-- <el-carousel trigger="click" height="470px">
+                                <el-carousel-item
                                     v-for="(carousel, index) in carousels"
                                     :key="index"
                                 >
                                     <img alt="图片加载失败" :src="carousel"/>
                                 </el-carousel-item>
-                            </el-carousel>
+                            </el-carousel> -->
                         </div>
                         <!-- 小轮播图 -->
-                        <div class="small-carousel">
-                            <a href="#">
-                                <img
-                                    alt="图片加载失败"
-                                    :src="smallCarousels[0]"
-                                /></a>
-                            <a href="#">
-                                <img
-                                    style="
-                                        margin-top: 5.5px;
-                                        margin-bottom: 5.5px;
-                                    "
-                                    alt="图片加载失败"
-                                    :src="smallCarousels[1]"
-                                /></a>
-                            <a href="#">
-                                <img
-                                    alt="图片加载失败"
-                                    :src="smallCarousels[2]"
-                                /></a>
-                        </div>
+                        <el-carousel trigger="click" height="470px">
+                                <el-carousel-item v-for="( item, index ) in homeAdv.smallCarousels" :key="index" >
+                                    <div class="small-carousel">
+                                        <a href="#" v-for="carousels in item" :key="carousels.advId">
+                                            <img alt="图片加载失败" :src="carousels.advPic"/>
+                                        </a>
+                                    </div>
+                                </el-carousel-item>
+                            </el-carousel>
                     </div>
                     <!-- 登录区域 -->
                     <div class="login">
@@ -313,15 +309,42 @@ import sideAd1 from "@/views/home/img/ad/503d064c8c43d834.png.webp";
 import sideAd2 from "@/views/home/img/ad/a164ab45b363c012.jpg.webp";
 import Cookie from 'js-cookie'
 import {logout} from "@/api/auth/auth";
+import {queryAdvByPage} from "@/api/product/home-adv";
 
 export default {
     created() {
         this.getCategory();
+        this.getCarousel()
     },
     mounted() {
         this.getUserInfo()
     },
     methods: {
+        // 加载轮播图资源
+        getCarousel(){
+            queryAdvByPage().then(response=>{
+                // 处理数据
+                let items = [];
+                let smallItems=[];
+                items = response.data.items;
+                items.forEach(item=>{
+                   if(item.advType==0){
+                       this.homeAdv.carousels.push(item)
+                   }else if(item.advType==5){
+                       if(smallItems.length>=3){
+                           this.homeAdv.smallCarousels.push(smallItems);
+                           smallItems=[]
+                       }
+                       smallItems.push(item)
+                   }else if(item.advType==4){
+                       this.sideAds.bigAds=item
+                   }else if(item.advType==6){
+                       this.sideAds.smallAds=item
+                   }
+                })
+                //this.homeAdv.carousels =response.data.items
+            })
+        },
         //退出登录
         logout() {
             logout().then(response => {
@@ -359,7 +382,7 @@ export default {
     data() {
         return {
             adShow: false,
-            sideAds: [sideAd1, sideAd2], //侧边栏的广告栏
+            sideAds: {smallAds:{},bigAds:{}}, //侧边栏的广告栏
             categoryShow: false, //是否显示类别的子节点，需要选中的时候，计算出数据才显示
             categorys: [], //全部的数据
             categoryLevels: [], //二三级类别的数据，需要根据选中的一级类获取二级类别
@@ -373,6 +396,7 @@ export default {
                 carousel7,
                 carousel8,
             ], //大的轮播图、
+            homeAdv:{carousels:[],smallCarousels:[]},//后台查询的首页轮播图等广告信息
             smallCarousels: [small1, small2, small3], //小轮播图
             userInfo: {},//用户信息
         };
