@@ -1,14 +1,14 @@
 import axios from 'axios'
-import {Notification, MessageBox, Message} from 'element-ui'
+import { Notification, MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import {getToken, removeToken} from '@/utils/auth'
+import { getToken, removeToken } from '@/utils/auth'
 import errorCode from '@/utils/errorCode'
-import {tansParams} from "@/utils/mall";
+import { tansParams } from "@/utils/mall";
 import Cookie from 'js-cookie'
-import {logout} from "@/api/auth/auth";
+import { logout } from "@/api/auth/auth";
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
-// 创建axios实例
+    // 创建axios实例
 const service = axios.create({
     // axios中请求配置有baseURL选项，表示请求URL公共部分
     baseURL: process.env.VUE_APP_BASE_API,
@@ -32,7 +32,7 @@ service.interceptors.request.use(config => {
         for (const propName of Object.keys(config.params)) {
             const value = config.params[propName];
             var part = encodeURIComponent(propName) + "=";
-            if (value !== null && typeof (value) !== "undefined") {
+            if (value !== null && typeof(value) !== "undefined") {
                 if (typeof value === 'object') {
                     for (const key of Object.keys(value)) {
                         let params = propName + '[' + key + ']';
@@ -66,23 +66,21 @@ service.interceptors.response.use(res => {
             Cookie.remove("userInfo")
             removeToken()
             MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
-                    confirmButtonText: '重新登录',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }
-            ).then(() => {
+                confirmButtonText: '重新登录',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
                 logout().then(response => {
                     window.location.href = '/loginorregist/login'
                 })
-            }).catch(() => {
-            });
+            }).catch(() => {});
         } else if (code === 500) {
             Message({
                 message: msg,
                 type: 'error'
             })
             return Promise.reject(new Error(msg))
-        }else if(code===490){
+        } else if (code === 490) {
             return res.data
         } else if (code !== 200) {
             Notification.error({
@@ -95,7 +93,7 @@ service.interceptors.response.use(res => {
     },
     error => {
         console.log('err' + error)
-        let {message} = error;
+        let { message } = error;
         if (message == "Network Error") {
             message = "后端接口连接异常";
         } else if (message.includes("timeout")) {

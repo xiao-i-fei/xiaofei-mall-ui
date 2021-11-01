@@ -2,7 +2,7 @@
     <div>
         <el-row :gutter="10">
             <el-col :offset="1" :span="22">
-                <el-col :span="24">orderEntity</el-col>
+                <el-col :span="24">首页</el-col>
             </el-col>
         </el-row>
     </div>
