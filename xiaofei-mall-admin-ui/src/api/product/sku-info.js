@@ -30,6 +30,33 @@ export function querySkuInfoByPage(pageNo = 1, pageSize = 8, skuSearchVo) {
     })
 }
 
+/**
+ * 查询指定商品的所有图片
+ */
+export function getSkuImageBySkuId(skuId) {
+    return request({
+        url: `/product/skuimage/${skuId}`,
+        method: "get"
+    })
+}
+
+
+// 修改sku信息
+export function updateInfo(data) {
+    return request({
+        url: '/product/skuinfo',
+        method: 'put',
+        data: data
+    })
+}
+
+// 查询sku信息详细
+export function getInfo(skuId) {
+    return request({
+        url: '/product/skuinfo/' + skuId,
+        method: 'get'
+    })
+}
 
 
 

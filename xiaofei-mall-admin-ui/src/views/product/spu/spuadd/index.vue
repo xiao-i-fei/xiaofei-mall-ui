@@ -341,7 +341,7 @@ export default {
                     {required: true, message: '请上传商品详情图集', trigger: 'blur'}
                 ],
                 images: [
-                    {required: true, message: '请上传商品图片集', trigger: 'blur'}
+                    {required: false, message: '请上传商品图片集', trigger: 'blur'}
                 ],
                 weight: [{type: 'number', required: true, message: '请填写正确的重量值', trigger: 'blur'}]
             },

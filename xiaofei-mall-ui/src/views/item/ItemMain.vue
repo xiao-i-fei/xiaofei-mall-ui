@@ -96,6 +96,7 @@
                         <el-input max="999" min="1" v-model.number="cartReq.buyNum" placeholder="购买数量"></el-input>
                         <i class="el-icon-plus" @click="cartReq.buyNum++" :disabled="true"></i>
                         <i class="el-icon-minus" @click="cartReq.buyNum--"></i>
+                        <i class="el-icon-minus" @click="cartReq.buyNum--"></i>
                     </div>
                     <div class="item-add-shopping">
                         <el-button type="primary" @click="addShopOrBuy(true)">加入购物</el-button>
@@ -148,6 +149,8 @@ export default {
     methods: {
         //获取销售属性中的skuIds
         getSkuIds(skuIds, index) {
+            console.log(skuIds)
+            console.log(index)
             let strSkuIds = ""
             for (let i = 0; i < this.skuIds.length; i++) {
                 if (i != index) {

@@ -28,7 +28,7 @@
                 <!-- 商品功能区域导航栏 -->
                 <div class="item-desc-nav">
                     <ul class="xiaofei-clear-level-ul">
-                        <li :class="{no_highlight:highlight!='itemdesc',highlight:highlight=='itemdesc'}">
+                        <li :class="{no_highlight:highlight!='itemdesc'&&highlight!='',highlight:highlight=='itemdesc'||highlight==''}">
                             <router-link style="text-decoration: none;" :to="{path:`/item/${skuId}/itemdesc`}">商品介绍
                             </router-link>
                         </li>

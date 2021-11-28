@@ -38,7 +38,7 @@
                                  -->
                                 <li v-for="(category, index) in categorys" :key="category.catId"
                                     @mouseleave.stop="categoryShow = false" @mouseenter.stop="getCategoryLevel2(index)">
-                                    <a>{{ category.name }} > </a>
+                                    <a>{{ category.name }}  </a>
                                 </li>
                             </ul>
                         </div>
@@ -47,7 +47,7 @@
                              @mouseenter.stop="categoryShow = true">
                             <dl v-for="(categoryLevel2, index) in categoryLevels" :key="categoryLevel2.catId">
                                 <dt>
-                                    <a>{{ categoryLevel2.name }}></a>
+                                    <a>{{ categoryLevel2.name }} > </a></a>
                                 </dt>
                                 <dd>
                                     <router-link style="text-decoration: none;"
@@ -485,8 +485,9 @@ $side-bar-height: 470px;
                     }
 
                     a {
-                        font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial,
-                        Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+                        font-size:14px;
+                        color:#333;
+                        margin-left: 10px;
 
                         &:hover {
                             cursor: pointer;
@@ -521,10 +522,12 @@ $side-bar-height: 470px;
             border: 1px solid #eaeaea;
             z-index: 5;
             width: ($width * 1 - $side-bar-width)+3;
-            height: $side-bar-height * 1-2;
+            min-height: $side-bar-height * 1-2;
             margin-top: 10px;
             background-color: white;
             float: right;
+            box-shadow: 5px 5px 5px #888888;
+            //overflow: hidden;
 
             //position: relative;
             //解决边框塌陷

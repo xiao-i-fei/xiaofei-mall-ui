@@ -91,7 +91,7 @@ export default {
         // 获取数据列表
         getSpuInfo() {
             this.dataListLoading = true
-            querySpuInfoByPage(this.pageNo, this.pageSize, this.spuSearchInfo).then(response => {
+            querySpuInfoByPage(this.page.pageNo, this.page.pageSize, this.spuSearchInfo).then(response => {
                 if (response.data && response.code === 200) {
                     this.page = response.data
                 } else {
@@ -108,12 +108,14 @@ export default {
         },
         //修改每一页显示的数量
         changePageSize(pageSize) {
+            console.log(pageSize);
             this.page.pageSize = pageSize
             this.getSpuInfo()
         },
 
         //修改当前页，上一页或下一页
         changePageNo(pageNo) {
+            console.log(pageNo);
             this.page.pageNo = pageNo
             this.getSpuInfo()
         },

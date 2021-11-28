@@ -13,17 +13,55 @@
                     <div class="one">
                         <div class="left">
                             <ul class="xiaofei-clear-level-ul">
-                                <li><a :class="{'no-height-light':true}">全部订单</a></li>
-                                <li><a :class="{'no-height-light':true}">待付款</a></li>
-                                <li><a :class="{'no-height-light':true}">待收获</a></li>
-                                <li><a :class="{'no-height-light':true}">待评价</a></li>
-                                <li><a style="font-weight: 800" :class="{'no-height-light':true}">我的常购商品</a></li>
+                                <li>
+                                    <a href="/order?orderStatus=-1" :class="{'no-height-light':orderItemQuery.orderStatus!=-1
+                                    ,'height-light':orderItemQuery.orderStatus==-1}">
+                                        全部订单
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/order?orderStatus=0" :class="{'no-height-light':orderItemQuery.orderStatus!=0
+                                    ,'height-light':orderItemQuery.orderStatus==0}">
+                                        待付款
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/order?orderStatus=1" :class="{'no-height-light':orderItemQuery.orderStatus!=1
+                                    ,'height-light':orderItemQuery.orderStatus==1}">
+                                        待发货
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/order?orderStatus=2" :class="{'no-height-light':orderItemQuery.orderStatus!=2
+                                    ,'height-light':orderItemQuery.orderStatus==2}">
+                                        已发货
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/order?orderStatus=3" :class="{'no-height-light':orderItemQuery.orderStatus!=3
+                                    ,'height-light':orderItemQuery.orderStatus==3}">
+                                        已完成
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/order?orderStatus=4" :class="{'no-height-light':orderItemQuery.orderStatus!=4
+                                    ,'height-light':orderItemQuery.orderStatus==4}">
+                                        已关闭
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/order?orderStatus=5" :class="{'no-height-light':orderItemQuery.orderStatus!=5
+                                    ,'height-light':orderItemQuery.orderStatus==5}">
+                                        无效订单
+                                    </a>
+                                </li>
+                                <li><a :class="{'no-height-light':true}">我的常购商品</a></li>
                                 <li><a :class="{'no-height-light':true}">订单回收站</a></li>
                             </ul>
                         </div>
                         <div class="right">
                             <input type="text" class="xiaofei-clear-input" v-model="orderItemQuery.orderSn"
-                                            @keyup.enter="queryOrderItem">
+                                            @keyup.enter="queryOrderItem" pr>
                             <button type="button" @click="queryOrderItem">搜索</button>
                         </div>
                     </div>
@@ -64,10 +102,16 @@
                                         <div class="item-detail">
                                             <div v-for="orderItem in item.orderItemEntitys" :key="orderItem.id">
                                                 <div class="sku-pic">
-                                                    <el-image :src="orderItem.skuPic" lazy fit="contain"
-                                                              style="width: 60px;height: 60px"/>
+                                                    <router-link style="text-decoration: none;color:#333" :to="{path:`/item/${orderItem.skuId}`}">
+                                                        <el-image :src="orderItem.skuPic" lazy fit="contain"
+                                                                style="width: 60px;height: 60px"/>
+                                                    </router-link>
                                                 </div>
-                                                <div class="sku-title">{{ orderItem.skuName }}</div>
+                                                <div class="sku-title">
+                                                    <router-link style="text-decoration: none;color:#333" :to="{path:`/item/${orderItem.skuId}`}">
+                                                        {{ orderItem.skuName }}
+                                                    </router-link>
+                                                </div>
                                                 <div class="sku-buy-num"> x {{ orderItem.skuQuantity }}</div>
                                             </div>
                                         </div>
@@ -180,12 +224,16 @@ import {getToken} from '@/utils/auth'
 import {addCart} from "@/api/cart/cart";
 export default {
     created() {
-        this.queryOrderItem()
+        let orderStatus = this.$route.query.orderStatus
+        if(orderStatus>-1&&orderStatus<6){
+            this.orderItemQuery.orderStatus = parseInt(orderStatus)
+        }
+        this.queryOrderItem();
+        
     },
     data() {
-        return {
-            orderStatus: 0,
-            orderItemQuery: {orderSn: "", orderStatus: null, addTime: null},
+        return { 
+            orderItemQuery: {orderSn: "", orderStatus: -1, addTime: null},
             page: {pageNo: 1, pageSize: 10, pageTotal: 1, itemCount: 0, items: []}
         }
     },
@@ -299,9 +347,20 @@ div {
                 > ul {
                     li {
                         .no-height-light {
-                            padding-right: 20px;
+                            margin-right: 20px;
                             font-size: 12px;
                             color: $font-color;
+
+                            &:hover {
+                                color: $color;
+                            }
+                        }
+                        .height-light {
+                                color: #e4393c;
+                                font-weight: 800;
+                                border-bottom: 2px solid #e4393c;
+                                margin-right: 20px;
+                                font-size: 12px; 
 
                             &:hover {
                                 color: $color;

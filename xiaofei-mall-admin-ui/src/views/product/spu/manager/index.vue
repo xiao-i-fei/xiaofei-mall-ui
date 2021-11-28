@@ -23,10 +23,10 @@
                         </el-form-item>
                         <el-form-item label="价格">
                             <el-input-number style="width:160px" v-model.number="skuSearchVo.minPrice"
-                                                :min="0"></el-input-number>
+                                             :min="0"></el-input-number>
                             -
                             <el-input-number style="width:160px" v-model.number="skuSearchVo.maxPrice"
-                                                :min="0"></el-input-number>
+                                             :min="0"></el-input-number>
                         </el-form-item>
                         <el-form-item label="检索">
                             <el-input style="width:160px" v-model="skuSearchVo.searchValue" clearable></el-input>
@@ -61,7 +61,8 @@
                                          label="名称"></el-table-column>
                         <el-table-column prop="skuDefaultImg" header-align="center" align="center" label="默认图片">
                             <template slot-scope="scope">
-                                <img alt="" :src="scope.row.skuDefaultImg" style="width:80px;height:80px;"/>
+                                <el-image alt="" lazy :preview-src-list="skuImages" :src="scope.row.skuDefaultImg"
+                                          style="width:80px;height:80px;" @click="preview(scope.row.skuId)"/>
                             </template>
                         </el-table-column>
                         <el-table-column prop="price" header-align="center" align="center" label="价格"></el-table-column>
@@ -69,15 +70,18 @@
                                          label="销量"></el-table-column>
                         <el-table-column header-align="center" align="center" width="300" label="操作">
                             <template slot-scope="scope">
-                                <el-button type="text" size="small" @click="preview(scope.row.skuId)">预览
+                                <el-button size="mini" type="text" icon="el-icon-edit" @click="preview(scope.row.skuId)"
+                                >预览
                                 </el-button>
-                                <el-button type="text" size="small" @click="comment(scope.row.skuId)">评论
+                                <el-button size="mini" type="text" icon="el-icon-edit" @click="skuInfoUpdate(scope.row)"
+                                           v-hasPermi="['product:skuinfo:edit']">修改
                                 </el-button>
                                 <el-dropdown @command="handleCommand($event,scope.row)">
                                      <span class="el-dropdown-link">
                                         更多<i class="el-icon-arrow-down el-icon--right"></i>
                                      </span>
                                     <el-dropdown-menu slot="dropdown">
+                                        <el-dropdown-item command="/product/spu/skuedit">商品信息修改</el-dropdown-item>
                                         <el-dropdown-item command="上传图片路由，后续添加">上传图片</el-dropdown-item>
                                         <el-dropdown-item command="参与秒杀路由，后续添加">参与秒杀</el-dropdown-item>
                                         <el-dropdown-item command="满减设置路由，后续添加">满减设置</el-dropdown-item>
@@ -93,10 +97,10 @@
                 </el-col>
 
                 <!-- 分页区域 -->
-                <el-col style="margin-top: 20px;text-align: center" :span="22" :offset="1" te>
+                <el-col style="margin-top: 20px;text-align: center;margin-bottom:20px;" :span="22" :offset="1" te>
                     <el-pagination @size-change="changePageSize" @current-change="changePageNo"
                                    :current-page="page.pageNo"
-                                   :page-sizes="[8,12,16,20,24]" :page-size="page.pageSize" :total="page.itemCount"
+                                   :page-sizes="[30,40,50,60,70,80]" :page-size="page.pageSize" :total="page.itemCount"
                                    layout="total, sizes, prev, pager, next, jumper">
                     </el-pagination>
                 </el-col>
@@ -104,6 +108,52 @@
             </el-col>
 
         </el-row>
+
+        <!-- 添加或修改sku信息对话框 -->
+        <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
+            <el-form ref="form" :model="form" :rules="rules" label-width="150px">
+                <el-form-item label="spuId" prop="spuId">
+                    <el-input v-model="form.spuId" placeholder="请输入spuId"/>
+                </el-form-item>
+                <el-form-item label="sku名称" prop="skuName">
+                    <el-input v-model="form.skuName" placeholder="请输入sku名称"/>
+                </el-form-item>
+                <el-form-item label="sku介绍描述" prop="skuDesc">
+                    <el-input v-model="form.skuDesc" type="textarea" placeholder="请输入内容"/>
+                </el-form-item>
+                <el-form-item label="所属分类id" prop="catalogId">
+                    <el-input v-model="form.catalogId" placeholder="请输入所属分类id"/>
+                </el-form-item>
+                <el-form-item label="品牌id" prop="brandId">
+                    <el-input v-model="form.brandId" placeholder="请输入品牌id"/>
+                </el-form-item>
+                <el-form-item label="默认图片" prop="skuDefaultImg">
+                    <el-select v-model="form.skuDefaultImg" placeholder="请选择下拉选择" clearable :style="{width: '100%'}">
+                        <el-option style="height: 150px" v-for="(item,index) in skuImages"
+                                   :key="index" :label="item" :value="item">
+                            <el-image style="width: 150px;height: 150px" :src="item"></el-image>
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="标题" prop="skuTitle">
+                    <el-input v-model="form.skuTitle" placeholder="请输入标题"/>
+                </el-form-item>
+                <el-form-item label="副标题" prop="skuSubtitle">
+                    <el-input v-model="form.skuSubtitle" type="textarea" placeholder="请输入内容"/>
+                </el-form-item>
+                <el-form-item label="价格" prop="price">
+                    <el-input v-model="form.price" placeholder="请输入价格"/>
+                </el-form-item>
+                <el-form-item label="销量" prop="saleCount">
+                    <el-input v-model="form.saleCount" placeholder="请输入销量"/>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="submitForm">确 定</el-button>
+                <el-button @click="cancel">取 消</el-button>
+            </div>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -111,14 +161,24 @@
 import BrandSelect from '@/views/components/brand/brand-select'
 import CategoryCascader from '@/views/components/category/category-cascader'
 import PubSub from 'pubsub-js'
-import {querySkuInfoByPage} from "@/api/product/sku-info";
+import {querySkuInfoByPage, getSkuImageBySkuId, getInfo, updateInfo} from "@/api/product/sku-info";
 
 export default {
     data() {
         return {
+            // 遮罩层
+            loading: true,
+            // 弹出层标题
+            title: "",
+            // 是否显示弹出层
+            open: false,
+            // 表单参数
+            form: {},
+            // 表单校验
+            rules: {},
             page: {
                 pageNo: 1,
-                pageSize: 8,
+                pageSize: 30,
                 pageTotal: 1,
                 itemCount: 0,
                 items: []
@@ -136,7 +196,8 @@ export default {
             dataListLoading: false,
             dataListSelections: [],
             addOrUpdateVisible: false,
-            catelogPath: []
+            catelogPath: [],
+            skuImages: [],//大图预览时的图片
         };
     },
     components: {
@@ -152,7 +213,52 @@ export default {
             //sku详情查询
             console.log("展开某行...", row, expand);
         },
-
+        /** 提交按钮 */
+        submitForm() {
+            this.$refs["form"].validate(valid => {
+                if (valid) {
+                    if (this.form.skuId != null) {
+                        updateInfo(this.form).then(response => {
+                            this.$modal.msgSuccess("修改成功");
+                            this.open = false;
+                        });
+                    }
+                }
+            });
+        },
+        // 取消按钮
+        cancel() {
+            this.open = false;
+            this.reset();
+        },
+        // 表单重置
+        reset() {
+            this.form = {
+                skuId: null,
+                spuId: null,
+                skuName: null,
+                skuDesc: null,
+                catalogId: null,
+                brandId: null,
+                skuDefaultImg: null,
+                skuTitle: null,
+                skuSubtitle: null,
+                price: null,
+                saleCount: null
+            };
+            this.resetForm("form");
+        },
+        /** 修改按钮操作 */
+        skuInfoUpdate(row) {
+            this.preview(row.skuId)
+            this.reset();
+            const skuId = row.skuId || this.ids
+            getInfo(skuId).then(response => {
+                this.form = response.data;
+                this.open = true;
+                this.title = "修改sku信息";
+            });
+        },
         //搜索按钮
         searchSkuInfo(isAll) {
             if (isAll) {
@@ -191,8 +297,21 @@ export default {
             this.getSkuInfo()
         },
         //预览部分
-        preview() {
-            this.$message.info("预览功能待完善")
+        preview(skuId) {
+            this.skuImages = []
+            //查询指定商品的所有图片
+            getSkuImageBySkuId(skuId).then(response => {
+                if (response.code == 200) {
+                    let images = [];
+                    response.data.forEach(image => {
+                        images.push(image.imgUrl)
+                    });
+                    this.skuImages = images;
+                }
+
+            })
+
+            //this.$message.info("预览功能待完善")
         },
         //评论功能
         comment() {
@@ -210,8 +329,10 @@ export default {
         },
         //最右边下拉框选择触发的
         handleCommand(command, sku) {
-            console.log("sku : ", sku)
-            this.$message(`click on item ${command} skuId为：${sku.skuId}`);
+            this.$router.push({
+                path: `${command}`,
+                query: {skuId: sku.skuId}
+            })
         }
     },
     mounted() {

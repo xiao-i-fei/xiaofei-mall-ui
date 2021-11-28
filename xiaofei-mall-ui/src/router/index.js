@@ -13,6 +13,8 @@ const routes = [
         children: [
             {path: 'itemdesc', name: 'ItemDesc', component: () => import("@/views/item/ItemDesc")},
             {path: 'itembaseattr', name: 'ItemBaseAttr', component: () => import("@/views/item/ItemBaseAttr")},
+            //设置默认默认现实的页面，如果设置了多个默认显示的页面，会默认显示最新配置的路由
+            {path: '/item', redirect: '/item/:skuId/itemDesc'}
         ]
     },
     {
@@ -25,7 +27,8 @@ const routes = [
     {path: '/account', name: 'Account', component: () => import('@/views/member/account/home/index')},
     {path: '/trade', name: 'Trade', component: () => import('@/views/order/trade/index')},
     {path: '/pay/:orderId/:orderSn', name: 'Pay', component: () => import('@/views/order/pay/index')},
-    {path: '/order', name: 'Order', component: () => import('@/views/order/order/index')}
+    {path: '/order', name: 'Order', component: () => import('@/views/order/order/index')},
+    {path: '/member/info', name: 'MemberInfo', component: () => import('@/views/member/info/index')}
     /*{
         path: '/about',
         name: 'About',

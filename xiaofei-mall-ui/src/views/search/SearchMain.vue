@@ -41,11 +41,11 @@
                     <li v-for="item in page.items" :key="item.skuId">
                         <div class="item-img">
                             <router-link style="text-decoration: none;" :to="{path:`/item/${item.skuId}/itemdesc`}">
-                                <el-image lazy :src=" item.skuImg"></el-image>
+                                <el-image lazy style="width: 220px;height: 220px;" :src=" item.skuImg"></el-image>
                             </router-link>
                         </div>
                         <div class="item-price">￥ {{ item.skuPrice }}</div>
-                        <div class="item-title" v-show="item.highlightFields!==''" v-html="item.highlightFields">
+                        <div class="item-title" v-show="item.highlightFields!==''" v-html="item.skuTitle">
                             {{ item.highlightFields }}
                         </div>
                         <div class="item-title" v-show="item.highlightFields===''" v-text="item.skuTitle"></div>
@@ -336,8 +336,9 @@ $width: 1200px;
             //  background-color: red;
             $width: 238px;
             $height: 385px;
-            height: $height;
+            //height: $height;
             border: 1px solid white;
+            padding-bottom: 20px;
             width: $width;
             overflow: hidden;
             //图片设置
