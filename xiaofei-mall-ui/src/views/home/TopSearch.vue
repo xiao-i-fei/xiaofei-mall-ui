@@ -73,7 +73,7 @@
 <script>
 import logo from "@/assets/images/logo.png";
 //import rightAd from '@/views/home/img/ad/search-right-ad.webp'
-import rightAd from "@/views/home/img/ad/0f9394ebde8292d1.png.webp";
+import rightAd from "@/views/home/img/ad/search-right-ad.webp";
 
 export default {
     data() {

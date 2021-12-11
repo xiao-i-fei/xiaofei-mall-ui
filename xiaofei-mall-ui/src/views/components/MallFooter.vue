@@ -99,7 +99,7 @@
                             <li>DIY装机</li>
                             <li>延保服务</li>
                             <li>E卡</li>
-                            <li>京东通信</li>
+                            <li>小飞通信</li>
                         </ul>
                     </div>
 

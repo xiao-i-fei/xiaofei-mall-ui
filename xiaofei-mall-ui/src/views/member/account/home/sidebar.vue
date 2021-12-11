@@ -29,7 +29,7 @@
                     <!-- 我的关注 -->
                     <dl style="border-bottom: 0">
                         <dt>我的关注</dt>
-                        <dd><a>购物车</a></dd>
+                        <dd><a href="/cart">购物车</a></dd>
                         <dd><a>我的收藏</a></dd>
                         <dd><a>更多>></a></dd>
                     </dl>
@@ -81,7 +81,7 @@
                         <div v-if="memberDetailInfo.orderItems.length>0" class="order">
                             <!-- 订单状态选择 -->
                             <div class="order-state">
-                                <router-link :to="{path:`/order`}" style="text-decoration: none;color: #333">
+                                <router-link :to="{path:`/order?orderStatus=0`}" style="text-decoration: none;color: #333">
                                     <div class="icon-sprite">
                                         <svg style="width: 40px;height: 40px" t="1637996812690" class="icon"
                                              viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +99,7 @@
                                     </div>
                                     <span class="name">待付款</span>
                                 </router-link>
-                                <router-link :to="{path:`/order`}" style="text-decoration: none;color: #333">
+                                <router-link :to="{path:`/order?orderStatus=2`}" style="text-decoration: none;color: #333">
                                     <div class="icon-sprite">
                                         <svg style="width: 40px;height: 40px" t="1637997363866" class="icon"
                                              viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@
                                     </div>
                                     <span class="name">待收货</span>
                                 </router-link>
-                                <router-link :to="{path:`/order`}" style="text-decoration: none;color: #333">
+                                <router-link :to="{path:`/order?orderStatus=3`}" style="text-decoration: none;color: #333">
                                     <div class="icon-sprite">
                                         <svg style="width: 40px;height: 40px" t="1637996982643" class="icon"
                                              viewBox="0 0 1114 1024" version="1.1"
@@ -123,7 +123,7 @@
                                     </div>
                                     <span class="name">待评价</span>
                                 </router-link>
-                                <router-link :to="{path:`/order`}" style="text-decoration: none;color: #333">
+                                <router-link :to="{path:`/order?orderStatus=3`}" style="text-decoration: none;color: #333">
                                     <div class="icon-sprite">
                                         <svg style="width: 40px;height: 40px" t="1637997151123" class="icon"
                                              viewBox="0 0 1024 1024" version="1.1"
@@ -141,7 +141,7 @@
                                     </div>
                                     <span class="name">退换/售后</span>
                                 </router-link>
-                                <router-link :to="{path:`/order`}" style="text-decoration: none;color: #333">
+                                <router-link :to="{path:`/order?orderStatus=-1`}" style="text-decoration: none;color: #333">
                                     <div class="icon-sprite">
                                         <svg style="width: 40px;height: 40px" t="1637997240699" class="icon"
                                              viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"

@@ -10,14 +10,14 @@
                 </div>
                 <div class="right xiaofei-col-6">
 
-                    <div class="two">
+                    <div class="two" @click="toCart()">
                         <i class="el-icon-shopping-cart-2"></i>
                         我的购物车
                     </div>
 
                     <div class="one">
-                        <input type="text" class="xiaofei-clear-input">
-                        <button class="xiaofei-clear-button">搜索</button>
+                        <input type="text" class="xiaofei-clear-input" v-model="key" @keyup.enter="btnSearch">
+                        <button class="xiaofei-clear-button" @click="btnSearch()">搜索</button>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,44 @@
 </template>
 
 <script>
-export default {}
+import {getQuery} from "@/utils/mall";
+
+export default {
+    data() {
+        return {
+            key: "",
+        }
+    },
+    methods: {
+        //搜索
+        btnSearch() {
+            let str = "?";
+            let param = getQuery();
+            if (param == null || param == undefined) {
+                window.location.href = `/search${str}searchValue=${this.key}`;
+            } else {
+                Object.keys(param).forEach(key => {
+                    if (key === "searchValue") {
+                        str = `${str}${key}=${this.key}&`
+                    } else {
+                        str = `${str}${key}=${param[key]}&`
+                    }
+                })
+                if (str.indexOf("searchValue") === -1) {
+                    str = str + "searchValue=" + this.key
+                }
+                str = str.substr(0, str.length - 1).toString()
+
+                window.location.href = "/search?" + str
+            }
+
+            //this.$bus.$emit('btnSearch', this.key)
+        },
+        toCart() {
+            window.location.href = "/cart"
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>

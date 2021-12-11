@@ -13,7 +13,7 @@
             </div>
             <div class="right">
                 <span><a>{{ userInfo.username }}</a></span>
-                <span><a>我的订单</a></span>
+                <span><a href="/order">我的订单</a></span>
                 <span><a>使用帮助</a></span>
             </div>
         </div>
