@@ -9,7 +9,7 @@ export default {
   name: 'RuoYiDoc',
   data() {
     return {
-      url: 'http://doc.ruoyi.vip/ruoyi-cloud'
+      url: 'https://gitee.com/Li_Fei_git/xiaofei-mall-ui/tree/master/xiaofei-mall-admin-ui'
     }
   },
   methods: {
