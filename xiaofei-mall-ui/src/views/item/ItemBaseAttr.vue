@@ -42,6 +42,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+*{
+    box-sizing:content-box
+}
 .base-attr-main {
     margin-top: 20px;
 

@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.aaa {
-
+*{
+    box-sizing:content-box
 }
 </style>

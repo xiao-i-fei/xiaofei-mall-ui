@@ -15,7 +15,7 @@
 
 <script>
 import TopSearch from "@/views/components/TopSearch";
-import TopCategory from "@/views/search/TopCategory";
+import TopCategory from "@/views/components/TopCategory";
 import TopNav from "@/views/components/TopNav";
 import AddItemMain from '@/views/cart/add/add-item-main'
 import MallFooter from "@/views/components/MallFooter";
@@ -27,5 +27,7 @@ export default {
 </script>
 
 <style scoped>
-
+*{
+    box-sizing:content-box
+}
 </style>

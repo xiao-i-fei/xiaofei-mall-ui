@@ -28,7 +28,17 @@ const routes = [
     {path: '/trade', name: 'Trade', component: () => import('@/views/order/trade/index')},
     {path: '/pay/:orderId/:orderSn', name: 'Pay', component: () => import('@/views/order/pay/index')},
     {path: '/order', name: 'Order', component: () => import('@/views/order/order/index')},
-    {path: '/member/info', name: 'MemberInfo', component: () => import('@/views/member/info/index')}
+    {path: '/member/info', name: 'MemberInfo', component: () => import('@/views/member/info/index')},
+    //401页面
+    {path: '/401', name: '401', component: () => import('@/views/error/401.vue')},
+    /*404页面配置，一定要配置到最底下*/
+    {
+        path: '/404',
+        component: () => import('@/views/error/404.vue'),
+        name: '404',
+        meta: {keepAlive: true, isTab: false, isAuth: false}
+    },
+    {path: '*', redirect: "/404"}
     /*{
         path: '/about',
         name: 'About',

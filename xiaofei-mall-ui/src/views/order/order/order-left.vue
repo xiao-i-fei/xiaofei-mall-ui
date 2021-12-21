@@ -26,6 +26,9 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+*{
+    box-sizing:content-box
+}
 .order-menu {
     dl {
         padding-bottom: 20px;

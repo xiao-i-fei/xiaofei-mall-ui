@@ -272,7 +272,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+*{
+    box-sizing:content-box
+}
 .login-register-main {
     align-items: center;
     background: #e9e9e9 url("../../../assets/images/background_oeuhe7.jpg") no-repeat fixed center;

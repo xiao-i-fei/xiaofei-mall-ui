@@ -80,18 +80,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
+*{
+    box-sizing:content-box
+}
 $width: 1200px;
 $height: 145px;
 
 div{
     //解决边框塌陷
-            &:after {
-                content: ".";
-                display: block;
-                height: 0;
-                clear: both;
-                visibility: hidden;
-            }
+    &:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
 }
 
 .aaa {

@@ -254,6 +254,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+*{
+    box-sizing:content-box
+}
 div {
     //解决边框塌陷
     &:after {

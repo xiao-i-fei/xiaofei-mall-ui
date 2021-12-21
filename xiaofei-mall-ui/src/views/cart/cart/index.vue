@@ -19,5 +19,7 @@ export default {
 </script>
 
 <style scoped>
-
+*{
+    box-sizing:content-box
+}
 </style>

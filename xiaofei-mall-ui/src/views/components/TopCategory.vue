@@ -113,7 +113,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+*{
+    box-sizing:content-box
+}
 $color: rgb(243, 2, 19);
 
 //搜索区域

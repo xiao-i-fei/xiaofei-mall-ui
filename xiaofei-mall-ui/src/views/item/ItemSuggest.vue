@@ -52,6 +52,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+*{
+    box-sizing:content-box
+}
 $color2: #e4393c;
 .suggest-main {
     background-color: #f7f7f7;

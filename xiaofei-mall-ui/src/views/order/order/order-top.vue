@@ -63,6 +63,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+*{
+    box-sizing:content-box
+}
 $width:1200px;
 $height:80px;
 $color: #df3028;

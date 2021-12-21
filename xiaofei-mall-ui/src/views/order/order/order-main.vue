@@ -229,10 +229,10 @@ export default {
             this.orderItemQuery.orderStatus = parseInt(orderStatus)
         }
         this.queryOrderItem();
-        
+
     },
     data() {
-        return { 
+        return {
             orderItemQuery: {orderSn: "", orderStatus: -1, addTime: null},
             page: {pageNo: 1, pageSize: 10, pageTotal: 1, itemCount: 0, items: []}
         }
@@ -305,6 +305,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+*{
+    box-sizing:content-box
+}
 $width: 1080px;
 $font-color: #333333;
 $color: #e4393c;
@@ -360,7 +363,7 @@ div {
                                 font-weight: 800;
                                 border-bottom: 2px solid #e4393c;
                                 margin-right: 20px;
-                                font-size: 12px; 
+                                font-size: 12px;
 
                             &:hover {
                                 color: $color;

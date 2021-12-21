@@ -131,6 +131,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+*{
+    box-sizing:content-box
+}
 .foot-main {
     background-color: #eaeaea;
     //解决边框塌陷

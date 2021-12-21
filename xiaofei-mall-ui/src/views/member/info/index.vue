@@ -339,6 +339,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+*{
+    box-sizing:content-box
+}
 .content-box {
     width: 1000px;
     margin: 0 auto;

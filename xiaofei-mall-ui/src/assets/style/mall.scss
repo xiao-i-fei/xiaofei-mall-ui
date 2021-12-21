@@ -1,0 +1,21 @@
+//小版心设置
+.wrapper {
+  margin: auto;
+  width: 1190px;
+}
+//大版心设置
+.big-wrapper {
+  margin: auto;
+  width: 1390px;
+}
+
+//清除浮动
+.clear-float {
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}

@@ -98,7 +98,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+*{
+    box-sizing:content-box
+}
 $width: 1200px;
 $min-width: 100px;
 $color1: #666666;

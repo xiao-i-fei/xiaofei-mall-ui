@@ -29,5 +29,7 @@ export default {components: {MallFooter, OrderMain, OrderLeft, OrderTop, TopNav}
 </script>
 
 <style scoped>
-
+*{
+    box-sizing:content-box
+}
 </style>

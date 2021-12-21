@@ -420,6 +420,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+*{
+    box-sizing:content-box
+}
 $width: 1000px;
 $color: #e4393c;
 
