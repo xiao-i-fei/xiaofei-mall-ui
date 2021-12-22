@@ -74,7 +74,7 @@ service.interceptors.response.use(res => {
                     window.location.href = '/loginorregist/login'
                 })
             }).catch(() => {});
-        } else if (code === 500) {
+        }else if (code === 500) {
             Message({
                 message: msg,
                 type: 'error'

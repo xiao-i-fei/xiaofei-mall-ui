@@ -8,7 +8,7 @@ import {getMemberByToken} from "@/api/member/member";
 import Cookies from "js-cookie";
 
 //白名单
-const whiteList = ['/', '/search']
+const whiteList = ['/', '/search','/404','/401']
 
 const TokenKey = 'User-Token'//token的键
 

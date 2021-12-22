@@ -103,7 +103,8 @@
                                         支付 <strong>{{ orderItemInfo.orderEntity.payAmount }}</strong>元
                                     </div>
                                 </div>
-                                <div class="pay-switch-item" style="padding: 15px">
+                                <!-- 白条支付 -->
+                              <!--   <div class="pay-switch-item" style="padding: 15px">
                                     <div class="pay-check">
                                         <input type="checkbox" style="cursor: not-allowed" disabled/>
                                     </div>
@@ -123,7 +124,7 @@
                                     <div class="pay-money" v-if="false">
                                         支付 <strong>{{ orderItemInfo.orderEntity.payAmount }}</strong>元
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="pay-switch-item" style="padding: 15px">
                                     <div class="pay-check">
                                         <input type="checkbox" style="cursor: not-allowed" disabled/>
@@ -159,7 +160,7 @@
                     <!-- 第三方支付方式 -->
                     <div class="third-pay-switch">
                         <div class="third-pay-switch-main">
-                            <div class="third-pay-switch-item">
+                            <!-- <div class="third-pay-switch-item">
                                 <div class="third-pay-switch-image">
                                     <img src="https://storage.360buyimg.com/payment-assets/sdk/bank/PAY-UNION.png"
                                          alt=""/>
@@ -176,7 +177,7 @@
                                 <div class="third-pay-switch-name">
                                     <span>微信支付</span>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

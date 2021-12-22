@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export function sendEmailCode(email) {
     return request({
-        url: `/user/email/sendSimpleEmail`,
+        url: `/user/sendSimpleEmail`,
         method: "post",
         data: {registerEmail: email}
     })
