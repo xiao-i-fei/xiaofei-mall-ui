@@ -50,16 +50,6 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/404',
-    component: (resolve) => require(['@/views/error/404'], resolve),
-    hidden: true
-  },
-  {
-    path: '/401',
-    component: (resolve) => require(['@/views/error/401'], resolve),
-    hidden: true
-  },
-  {
     path: '',
     component: Layout,
     redirect: 'index',
@@ -150,7 +140,18 @@ export const constantRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen'}
       }
     ]
-  }
+    },
+    {
+        path: '/404',
+        component: (resolve) => require(['@/views/error/404'], resolve),
+        hidden: true
+    },
+    {
+        path: '/401',
+        component: (resolve) => require(['@/views/error/401'], resolve),
+        hidden: true
+    },
+    { path: '*', redirect: "/404" }
 ]
 
 export default new Router({
