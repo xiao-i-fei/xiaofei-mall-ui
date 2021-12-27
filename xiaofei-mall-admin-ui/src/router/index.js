@@ -151,7 +151,6 @@ export const constantRoutes = [
         component: (resolve) => require(['@/views/error/401'], resolve),
         hidden: true
     },
-    { path: '*', redirect: "/404" }
 ]
 
 export default new Router({
