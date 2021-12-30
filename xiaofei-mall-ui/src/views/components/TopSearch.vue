@@ -5,7 +5,7 @@
             <!-- logo区域 -->
             <div class="xiaofei-col-3 logo">
                 <a href="/">
-                    <img :src="logo" alt="图片加载失败"/>
+                    <img src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/logo.png" alt="图片加载失败"/>
                 </a>
             </div>
             <!-- 搜索区域 -->
@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import logo from "@/assets/images/logo.png";
 import {getQuery} from "@/utils/mall";
 import Cookie from 'js-cookie'
 
@@ -44,7 +43,6 @@ export default {
     },
     data() {
         return {
-            logo: logo,
             key: "",
             cartTotalCount: '',//购物车中商品的数量
         };

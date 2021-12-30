@@ -405,7 +405,7 @@ export default {
 
 /*#member-info {
     height: 100vh;
-    background: url(../../../assets/images/background_oeuhe7.jpg) no-repeat fixed 58% 20% / cover;
+    background: url(https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/background_oeuhe7.jpg) no-repeat fixed 58% 20% / cover;
     background-size: cover;
 }*/
 

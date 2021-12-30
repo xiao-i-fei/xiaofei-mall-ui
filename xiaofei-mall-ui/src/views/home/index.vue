@@ -15,7 +15,7 @@
             <div class="wrapper content">
                 <!-- 左边logo -->
                 <div class="logo">
-                    <img src="../../assets/images/logo/logo.png" alt="加载失败">
+                    <img src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/logo.png" alt="加载失败">
                 </div>
                 <!-- 中间input框 -->
                 <div class="search">

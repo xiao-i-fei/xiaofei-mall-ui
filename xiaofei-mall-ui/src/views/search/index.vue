@@ -8,7 +8,7 @@
                 <!-- 左边logo -->
                 <div class="logo">
                     <a href="/">
-                        <img src="../../assets/images/logo/logo.png" alt="加载失败">
+                        <img src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/logo.png" alt="加载失败">
                     </a>
                 </div>
                 <!-- 中间input框 -->

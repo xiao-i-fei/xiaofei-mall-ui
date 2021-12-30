@@ -66,7 +66,6 @@
 
 <script>
 import TopSearch from "@/views/components/TopSearch";
-import logo from "@/assets/images/logo.png";
 import {queryAllCategory} from "@/api/product/category";
 
 export default {
@@ -105,7 +104,6 @@ export default {
             categoryShow2: false,
             categorys: [], //全部的数据
             categoryLevels: [], //二三级类别的数据，需要根据选中的一级类获取二级类别
-            logo: logo,
             key: this.searchValue
         };
     },

@@ -277,7 +277,7 @@ export default {
 }
 .login-register-main {
     align-items: center;
-    background: #e9e9e9 url("../../../assets/images/background_oeuhe7.jpg") no-repeat fixed center;
+    background: #e9e9e9 url("https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/background_oeuhe7.jpg") no-repeat fixed center;
     background-size: cover;
     display: grid;
     height: 100vh;
@@ -355,7 +355,7 @@ export default {
 }
 
 .overlay {
-    background: #008997 url("../../../assets/images/background_oeuhe7.jpg") no-repeat fixed center;
+    background: #008997 url("https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/background_oeuhe7.jpg") no-repeat fixed center;
     background-size: cover;
     height: 100%;
     left: -100%;
