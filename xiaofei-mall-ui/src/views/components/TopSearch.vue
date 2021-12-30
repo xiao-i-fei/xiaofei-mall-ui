@@ -93,7 +93,7 @@ $color: rgb(243, 2, 19);
     // 左边logo区域
     .logo {
         img {
-            width: 200px;
+            width: 90px;
             height: auto;
             margin-top: 20px;
         }

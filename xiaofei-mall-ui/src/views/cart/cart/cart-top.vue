@@ -72,8 +72,8 @@ $color: rgb(201, 22, 35);
         float: left;
 
         img {
-            width: 150px;
-            height: auto;
+            width: 90px;
+            height: $height;
             margin-top: 20px;
             object-fit: contain;
         }
