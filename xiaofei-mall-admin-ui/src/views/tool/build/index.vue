@@ -3,7 +3,7 @@
     <div class="left-board">
       <div class="logo-wrapper">
         <div class="logo">
-          <img :src="logo" alt="logo"> Form Generator
+          <img src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/logo.png" alt="logo"> Form Generator
         </div>
       </div>
       <el-scrollbar class="left-scrollbar">
@@ -147,7 +147,6 @@ import { makeUpHtml, vueTemplate, vueScript, cssStyle } from '@/utils/generator/
 import { makeUpJs } from '@/utils/generator/js'
 import { makeUpCss } from '@/utils/generator/css'
 import drawingDefalut from '@/utils/generator/drawingDefalut'
-import logo from '@/assets/logo/logo.png'
 import CodeTypeDialog from './CodeTypeDialog'
 import DraggableItem from './DraggableItem'
 
@@ -164,7 +163,7 @@ export default {
   },
   data() {
     return {
-      logo,
+      // logo,
       idGlobal: 100,
       formConf,
       inputComponents,

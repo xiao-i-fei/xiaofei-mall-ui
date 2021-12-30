@@ -157,7 +157,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-bgc.jpg");
+  background-image: url("https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/background_oeuhe7.jpg");
   background-size: cover;
 }
 .title {
