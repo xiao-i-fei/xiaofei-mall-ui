@@ -182,7 +182,7 @@
                 <el-tooltip placement="top">
                   <div slot="content">
                     Bean调用示例：ryTask.ryParams('ry')
-                    <br />Class类调用示例：com.ruoyi.quartz.task.RyTask.ryParams('ry')
+                    <br />Class类调用示例：com.xiaofei.quartz.task.RyTask.ryParams('ry')
                     <br />参数说明：支持字符串，布尔类型，长整型，浮点型，整型
                   </div>
                   <i class="el-icon-question"></i>
@@ -204,7 +204,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="错误策略" prop="misfirePolicy">
+            <el-form-item label="执行策略" prop="misfirePolicy">
               <el-radio-group v-model="form.misfirePolicy" size="small">
                 <el-radio-button label="1">立即执行</el-radio-button>
                 <el-radio-button label="2">执行一次</el-radio-button>

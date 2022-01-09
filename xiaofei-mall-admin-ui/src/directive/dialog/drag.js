@@ -1,6 +1,6 @@
 /**
 * v-dialogDrag 弹窗拖拽
-* Copyright (c) 2021 李飞
+* Copyright (c) 李飞
 */
 
 export default {

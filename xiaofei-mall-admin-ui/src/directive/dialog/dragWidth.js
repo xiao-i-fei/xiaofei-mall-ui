@@ -1,6 +1,6 @@
 /**
 * v-dialogDragWidth 可拖动弹窗宽度（右侧边）
-* Copyright (c) 2021 李飞
+* Copyright (c) 李飞
 */
 
 export default {

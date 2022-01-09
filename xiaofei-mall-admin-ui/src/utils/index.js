@@ -1,4 +1,4 @@
-import { parseTime } from './ruoyi'
+import { parseTime } from './xiaofei'
 
 /**
  * 表格时间格式化
@@ -13,15 +13,6 @@ export function formatDate(cellValue) {
   var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
   var seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
   return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
-}
-
-/**
- * 获取uuid
- */
-export function getUUID () {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-        return (c === 'x' ? (Math.random() * 16 | 0) : ('r&0x3' | '0x8')).toString(16)
-    })
 }
 
 /**
@@ -390,7 +381,7 @@ export function titleCase(str) {
 
 // 下划转驼峰
 export function camelCase(str) {
-  return str.replace(/-[a-z]/g, str1 => str1.substr(-1).toUpperCase())
+  return str.replace(/_[a-z]/g, str1 => str1.substr(-1).toUpperCase())
 }
 
 export function isNumberStr(str) {

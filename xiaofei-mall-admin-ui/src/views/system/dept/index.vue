@@ -106,6 +106,8 @@
               <treeselect v-model="form.parentId" :options="deptOptions" :normalizer="normalizer" placeholder="选择上级部门" />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="部门名称" prop="deptName">
               <el-input v-model="form.deptName" placeholder="请输入部门名称" />
@@ -116,6 +118,8 @@
               <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="负责人" prop="leader">
               <el-input v-model="form.leader" placeholder="请输入负责人" maxlength="20" />
@@ -126,6 +130,8 @@
               <el-input v-model="form.phone" placeholder="请输入联系电话" maxlength="11" />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
@@ -179,8 +185,6 @@ export default {
       isExpandAll: true,
       // 重新渲染表格状态
       refreshTable: true,
-      // 是否展开
-      expand: false,
       // 查询参数
       queryParams: {
         deptName: undefined,
@@ -276,7 +280,7 @@ export default {
       this.open = true;
       this.title = "添加部门";
       listDept().then(response => {
-	        this.deptOptions = this.handleTree(response.data, "deptId");
+        this.deptOptions = this.handleTree(response.data, "deptId");
       });
     },
     /** 展开/折叠操作 */
@@ -296,7 +300,7 @@ export default {
         this.title = "修改部门";
       });
       listDeptExcludeChild(row.deptId).then(response => {
-	        this.deptOptions = this.handleTree(response.data, "deptId");
+        this.deptOptions = this.handleTree(response.data, "deptId");
       });
     },
     /** 提交按钮 */

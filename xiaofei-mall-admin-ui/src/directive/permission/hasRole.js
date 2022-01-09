@@ -1,6 +1,6 @@
  /**
  * v-hasRole 角色权限处理
- * Copyright (c) 2021 李飞
+ * Copyright (c) 李飞
  */
 
 import store from '@/store'

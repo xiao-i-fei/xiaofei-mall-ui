@@ -33,6 +33,7 @@
                 <el-option label="Double" value="Double" />
                 <el-option label="BigDecimal" value="BigDecimal" />
                 <el-option label="Date" value="Date" />
+                <el-option label="Boolean" value="Boolean" />
               </el-select>
             </template>
           </el-table-column>
@@ -124,6 +125,7 @@
     </el-form>
   </el-card>
 </template>
+
 <script>
 import { getGenTable, updateGenTable } from "@/api/tool/gen";
 import { optionselect as getDictOptionselect } from "@/api/system/dict/type";
@@ -211,8 +213,8 @@ export default {
     },
     /** 关闭按钮 */
     close() {
-      this.$store.dispatch("tagsView/delView", this.$route);
-      this.$router.push({ path: "/tool/gen", query: { t: Date.now(), pageNum: this.$route.query.pageNum } })
+      const obj = { path: "/tool/gen", query: { t: Date.now(), pageNum: this.$route.query.pageNum } };
+      this.$tab.closeOpenPage(obj);
     }
   },
   mounted() {

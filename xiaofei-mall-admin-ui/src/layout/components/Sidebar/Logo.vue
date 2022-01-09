@@ -1,6 +1,7 @@
 <template>
     <div class="sidebar-logo-container" :class="{'collapse':collapse}"
-         :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }">
+         :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }"
+    >
         <transition name="sidebarLogoFade">
             <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
                 <img src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/logo.png" class="sidebar-logo"/>
@@ -31,7 +32,7 @@ export default {
     },
     computed: {
         variables() {
-            return variables;
+            return variables
         },
         sideTheme() {
             return this.$store.state.settings.sideTheme
@@ -39,8 +40,7 @@ export default {
     },
     data() {
         return {
-            title: '后台管理系统',
-            // logo: logoImg
+            title: '小飞商城',
         }
     }
 }

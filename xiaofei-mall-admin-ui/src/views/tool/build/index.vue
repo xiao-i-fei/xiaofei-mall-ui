@@ -3,7 +3,7 @@
     <div class="left-board">
       <div class="logo-wrapper">
         <div class="logo">
-          <img src="https://xiaofei-mall.oss-cn-beijing.aliyuncs.com/2021-12-24/logo.png" alt="logo"> Form Generator
+          <img :src="logo" alt="logo"> Form Generator
         </div>
       </div>
       <el-scrollbar class="left-scrollbar">
@@ -163,7 +163,6 @@ export default {
   },
   data() {
     return {
-      // logo,
       idGlobal: 100,
       formConf,
       inputComponents,

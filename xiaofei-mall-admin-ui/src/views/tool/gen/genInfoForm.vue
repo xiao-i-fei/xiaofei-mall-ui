@@ -11,12 +11,11 @@
           </el-select>
         </el-form-item>
       </el-col>
-
       <el-col :span="12">
         <el-form-item prop="packageName">
           <span slot="label">
             生成包路径
-            <el-tooltip content="生成在哪个java包下，例如 com.ruoyi.system" placement="top">
+            <el-tooltip content="生成在哪个java包下，例如 com.xiaofei.system" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -213,12 +212,12 @@
     </el-row>
   </el-form>
 </template>
+
 <script>
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 export default {
-  name: "BasicInfoForm",
   components: { Treeselect },
   props: {
     info: {
