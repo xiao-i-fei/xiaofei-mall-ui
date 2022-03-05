@@ -1,5 +1,5 @@
 {
-  "name": "lifei",
+  "name": "mall",
   "version": "3.4.0",
   "description": "小飞商城",
   "author": "李飞",
@@ -33,7 +33,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/Li_Fei_git/xiaofei-mall-ui.git"
+    "url": "https://gitee.com/Li_Fei_git/xiaofei-mall-ui"
   },
   "dependencies": {
     "@riophae/vue-treeselect": "0.4.0",

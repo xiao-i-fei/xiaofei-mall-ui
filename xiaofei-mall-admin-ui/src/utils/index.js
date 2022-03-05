@@ -1,4 +1,4 @@
-import { parseTime } from './xiaofei'
+import { parseTime } from './mall'
 
 /**
  * 表格时间格式化
